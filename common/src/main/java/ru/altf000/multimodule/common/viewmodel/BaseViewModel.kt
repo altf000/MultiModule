@@ -20,5 +20,5 @@ abstract class BaseViewModel : ViewModel(), CoroutineScope {
         super.onCleared()
     }
 
-    private fun cancelChildrenJobs() = coroutineContext.cancelChildren()
+    fun cancelChildrenJobs() = coroutineContext.cancelChildren()
 }

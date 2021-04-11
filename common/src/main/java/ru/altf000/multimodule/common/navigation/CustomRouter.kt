@@ -6,7 +6,6 @@ import ru.altf000.multimodule.movie_detail_api.MovieDetailApi
 import ru.terrakok.cicerone.Router
 import ru.terrakok.cicerone.Screen
 import javax.inject.Inject
-
 import javax.inject.Provider
 import javax.inject.Singleton
 
@@ -16,21 +15,15 @@ class CustomRouter @Inject constructor(
     private val movieDetailScreenCreator: Provider<MovieDetailApi>
 ) : Router() {
 
-    override fun navigateTo(screen: Screen) {
-        super.navigateTo(screen)
-        ScreensChecker.add(screen)
-    }
-
-    override fun exit() {
-        ScreensChecker.removeLast()
-        super.exit()
+    private fun addScreen(screen: Screen) {
+        executeCommands(Add(screen))
     }
 
     fun openCollection(collectionId: Int) {
-        navigateTo(collectionListScreen.get().getScreenCreator().createScreen(collectionId))
+        addScreen(collectionListScreen.get().getScreenCreator().createScreen(collectionId))
     }
 
     fun openMovieDetail(content: Content) {
-        navigateTo(movieDetailScreenCreator.get().getScreenCreator().createScreen(content))
+        addScreen(movieDetailScreenCreator.get().getScreenCreator().createScreen(content))
     }
 }

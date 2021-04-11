@@ -1,9 +1,9 @@
-package ru.altf000.multimodule.collection_list_impl.presentation.view.adapter
+package ru.altf000.multimodule.common_ui.diffutil
 
 import androidx.recyclerview.widget.DiffUtil
 import ru.altf000.multimodule.common_entities.domain.Content
 
-class MovieListDiffCallback(
+class ContentDiff(
     private val oldList: List<Content>,
     private val newList: List<Content>
 ) : DiffUtil.Callback() {

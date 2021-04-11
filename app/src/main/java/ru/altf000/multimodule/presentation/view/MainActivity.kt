@@ -53,7 +53,9 @@ class MainActivity : AppCompatActivity() {
             .apply {
                 init.observe(this@MainActivity, Observer {
                     binding.progressBar.visibility = View.GONE
-                    router.openCollection(4661)
+                    if (savedInstanceState == null) {
+                        router.openCollection(4661)
+                    }
                 })
             }
     }

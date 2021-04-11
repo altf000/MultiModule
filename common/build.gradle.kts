@@ -34,6 +34,7 @@ dependencies {
     implementation(project(":module-injector"))
     implementation(project(":common-ui"))
     implementation(project(":common-entities"))
+    implementation(project(":constants"))
 
     val coroutines = rootProject.extra["coroutines_version"]
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutines")

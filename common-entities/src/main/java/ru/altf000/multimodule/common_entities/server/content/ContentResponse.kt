@@ -10,5 +10,5 @@ data class ContentResponse(
     @SerializedName("rating") val rating: RatingRoot? = null,
     @SerializedName("restrict") val restrict: Int,
     @SerializedName("year") val year: Int,
-    @SerializedName("kind") val kind: Kind
+    @SerializedName("kind") val kind: Int
 )

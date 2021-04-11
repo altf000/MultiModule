@@ -11,7 +11,7 @@ data class FullContentResponse(
     @SerializedName("rating") val rating: RatingRoot? = null,
     @SerializedName("restrict") val restrict: Int = -1,
     @SerializedName("year") val year: Int = -1,
-    @SerializedName("kind") val kind: Kind = Kind.EMPTY,
+    @SerializedName("kind") val kind: Int = -1,
     @SerializedName("genres") val genres: List<Int> = emptyList(),
     @SerializedName("country") val country: Int = -1
 )

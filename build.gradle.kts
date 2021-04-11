@@ -16,6 +16,7 @@ buildscript {
     val logging_interceptor_version by extra("4.9.0")
     val room_version by extra("2.2.6")
     val timber_version by extra("4.7.1")
+    val swipe_refresh_version by extra("1.1.0")
 
     repositories {
         google()

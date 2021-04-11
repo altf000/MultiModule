@@ -65,4 +65,7 @@ dependencies {
     val glide = rootProject.extra["glide_version"]
     implementation("com.github.bumptech.glide:glide:$glide")
     annotationProcessor("com.github.bumptech.glide:compiler:$glide")
+
+    val swipeRefresh = rootProject.extra["swipe_refresh_version"]
+    implementation("androidx.swiperefreshlayout:swiperefreshlayout:$swipeRefresh")
 }

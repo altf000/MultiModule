@@ -3,18 +3,18 @@ package ru.altf000.multimodule.common_entities.mapper
 import ru.altf000.multimodule.common_entities.domain.FullContent
 import ru.altf000.multimodule.common_entities.entity.FullContentEntity
 import ru.altf000.multimodule.common_entities.server.content.FullContentResponse
-import ru.altf000.multimodule.common_entities.server.content.Kind
+import ru.altf000.multimodule.constants.Constants
 
 fun FullContentResponse.toLocal() = FullContent(
     id = this.id,
     title = this.title.orEmpty(),
     synopsis = this.synopsis.orEmpty(),
-    posterUrl = this.posters.first().url.orEmpty(),
-    thumbUrl = this.thumbs.first().url.orEmpty(),
+    posterUrl = this.posters.firstOrNull()?.url.orEmpty(),
+    thumbUrl = this.thumbs.firstOrNull()?.url.orEmpty(),
     rating = this.rating?.ready?.main.toString(),
     year = this.year,
     restrict = this.restrict,
-    isSerial = this.kind == Kind.SERIAL,
+    isSerial = this.kind == Constants.Content.KIND_SERIAL,
     genres = this.genres,
     country = this.country
 )

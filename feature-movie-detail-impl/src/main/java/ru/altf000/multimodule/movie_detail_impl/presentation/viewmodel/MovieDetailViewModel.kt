@@ -27,7 +27,9 @@ internal class MovieDetailViewModel(
     private val _contentInfo = MutableLiveData<FullContent>()
     val contentInfo: LiveData<FullContent> get() = _contentInfo
 
-    private val _recommendations = MutableLiveData<List<Content>>()
+    private val _recommendations = MutableLiveData<List<Content>>().apply {
+        value = listOf(Content(), Content(), Content())
+    }
     val recommendations: LiveData<List<Content>> get() = _recommendations
 
     var router: CustomRouter? = null
@@ -44,7 +46,9 @@ internal class MovieDetailViewModel(
                                 is RequestResult.Success -> {
                                     _contentInfo.value = result.value
                                     loadRecommendations()
-                                    Timber.tag(MovieDetailViewModel::class.simpleName).d("content info: ${result.value}")
+                                    Timber
+                                        .tag(MovieDetailViewModel::class.simpleName)
+                                        .d("content info: ${result.value}")
                                 }
                                 is RequestResult.Failure<*> -> {
                                     Timber.e("error to get content info: ${result.error}")
@@ -65,9 +69,17 @@ internal class MovieDetailViewModel(
                     .getRecommendations(notNullContent.id)
                     .collect { result ->
                         withContext(Dispatchers.Main) {
-                            if (result is RequestResult.Success) {
-                                _recommendations.value = result.value
-                                Timber.tag(MovieDetailViewModel::class.simpleName).d("recommendations: ${result.value}")
+                            when (result) {
+                                is RequestResult.Success -> {
+                                    _recommendations.value = result.value
+                                    Timber
+                                        .tag(MovieDetailViewModel::class.simpleName)
+                                        .d("recommendations: ${result.value}")
+                                }
+                                is RequestResult.Failure<*> -> {
+                                    _recommendations.value = emptyList()
+                                    Timber.e("error to get recommendations info: ${result.error}")
+                                }
                             }
                         }
                     }
@@ -81,5 +93,9 @@ internal class MovieDetailViewModel(
             recommendationsApi.get().getUtils().release()
         }
         super.onCleared()
+    }
+
+    fun onItemClicked(content: Content) {
+        router?.openMovieDetail(content)
     }
 }

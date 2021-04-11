@@ -24,6 +24,16 @@ android {
 }
 
 dependencies {
+
+    implementation(project(":common-entities"))
+
+    val recyclerView = rootProject.extra["recyclerview_version"]
+    implementation("androidx.recyclerview:recyclerview:$recyclerView")
+
     val appCompat = rootProject.extra["appcompat_version"]
     implementation("androidx.appcompat:appcompat:$appCompat")
+
+    val glide = rootProject.extra["glide_version"]
+    implementation("com.github.bumptech.glide:glide:$glide")
+    annotationProcessor("com.github.bumptech.glide:compiler:$glide")
 }

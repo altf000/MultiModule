@@ -1,14 +1,15 @@
-package ru.altf000.multimodule.collection_list_impl.presentation.view.adapter
+package ru.altf000.multimodule.movie_detail_impl.presentation.view.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import ru.altf000.multimodule.collection_list.R
-import ru.altf000.multimodule.common.utils.load
 import ru.altf000.multimodule.common_entities.domain.Content
+import ru.altf000.multimodule.common_ui.diffutil.ContentDiff
+import ru.altf000.multimodule.common_ui.utils.load
+import ru.altf000.multimodule.movie_detail_impl.R
 
-class MovieListAdapter(private val onClickListener: (Content) -> Unit)
+class RecommendationsListAdapter(private val onClickListener: (Content) -> Unit)
     : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     var items: MutableList<Content> = mutableListOf()
@@ -16,20 +17,19 @@ class MovieListAdapter(private val onClickListener: (Content) -> Unit)
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val inflater = LayoutInflater.from(viewGroup.context)
         return if (viewType == 0) {
-            val view = inflater.inflate(R.layout.item_movie_stub, viewGroup, false)
-            MovieStubViewHolder(view)
+            val view = inflater.inflate(R.layout.item_recommendation_stub, viewGroup, false)
+            RecommendationsStubViewHolder(view)
         } else {
-            val view = inflater.inflate(R.layout.item_movie, viewGroup, false)
-            MovieViewHolder(view)
+            val view = inflater.inflate(R.layout.item_recommendation, viewGroup, false)
+            RecommendationsViewHolder(view)
         }
     }
 
     override fun onBindViewHolder(viewHolder: RecyclerView.ViewHolder, position: Int) {
-        if (viewHolder is MovieViewHolder) {
+        if (viewHolder is RecommendationsViewHolder) {
             val item = items[position]
             viewHolder.poster.load(item.posterUrl)
             viewHolder.title.text = item.title
-            viewHolder.description.text = item.synopsis
             viewHolder.itemView.setOnClickListener { onClickListener(item) }
         }
     }
@@ -46,7 +46,7 @@ class MovieListAdapter(private val onClickListener: (Content) -> Unit)
     }
 
     fun setData(newItems: List<Content>) {
-        val diffCallback = MovieListDiffCallback(items, newItems)
+        val diffCallback = ContentDiff(items, newItems)
         val diffResult = DiffUtil.calculateDiff(diffCallback)
         items.clear()
         items.addAll(newItems)

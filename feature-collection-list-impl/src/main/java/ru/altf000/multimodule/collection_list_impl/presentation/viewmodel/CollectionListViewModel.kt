@@ -18,25 +18,27 @@ internal class CollectionListViewModel @Inject constructor(
     private val getCollectionListUseCase: GetCollectionListUseCase
 ) : BaseViewModel() {
 
-    private val _collectionList = MutableLiveData<List<Content>>()
+    private val _collectionList = MutableLiveData<List<Content>>().apply {
+        value = listOf(Content(), Content(), Content())
+    }
     val collectionList: LiveData<List<Content>> get() = _collectionList
 
-    private val _errorList = MutableLiveData<Boolean>()
-    val errorList: LiveData<Boolean> get() = _errorList
+    private val _collectionListError = MutableLiveData<Boolean>()
+    val collectionListError: LiveData<Boolean> get() = _collectionListError
 
     var router: CustomRouter? = null
     var collectionId = -1
 
-    private var isFirstLoaded = false
+    @Volatile
+    private var isFirstPageLoaded = false
 
-    fun loadFirst() {
-        if (!isFirstLoaded) {
-            _collectionList.value = listOf(Content(), Content(), Content())
+    fun loadFirstPage() {
+        if (!isFirstPageLoaded) {
             launch {
                 getCollectionListUseCase
                     .execute(GetCollectionListUseCase.Params(collectionId, false))
                     .collect {
-                        isFirstLoaded = true
+                        isFirstPageLoaded = true
                         onResult(it)
                     }
             }
@@ -51,16 +53,23 @@ internal class CollectionListViewModel @Inject constructor(
         }
     }
 
+    fun refresh() {
+        cancelChildrenJobs()
+        isFirstPageLoaded = false
+        getCollectionListUseCase.reset()
+        loadFirstPage()
+    }
+
     private suspend fun onResult(result: RequestResult<List<Content>>) {
         return withContext(Dispatchers.Main) {
             when (result) {
                 is RequestResult.Success -> {
                     _collectionList.value = result.value
-                    _errorList.value = false
+                    _collectionListError.value = false
                 }
                 is RequestResult.Failure<*> -> {
                     _collectionList.value = emptyList()
-                    _errorList.value = true
+                    _collectionListError.value = true
                 }
             }
         }

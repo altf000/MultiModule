@@ -6,37 +6,33 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import ru.altf000.multimodule.collection_list.databinding.FragmentCollectionListBinding
 import ru.altf000.multimodule.collection_list_impl.di.CollectionListComponentHolder
-import ru.altf000.multimodule.collection_list_impl.presentation.view.adapter.MovieListAdapter
+import ru.altf000.multimodule.collection_list_impl.presentation.view.adapter.CollectionListAdapter
 import ru.altf000.multimodule.collection_list_impl.presentation.viewmodel.CollectionListViewModel
 import ru.altf000.multimodule.common.fragment.argument
 import ru.altf000.multimodule.common.navigation.CustomRouter
 import ru.altf000.multimodule.common.viewmodel.injectViewModel
+import ru.altf000.multimodule.common_ui.fragment.BaseFragment
+import ru.altf000.multimodule.common_ui.utils.addLoadMoreListener
 import javax.inject.Inject
 
-internal class CollectionListFragment : Fragment() {
-
-    companion object {
-        private const val VISIBLE_THRESHOLD = 1
-    }
+internal class CollectionListFragment : BaseFragment<FragmentCollectionListBinding>() {
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
+
     @Inject
     lateinit var router: CustomRouter
 
-    private lateinit var viewModel: CollectionListViewModel
-    private lateinit var binding: FragmentCollectionListBinding
-
     var collectionId: Int by argument()
 
-    private val moviesAdapter: MovieListAdapter = MovieListAdapter {
+    private lateinit var viewModel: CollectionListViewModel
+
+    private val collectionListAdapter: CollectionListAdapter = CollectionListAdapter {
         viewModel.onItemClicked(it)
     }
 
@@ -46,44 +42,43 @@ internal class CollectionListFragment : Fragment() {
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        viewModel = injectViewModel<CollectionListViewModel>(viewModelFactory)
-            .apply {
-                collectionList.observe(this@CollectionListFragment, Observer {
-                    moviesAdapter.setData(it)
-                })
-                errorList.observe(this@CollectionListFragment, Observer {
-                    if (it) {
-                        Toast.makeText(context, "Ошибка загрузки данных", Toast.LENGTH_LONG).show()
-                    }
-                })
-                router = this@CollectionListFragment.router
-                collectionId = arguments?.getInt("collectionId") ?: -1
-                loadFirst()
-            }
+        viewModel = injectViewModel<CollectionListViewModel>(viewModelFactory).apply {
+            val fragment = this@CollectionListFragment
+            collectionId = fragment.collectionId
+            router = fragment.router
+        }
+        subscribeToViewModels()
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        binding = FragmentCollectionListBinding.inflate(layoutInflater).apply {
+        _binding = FragmentCollectionListBinding.inflate(layoutInflater).apply {
             list.apply {
                 layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
-                adapter = moviesAdapter
+                adapter = collectionListAdapter
+                addLoadMoreListener { viewModel.loadMore() }
             }
+            root.setOnRefreshListener { viewModel.refresh() }
         }
-        setupScrollListener()
         return binding.root
     }
 
-    private fun setupScrollListener() {
-        val layoutManager = binding.list.layoutManager as LinearLayoutManager
-        binding.list.addOnScrollListener(object : RecyclerView.OnScrollListener() {
-            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-                super.onScrolled(recyclerView, dx, dy)
-                val totalItemCount = layoutManager.itemCount
-                val visibleItemCount = layoutManager.childCount
-                val lastVisibleItemPosition = layoutManager.findLastVisibleItemPosition()
-                if (visibleItemCount + lastVisibleItemPosition + VISIBLE_THRESHOLD >= totalItemCount) {
-                    viewModel.loadMore()
-                }
+    override fun onStartInner() {
+        viewModel.loadFirstPage()
+    }
+
+    override fun onStopInner() {}
+
+    private fun subscribeToViewModels() {
+
+        viewModel.collectionList.observe(this, Observer {
+            binding.root.isRefreshing = false
+            collectionListAdapter.setData(it)
+        })
+
+        viewModel.collectionListError.observe(this, Observer {
+            if (it) {
+                binding.root.isRefreshing = false
+                Toast.makeText(context, "Ошибка загрузки данных", Toast.LENGTH_LONG).show()
             }
         })
     }

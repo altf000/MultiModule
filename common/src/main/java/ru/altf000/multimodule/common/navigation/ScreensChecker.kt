@@ -11,7 +11,9 @@ object ScreensChecker {
     }
 
     fun removeLast() {
-        SCREENS.removeAt(SCREENS.size - 1)
+        if (SCREENS.isNotEmpty()) {
+            SCREENS.removeAt(SCREENS.size - 1)
+        }
     }
 
     fun hasScreen(key: String): Boolean {
