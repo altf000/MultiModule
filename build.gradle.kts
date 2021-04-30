@@ -8,7 +8,7 @@ buildscript {
     val appcompat_version by extra("1.2.0")
     val recyclerview_version by extra("1.1.0")
     val constraintlayout_version by extra("2.0.4")
-    val lifecycle_ktx_version by extra("2.3.1")
+    val lifecycle_ktx_version by extra("2.4.0-alpha01")
     val lifecycle_extensions_version by extra("2.2.0")
     val retrofit_version by extra("2.9.0")
     val gson_version by extra("2.8.6")

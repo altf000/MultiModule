@@ -44,6 +44,7 @@ dependencies {
     implementation(project(":common-network"))
     implementation(project(":common-db"))
     implementation(project(":common"))
+    implementation(project(":constants"))
     implementation(project(":common-entities"))
     implementation(project(":feature-collection-list-api"))
     implementation(project(":feature-collection-list-impl"))
@@ -73,4 +74,7 @@ dependencies {
 
     val timber = rootProject.extra["timber_version"]
     implementation("com.jakewharton.timber:timber:$timber")
+
+    val lifecycleKtx = rootProject.extra["lifecycle_ktx_version"]
+    implementation("androidx.lifecycle:lifecycle-runtime-ktx:$lifecycleKtx")
 }

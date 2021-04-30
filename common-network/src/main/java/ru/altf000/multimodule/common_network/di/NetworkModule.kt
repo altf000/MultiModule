@@ -9,7 +9,6 @@ import retrofit2.converter.gson.GsonConverterFactory
 import ru.altf000.multimodule.common_network.network.TimberOkHttpLogger
 import ru.altf000.multimodule.common_network.network.adapter.result.ResultAdapterFactory
 import ru.altf000.multimodule.common_network.network.api.ApiService
-import java.time.Duration
 import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
 

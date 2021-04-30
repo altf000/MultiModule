@@ -69,10 +69,12 @@ internal class FeatureModule {
 
     @Singleton
     @Provides
-    fun provideRecommendationDependencies(): RecommendationsDependencies {
+    fun provideRecommendationDependencies(context: Context): RecommendationsDependencies {
         return object : RecommendationsDependencies {
 
             override fun getApiService(): ApiService = NetworkComponent.get().apiService()
+
+            override fun getDatabase(): AppDatabase = DatabaseComponent.get(context).getDatabase()
         }
     }
 }

@@ -1,8 +1,9 @@
 package ru.altf000.multimodule.presentation.viewmodel
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -13,8 +14,8 @@ class MainViewModel(
     private val mainUseCase: MainUseCase
 ) : BaseViewModel() {
 
-    private val _init = MutableLiveData<Boolean>()
-    val init: LiveData<Boolean> get() = _init
+    private val _initFlow = MutableStateFlow(false)
+    val initFlow: StateFlow<Boolean> = _initFlow.asStateFlow()
 
     init {
         launch {
@@ -22,7 +23,7 @@ class MainViewModel(
                 .execute(Unit)
                 .collect {
                     withContext(Dispatchers.Main) {
-                        _init.value = it
+                        _initFlow.value = true
                     }
                 }
         }

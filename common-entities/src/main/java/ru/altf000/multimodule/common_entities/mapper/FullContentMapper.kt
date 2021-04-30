@@ -5,7 +5,7 @@ import ru.altf000.multimodule.common_entities.entity.FullContentEntity
 import ru.altf000.multimodule.common_entities.server.content.FullContentResponse
 import ru.altf000.multimodule.constants.Constants
 
-fun FullContentResponse.toLocal() = FullContent(
+fun FullContentResponse.toContent() = FullContent(
     id = this.id,
     title = this.title.orEmpty(),
     synopsis = this.synopsis.orEmpty(),
@@ -19,8 +19,7 @@ fun FullContentResponse.toLocal() = FullContent(
     country = this.country
 )
 
-
-fun FullContentEntity.toLocal() = FullContent(
+fun FullContentEntity.toContent() = FullContent(
     id = this.id,
     title = this.title,
     synopsis = this.synopsis,

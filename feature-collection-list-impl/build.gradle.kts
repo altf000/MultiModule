@@ -68,4 +68,10 @@ dependencies {
 
     val swipeRefresh = rootProject.extra["swipe_refresh_version"]
     implementation("androidx.swiperefreshlayout:swiperefreshlayout:$swipeRefresh")
+
+    val pagingVersion = "3.0.0-rc01"
+    implementation("androidx.paging:paging-runtime:$pagingVersion")
+
+    val timber = rootProject.extra["timber_version"]
+    implementation("com.jakewharton.timber:timber:$timber")
 }

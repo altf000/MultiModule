@@ -3,12 +3,18 @@ package ru.altf000.multimodule.presentation.view
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.Observer
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.flowWithLifecycle
+import androidx.lifecycle.lifecycleScope
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.onStart
+import kotlinx.coroutines.launch
 import ru.altf000.multimodule.R
 import ru.altf000.multimodule.common.navigation.CustomNavigator
 import ru.altf000.multimodule.common.navigation.CustomRouter
 import ru.altf000.multimodule.common.viewmodel.injectViewModel
+import ru.altf000.multimodule.constants.Constants
 import ru.altf000.multimodule.databinding.ActivityMainBinding
 import ru.altf000.multimodule.di.app.DaggerMainActivityComponent
 import ru.altf000.multimodule.di.app.MainActivityComponent
@@ -22,10 +28,13 @@ class MainActivity : AppCompatActivity() {
 
     @Inject
     lateinit var navigatorHolder: NavigatorHolder
+
     @Inject
     lateinit var router: CustomRouter
+
     @Inject
     lateinit var navigator: CustomNavigator
+
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
 
@@ -49,15 +58,23 @@ class MainActivity : AppCompatActivity() {
 
         navigatorHolder.setNavigator(navigator)
 
-        viewModel = injectViewModel<MainViewModel>(viewModelFactory)
-            .apply {
-                init.observe(this@MainActivity, Observer {
-                    binding.progressBar.visibility = View.GONE
-                    if (savedInstanceState == null) {
-                        router.openCollection(4661)
+        viewModel = injectViewModel(viewModelFactory)
+
+        lifecycleScope.launch {
+            viewModel.initFlow
+                .onStart {
+                    binding.progressBar.visibility = View.VISIBLE
+                }
+                .flowWithLifecycle(lifecycle, Lifecycle.State.CREATED)
+                .collect {
+                    if (it) {
+                        binding.progressBar.visibility = View.GONE
+                        if (savedInstanceState == null) {
+                            router.openCollection(Constants.Content.BASE_COLLECTION_ID)
+                        }
                     }
-                })
-            }
+                }
+        }
     }
 
     override fun onDestroy() {

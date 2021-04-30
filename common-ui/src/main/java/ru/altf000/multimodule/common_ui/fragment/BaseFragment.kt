@@ -1,11 +1,12 @@
 package ru.altf000.multimodule.common_ui.fragment
 
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 
 abstract class BaseFragment<T> : Fragment() {
 
-    public var _binding: T? = null
-    public val binding get() = _binding!!
+    protected var _binding: T? = null
+    protected val binding get() = _binding!!
 
     override fun onStart() {
         super.onStart()
@@ -30,12 +31,20 @@ abstract class BaseFragment<T> : Fragment() {
         }
     }
 
-    abstract fun onStartInner()
+    open fun onStartInner() {}
 
-    abstract fun onStopInner()
+    open fun onStopInner() {}
 
     override fun onDestroyView() {
         _binding = null
         super.onDestroyView()
+    }
+
+    fun showToast(stringRes: Int) {
+        Toast.makeText(
+            context,
+            resources.getString(stringRes),
+            Toast.LENGTH_LONG
+        ).show()
     }
 }

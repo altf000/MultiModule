@@ -5,9 +5,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.flowWithLifecycle
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 import ru.altf000.multimodule.common.fragment.argument
 import ru.altf000.multimodule.common.navigation.CustomRouter
 import ru.altf000.multimodule.common.utils.ContentUtils
@@ -20,12 +23,13 @@ import ru.altf000.multimodule.movie_detail_impl.databinding.FragmentDetailBindin
 import ru.altf000.multimodule.movie_detail_impl.di.MovieDetailComponentHolder
 import ru.altf000.multimodule.movie_detail_impl.presentation.view.adapter.RecommendationsListAdapter
 import ru.altf000.multimodule.movie_detail_impl.presentation.viewmodel.MovieDetailViewModel
+import ru.altf000.multimodule.movie_detail_impl.presentation.viewmodel.MovieDetailViewModelFactory
 import javax.inject.Inject
 
 internal class MovieDetailFragment : BaseFragment<FragmentDetailBinding>() {
 
     @Inject
-    lateinit var viewModelFactory: ViewModelProvider.Factory
+    lateinit var viewModelFactory: MovieDetailViewModelFactory
 
     @Inject
     lateinit var router: CustomRouter
@@ -34,7 +38,7 @@ internal class MovieDetailFragment : BaseFragment<FragmentDetailBinding>() {
 
     private lateinit var viewModel: MovieDetailViewModel
 
-    private val recommendationsAdapter: RecommendationsListAdapter = RecommendationsListAdapter {
+    private val recommendationsAdapter = RecommendationsListAdapter {
         viewModel.onItemClicked(it)
     }
 
@@ -44,44 +48,49 @@ internal class MovieDetailFragment : BaseFragment<FragmentDetailBinding>() {
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        viewModel = injectViewModel<MovieDetailViewModel>(viewModelFactory).apply {
-            val fragment = this@MovieDetailFragment
-            content = fragment.content
-            router = fragment.router
-        }
-        subscribeToViewModels()
+        viewModelFactory.content = content
+        viewModel = injectViewModel(viewModelFactory)
+        viewModel.router = router
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         _binding = FragmentDetailBinding.inflate(layoutInflater).apply {
             recommendations.apply {
                 layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+                itemAnimator = null
                 adapter = recommendationsAdapter
             }
         }
         return binding.root
     }
 
-    override fun onStartInner() {
-        viewModel.loadContent()
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        subscribeToViewModels()
     }
-
-    override fun onStopInner() {}
 
     private fun subscribeToViewModels() {
 
-        viewModel.contentInfo.observe(this, Observer {
-            setContentInfo(it)
-        })
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.contentInfoFlow
+                .flowWithLifecycle(viewLifecycleOwner.lifecycle, Lifecycle.State.STARTED)
+                .collect { content ->
+                    setContentInfo(content)
+                }
+        }
 
-        viewModel.recommendations.observe(this, Observer {
-            binding.recommendationsContainer.visibility = if (it.isNotEmpty()) {
-                View.VISIBLE
-            } else {
-                View.GONE
-            }
-            setRecommendations(it)
-        })
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.recommendationsFlow
+                .flowWithLifecycle(viewLifecycleOwner.lifecycle, Lifecycle.State.STARTED)
+                .collect { recommendations ->
+                    binding.recommendationsContainer.visibility = if (recommendations.isNotEmpty()) {
+                        View.VISIBLE
+                    } else {
+                        View.GONE
+                    }
+                    setRecommendations(recommendations)
+                }
+        }
     }
 
     private fun setContentInfo(content: FullContent) {

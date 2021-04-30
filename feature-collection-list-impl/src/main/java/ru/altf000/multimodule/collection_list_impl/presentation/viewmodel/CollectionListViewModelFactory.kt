@@ -10,7 +10,9 @@ internal class CollectionListViewModelFactory @Inject constructor(
     private val getCollectionListUseCase: GetCollectionListUseCase
 ) : ViewModelProvider.Factory {
 
+    var collectionId: Int = -1
+
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-        return CollectionListViewModel(getCollectionListUseCase) as T
+        return CollectionListViewModel(getCollectionListUseCase, collectionId) as T
     }
 }

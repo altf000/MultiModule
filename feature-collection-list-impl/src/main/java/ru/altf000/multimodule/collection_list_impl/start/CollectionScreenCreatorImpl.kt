@@ -3,9 +3,8 @@ package ru.altf000.multimodule.collection_list_impl.start
 import androidx.fragment.app.Fragment
 import ru.altf000.multimodule.collection_list_api.CollectionScreenCreator
 import ru.altf000.multimodule.collection_list_impl.presentation.view.CollectionListFragment
-import ru.altf000.multimodule.common.navigation.ScreenKeys
-import ru.altf000.multimodule.common.di.ScopeFeature
 import ru.altf000.multimodule.common.di.ScopeScreen
+import ru.altf000.multimodule.common.navigation.ScreenKeys
 import ru.terrakok.cicerone.Screen
 import ru.terrakok.cicerone.android.support.SupportAppScreen
 import javax.inject.Inject

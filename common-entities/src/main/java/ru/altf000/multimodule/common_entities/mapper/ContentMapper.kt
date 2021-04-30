@@ -4,7 +4,7 @@ import ru.altf000.multimodule.common_entities.domain.Content
 import ru.altf000.multimodule.common_entities.server.content.ContentResponse
 import ru.altf000.multimodule.constants.Constants
 
-fun ContentResponse.toLocal() = Content(
+fun ContentResponse.toContent() = Content(
     id = this.id,
     title = this.title.orEmpty(),
     synopsis = this.synopsis.orEmpty(),

@@ -1,8 +1,9 @@
 package ru.altf000.multimodule.movie_detail_impl.presentation.viewmodel
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -21,22 +22,24 @@ import javax.inject.Provider
 
 internal class MovieDetailViewModel(
     private val getContentInfoUseCase: GetContentInfoUseCase,
-    private val recommendationsApi: Provider<RecommendationsApi>
+    private val recommendationsApi: Provider<RecommendationsApi>,
+    private val content: Content
 ) : BaseViewModel() {
 
-    private val _contentInfo = MutableLiveData<FullContent>()
-    val contentInfo: LiveData<FullContent> get() = _contentInfo
+    private val _contentInfoFlow = MutableStateFlow(FullContent())
+    val contentInfoFlow: StateFlow<FullContent> get() = _contentInfoFlow
 
-    private val _recommendations = MutableLiveData<List<Content>>().apply {
-        value = listOf(Content(), Content(), Content())
-    }
-    val recommendations: LiveData<List<Content>> get() = _recommendations
+    private val _recommendationsFlow = MutableStateFlow(listOf(Content(), Content(), Content()))
+    val recommendationsFlow: StateFlow<List<Content>> = _recommendationsFlow.asStateFlow()
 
     var router: CustomRouter? = null
-    var content: Content? = null
 
-    fun loadContent() {
-        content?.let { notNullContent ->
+    init {
+        loadContent()
+    }
+
+    private fun loadContent() {
+        content.let { notNullContent ->
             launch {
                 getContentInfoUseCase
                     .execute(GetContentInfoUseCase.Params(notNullContent))
@@ -44,7 +47,7 @@ internal class MovieDetailViewModel(
                         withContext(Dispatchers.Main) {
                             when (result) {
                                 is RequestResult.Success -> {
-                                    _contentInfo.value = result.value
+                                    _contentInfoFlow.value = result.value
                                     loadRecommendations()
                                     Timber
                                         .tag(MovieDetailViewModel::class.simpleName)
@@ -61,7 +64,7 @@ internal class MovieDetailViewModel(
     }
 
     private fun loadRecommendations() {
-        content?.let { notNullContent ->
+        content.let { notNullContent ->
             launch {
                 recommendationsApi
                     .get()
@@ -71,13 +74,13 @@ internal class MovieDetailViewModel(
                         withContext(Dispatchers.Main) {
                             when (result) {
                                 is RequestResult.Success -> {
-                                    _recommendations.value = result.value
+                                    _recommendationsFlow.value = result.value
                                     Timber
                                         .tag(MovieDetailViewModel::class.simpleName)
                                         .d("recommendations: ${result.value}")
                                 }
                                 is RequestResult.Failure<*> -> {
-                                    _recommendations.value = emptyList()
+                                    _recommendationsFlow.value = emptyList()
                                     Timber.e("error to get recommendations info: ${result.error}")
                                 }
                             }

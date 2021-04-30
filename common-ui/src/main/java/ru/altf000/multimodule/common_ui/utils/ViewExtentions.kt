@@ -1,28 +1,20 @@
 package ru.altf000.multimodule.common_ui.utils
 
+import android.view.View
 import android.widget.ImageView
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-
-fun RecyclerView.addLoadMoreListener(loadMore: (Unit) -> Unit) {
-    val layoutManager = layoutManager as LinearLayoutManager
-    this.addOnScrollListener(object : RecyclerView.OnScrollListener() {
-        override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-            super.onScrolled(recyclerView, dx, dy)
-            val totalItemCount = layoutManager.itemCount
-            val visibleItemCount = layoutManager.childCount
-            val lastVisibleItemPosition = layoutManager.findLastVisibleItemPosition()
-            if (visibleItemCount + lastVisibleItemPosition + 1 >= totalItemCount) {
-                loadMore.invoke(Unit)
-            }
-        }
-    })
-}
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 
 fun ImageView.load(url: String) {
     Glide.with(context!!)
         .load(url)
+        .diskCacheStrategy(DiskCacheStrategy.ALL)
         .centerCrop()
         .into(this)
 }
+
+inline var View.isVisible: Boolean
+    get() = visibility == View.VISIBLE
+    set(value) {
+        visibility = if (value) View.VISIBLE else View.GONE
+    }

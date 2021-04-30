@@ -1,10 +1,9 @@
 package ru.altf000.multimodule.movie_detail_impl.start
 
 import androidx.fragment.app.Fragment
+import ru.altf000.multimodule.common.di.ScopeScreen
 import ru.altf000.multimodule.common.navigation.ScreenKeys
 import ru.altf000.multimodule.common_entities.domain.Content
-import ru.altf000.multimodule.common.di.ScopeFeature
-import ru.altf000.multimodule.common.di.ScopeScreen
 import ru.altf000.multimodule.movie_detail_api.MovieDetailScreenCreator
 import ru.altf000.multimodule.movie_detail_impl.presentation.view.MovieDetailFragment
 import ru.terrakok.cicerone.Screen

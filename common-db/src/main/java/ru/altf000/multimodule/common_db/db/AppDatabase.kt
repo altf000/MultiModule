@@ -8,17 +8,20 @@ import androidx.room.TypeConverters
 import ru.altf000.multimodule.common_db.dao.CountriesDao
 import ru.altf000.multimodule.common_db.dao.FullContentDao
 import ru.altf000.multimodule.common_db.dao.GenresDao
+import ru.altf000.multimodule.common_db.dao.RecommendationsDao
+import ru.altf000.multimodule.common_entities.converters.ListToIntConverter
 import ru.altf000.multimodule.common_entities.entity.CountryEntity
 import ru.altf000.multimodule.common_entities.entity.FullContentEntity
 import ru.altf000.multimodule.common_entities.entity.GenreEntity
-import ru.altf000.multimodule.common_entities.converters.ListToIntConverter
+import ru.altf000.multimodule.common_entities.entity.RecommendationEntity
 import ru.altf000.multimodule.constants.Constants
 
 @Database(
     entities = [
         FullContentEntity::class,
         GenreEntity::class,
-        CountryEntity::class
+        CountryEntity::class,
+        RecommendationEntity::class
     ],
     version = 1
 )
@@ -30,6 +33,8 @@ abstract class AppDatabase : RoomDatabase() {
     abstract fun genresDao(): GenresDao
 
     abstract fun countriesDao(): CountriesDao
+
+    abstract fun recommendationsDao(): RecommendationsDao
 
     companion object {
 

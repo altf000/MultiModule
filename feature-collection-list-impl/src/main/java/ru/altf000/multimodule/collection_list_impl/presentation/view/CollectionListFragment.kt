@@ -5,25 +5,29 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.flowWithLifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.paging.LoadState
 import androidx.recyclerview.widget.LinearLayoutManager
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 import ru.altf000.multimodule.collection_list.databinding.FragmentCollectionListBinding
 import ru.altf000.multimodule.collection_list_impl.di.CollectionListComponentHolder
 import ru.altf000.multimodule.collection_list_impl.presentation.view.adapter.CollectionListAdapter
+import ru.altf000.multimodule.collection_list_impl.presentation.view.adapter.loading.CollectionLoadStateAdapter
 import ru.altf000.multimodule.collection_list_impl.presentation.viewmodel.CollectionListViewModel
+import ru.altf000.multimodule.collection_list_impl.presentation.viewmodel.CollectionListViewModelFactory
 import ru.altf000.multimodule.common.fragment.argument
 import ru.altf000.multimodule.common.navigation.CustomRouter
 import ru.altf000.multimodule.common.viewmodel.injectViewModel
 import ru.altf000.multimodule.common_ui.fragment.BaseFragment
-import ru.altf000.multimodule.common_ui.utils.addLoadMoreListener
 import javax.inject.Inject
 
 internal class CollectionListFragment : BaseFragment<FragmentCollectionListBinding>() {
 
     @Inject
-    lateinit var viewModelFactory: ViewModelProvider.Factory
+    lateinit var viewModelFactory: CollectionListViewModelFactory
 
     @Inject
     lateinit var router: CustomRouter
@@ -32,7 +36,7 @@ internal class CollectionListFragment : BaseFragment<FragmentCollectionListBindi
 
     private lateinit var viewModel: CollectionListViewModel
 
-    private val collectionListAdapter: CollectionListAdapter = CollectionListAdapter {
+    private val collectionListAdapter = CollectionListAdapter {
         viewModel.onItemClicked(it)
     }
 
@@ -42,44 +46,46 @@ internal class CollectionListFragment : BaseFragment<FragmentCollectionListBindi
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        viewModel = injectViewModel<CollectionListViewModel>(viewModelFactory).apply {
-            val fragment = this@CollectionListFragment
-            collectionId = fragment.collectionId
-            router = fragment.router
-        }
-        subscribeToViewModels()
+        viewModelFactory.collectionId = collectionId
+        viewModel = injectViewModel(viewModelFactory)
+        viewModel.router = router
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         _binding = FragmentCollectionListBinding.inflate(layoutInflater).apply {
             list.apply {
                 layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
-                adapter = collectionListAdapter
-                addLoadMoreListener { viewModel.loadMore() }
+                adapter = collectionListAdapter.withLoadStateHeaderAndFooter(
+                    header = CollectionLoadStateAdapter(collectionListAdapter),
+                    footer = CollectionLoadStateAdapter(collectionListAdapter)
+                )
             }
-            root.setOnRefreshListener { viewModel.refresh() }
+            root.setOnRefreshListener { collectionListAdapter.refresh() }
         }
         return binding.root
     }
 
-    override fun onStartInner() {
-        viewModel.loadFirstPage()
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        subscribeToViewModels()
     }
-
-    override fun onStopInner() {}
 
     private fun subscribeToViewModels() {
 
-        viewModel.collectionList.observe(this, Observer {
-            binding.root.isRefreshing = false
-            collectionListAdapter.setData(it)
-        })
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.collectionListFlow
+                .flowWithLifecycle(viewLifecycleOwner.lifecycle, Lifecycle.State.CREATED)
+                .collectLatest { pagingData ->
+                    collectionListAdapter.submitData(pagingData)
+                }
+        }
 
-        viewModel.collectionListError.observe(this, Observer {
-            if (it) {
-                binding.root.isRefreshing = false
-                Toast.makeText(context, "Ошибка загрузки данных", Toast.LENGTH_LONG).show()
-            }
-        })
+        viewLifecycleOwner.lifecycleScope.launch {
+            collectionListAdapter.loadStateFlow
+                .flowWithLifecycle(viewLifecycleOwner.lifecycle, Lifecycle.State.CREATED)
+                .collectLatest { loadState ->
+                    binding.root.isRefreshing = loadState.refresh is LoadState.Loading
+                }
+        }
     }
 }
