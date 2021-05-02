@@ -5,8 +5,8 @@ import kotlinx.coroutines.flow.flow
 import ru.altf000.multimodule.common.di.ScopeScreen
 import ru.altf000.multimodule.common_db.db.AppDatabase
 import ru.altf000.multimodule.common_entities.domain.FullContent
-import ru.altf000.multimodule.common_entities.mapper.toContent
-import ru.altf000.multimodule.common_entities.mapper.toEntity
+import ru.altf000.multimodule.common_entities.mapper.toFullContent
+import ru.altf000.multimodule.common_entities.mapper.toFullContentEntity
 import ru.altf000.multimodule.common_network.network.adapter.RequestResult
 import ru.altf000.multimodule.common_network.network.adapter.result.asSuccess
 import ru.altf000.multimodule.common_network.network.adapter.result.isSuccess
@@ -32,18 +32,18 @@ internal class MovieDetailRepositoryImpl @Inject constructor(
 
         val dao = database.fullContentDao()
         dao.findById(contentId)?.let {
-            emit(RequestResult.Success.Value(it.toContent()))
+            emit(RequestResult.Success.Value(it.toFullContent()))
         } ?: run {
 
             val apiResult = if (isSerial) {
-                apiService.getSerial(contentId).map { it.result.toContent() }
+                apiService.getSerial(contentId).map { it.result.toFullContent() }
             } else {
-                apiService.getMovie(contentId).map { it.result.toContent() }
+                apiService.getMovie(contentId).map { it.result.toFullContent() }
             }
             emit(apiResult)
 
             if (apiResult.isSuccess()) {
-                dao.insert(apiResult.asSuccess().value.toEntity())
+                dao.insert(apiResult.asSuccess().value.toFullContentEntity())
             }
         }
     }

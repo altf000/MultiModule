@@ -6,5 +6,5 @@ import ru.altf000.multimodule.common_entities.domain.Content
 
 internal interface CollectionListRepository {
 
-    suspend fun getCollectionList(contentId: Int): Flow<PagingData<Content>>
+    suspend fun getCollectionList(collectionId: Int): Flow<PagingData<Content>>
 }

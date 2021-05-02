@@ -5,7 +5,7 @@ import kotlinx.coroutines.flow.flow
 import ru.altf000.multimodule.common.di.ScopeFeature
 import ru.altf000.multimodule.common_db.db.AppDatabase
 import ru.altf000.multimodule.common_entities.domain.Content
-import ru.altf000.multimodule.common_entities.mapper.toContent
+import ru.altf000.multimodule.common_entities.mapper.toFullContent
 import ru.altf000.multimodule.common_entities.mapper.toRecommendationEntity
 import ru.altf000.multimodule.common_network.network.adapter.RequestResult
 import ru.altf000.multimodule.common_network.network.adapter.result.asSuccess
@@ -27,16 +27,18 @@ internal class RecommendationsRepositoryImpl @Inject constructor(
         val cachedItems = dao.getRecommendations(contentId)
 
         if (!cachedItems.isNullOrEmpty()) {
-            emit(RequestResult.Success.Value(cachedItems.map { it.toContent() }))
+            emit(RequestResult.Success.Value(cachedItems.map { it.toFullContent() }))
         }
 
-        val recommendationsResult = apiService.getRecommendations(contentId, ITEM_PAGE).map { response ->
-            response.result.map { it.toContent() }
-        }
-        emit(recommendationsResult)
+        val apiResult = apiService
+            .getRecommendations(contentId, ITEM_PAGE)
+            .map { response ->
+                response.result.map { it.toFullContent() }
+            }
+        emit(apiResult)
 
-        if (recommendationsResult.isSuccess()) {
-            val recommendationsEntities = recommendationsResult.asSuccess().value.map {
+        if (apiResult.isSuccess()) {
+            val recommendationsEntities = apiResult.asSuccess().value.map {
                 it.toRecommendationEntity(contentId)
             }
             dao.deleteAll(contentId)

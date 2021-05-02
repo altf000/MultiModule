@@ -27,7 +27,7 @@ internal class MovieDetailViewModel(
 ) : BaseViewModel() {
 
     private val _contentInfoFlow = MutableStateFlow(FullContent())
-    val contentInfoFlow: StateFlow<FullContent> get() = _contentInfoFlow
+    val contentInfoFlow: StateFlow<FullContent> = _contentInfoFlow.asStateFlow()
 
     private val _recommendationsFlow = MutableStateFlow(listOf(Content(), Content(), Content()))
     val recommendationsFlow: StateFlow<List<Content>> = _recommendationsFlow.asStateFlow()
@@ -39,55 +39,55 @@ internal class MovieDetailViewModel(
     }
 
     private fun loadContent() {
-        content.let { notNullContent ->
-            launch {
-                getContentInfoUseCase
-                    .execute(GetContentInfoUseCase.Params(notNullContent))
-                    .collect { result ->
-                        withContext(Dispatchers.Main) {
-                            when (result) {
-                                is RequestResult.Success -> {
-                                    _contentInfoFlow.value = result.value
-                                    loadRecommendations()
-                                    Timber
-                                        .tag(MovieDetailViewModel::class.simpleName)
-                                        .d("content info: ${result.value}")
-                                }
-                                is RequestResult.Failure<*> -> {
-                                    Timber.e("error to get content info: ${result.error}")
-                                }
+        launch {
+            getContentInfoUseCase
+                .execute(GetContentInfoUseCase.Params(content))
+                .collect { result ->
+                    withContext(Dispatchers.Main) {
+                        when (result) {
+                            is RequestResult.Success -> {
+                                _contentInfoFlow.value = result.value
+                                loadRecommendations()
+                                Timber
+                                    .tag(MovieDetailViewModel::class.simpleName)
+                                    .d("content info: ${result.value}")
+                            }
+                            is RequestResult.Failure<*> -> {
+                                Timber.e("error to get content info: ${result.error}")
                             }
                         }
                     }
-            }
+                }
         }
     }
 
     private fun loadRecommendations() {
-        content.let { notNullContent ->
-            launch {
-                recommendationsApi
-                    .get()
-                    .getContentRecommendationsUseCase()
-                    .getRecommendations(notNullContent.id)
-                    .collect { result ->
-                        withContext(Dispatchers.Main) {
-                            when (result) {
-                                is RequestResult.Success -> {
-                                    _recommendationsFlow.value = result.value
-                                    Timber
-                                        .tag(MovieDetailViewModel::class.simpleName)
-                                        .d("recommendations: ${result.value}")
-                                }
-                                is RequestResult.Failure<*> -> {
-                                    _recommendationsFlow.value = emptyList()
-                                    Timber.e("error to get recommendations info: ${result.error}")
-                                }
+        launch {
+            recommendationsApi
+                .get()
+                .getContentRecommendationsUseCase()
+                .getRecommendations(content.id)
+                .collect { result ->
+                    withContext(Dispatchers.Main) {
+                        when (result) {
+                            is RequestResult.Success -> {
+                                _recommendationsFlow.value = result.value
+                                Timber
+                                    .tag(MovieDetailViewModel::class.simpleName)
+                                    .d("recommendations: ${result.value}")
+                            }
+                            is RequestResult.Failure<*> -> {
+                                _recommendationsFlow.value = emptyList()
+                                Timber.e("error to get recommendations info: ${result.error}")
                             }
                         }
                     }
-            }
+                }
         }
+    }
+
+    fun onItemClicked(content: Content) {
+        router?.openMovieDetail(content)
     }
 
     override fun onCleared() {
@@ -96,9 +96,5 @@ internal class MovieDetailViewModel(
             recommendationsApi.get().getUtils().release()
         }
         super.onCleared()
-    }
-
-    fun onItemClicked(content: Content) {
-        router?.openMovieDetail(content)
     }
 }

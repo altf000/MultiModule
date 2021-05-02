@@ -17,11 +17,11 @@ internal class CollectionListViewModel @Inject constructor(
     private val collectionId: Int
 ) : BaseViewModel() {
 
-    var router: CustomRouter? = null
-
     private lateinit var _collectionListFlow: Flow<PagingData<Content>>
     val collectionListFlow: Flow<PagingData<Content>>
         get() = _collectionListFlow
+
+    var router: CustomRouter? = null
 
     init {
         launch {

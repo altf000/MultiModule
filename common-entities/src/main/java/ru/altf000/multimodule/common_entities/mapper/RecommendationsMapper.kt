@@ -15,7 +15,7 @@ fun Content.toRecommendationEntity(parentId: Int) = RecommendationEntity(
     isSerial = this.isSerial,
 )
 
-fun RecommendationEntity.toContent() = Content(
+fun RecommendationEntity.toFullContent() = Content(
     id = this.id,
     title = this.title,
     synopsis = this.synopsis,

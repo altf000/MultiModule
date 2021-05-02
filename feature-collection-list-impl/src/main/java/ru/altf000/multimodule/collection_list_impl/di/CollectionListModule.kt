@@ -25,7 +25,6 @@ internal class CollectionListModule {
         return screenCreator
     }
 
-    @ScopeScreen
     @Provides
     fun provideViewModelFactory(factory: CollectionListViewModelFactory): ViewModelProvider.Factory {
         return factory

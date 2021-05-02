@@ -3,7 +3,7 @@ package ru.altf000.multimodule.collection_list_impl.data.paging
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import ru.altf000.multimodule.common_entities.domain.Content
-import ru.altf000.multimodule.common_entities.mapper.toContent
+import ru.altf000.multimodule.common_entities.mapper.toFullContent
 import ru.altf000.multimodule.common_network.network.adapter.result.asSuccess
 import ru.altf000.multimodule.common_network.network.adapter.result.isSuccess
 import ru.altf000.multimodule.common_network.network.adapter.result.map
@@ -25,14 +25,14 @@ class CollectionListDataSource(
 
         try {
 
-            val result = apiService
+            val apiResult = apiService
                 .getCollectionList(collectionId, from, to)
                 .map { response ->
-                    response.result.map { it.toContent() }
+                    response.result.map { it.toFullContent() }
                 }
 
-            return if (result.isSuccess()) {
-                val items = result.asSuccess().value
+            return if (apiResult.isSuccess()) {
+                val items = apiResult.asSuccess().value
                 LoadResult.Page(
                     data = items,
                     prevKey = null,

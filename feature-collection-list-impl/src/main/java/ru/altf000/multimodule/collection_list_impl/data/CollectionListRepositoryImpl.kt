@@ -16,8 +16,8 @@ internal class CollectionListRepositoryImpl @Inject constructor(
     private val apiService: ApiService
 ) : CollectionListRepository {
 
-    override suspend fun getCollectionList(contentId: Int): Flow<PagingData<Content>> = Pager(
+    override suspend fun getCollectionList(collectionId: Int): Flow<PagingData<Content>> = Pager(
         config = PagingConfig(pageSize = 20),
-        pagingSourceFactory = { CollectionListDataSource(apiService, contentId) }
+        pagingSourceFactory = { CollectionListDataSource(apiService, collectionId) }
     ).flow
 }
