@@ -77,4 +77,7 @@ dependencies {
 
     val lifecycleKtx = rootProject.extra["lifecycle_ktx_version"]
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:$lifecycleKtx")
+
+    val fragmentKtx = rootProject.extra["fragment_ktx_version"]
+    implementation("androidx.fragment:fragment-ktx:$fragmentKtx")
 }

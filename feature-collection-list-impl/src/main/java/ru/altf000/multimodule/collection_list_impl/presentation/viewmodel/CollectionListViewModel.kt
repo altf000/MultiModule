@@ -4,32 +4,22 @@ import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.launch
 import ru.altf000.multimodule.collection_list_impl.di.CollectionListComponentHolder
 import ru.altf000.multimodule.collection_list_impl.domain.GetCollectionListUseCase
-import ru.altf000.multimodule.common.navigation.CustomRouter
+import ru.altf000.multimodule.common.navigation.GlobalRouter
 import ru.altf000.multimodule.common.viewmodel.BaseViewModel
 import ru.altf000.multimodule.common_entities.domain.Content
-import javax.inject.Inject
 
-internal class CollectionListViewModel @Inject constructor(
-    private val getCollectionListUseCase: GetCollectionListUseCase,
-    private val collectionId: Int
+internal class CollectionListViewModel(
+    collectionListUseCase: GetCollectionListUseCase,
+    collectionId: Int
 ) : BaseViewModel() {
 
-    private lateinit var _collectionListFlow: Flow<PagingData<Content>>
-    val collectionListFlow: Flow<PagingData<Content>>
-        get() = _collectionListFlow
+    val collectionListFlow: Flow<PagingData<Content>> = collectionListUseCase
+        .execute(GetCollectionListUseCase.Params(collectionId))
+        .cachedIn(viewModelScope)
 
-    var router: CustomRouter? = null
-
-    init {
-        launch {
-            _collectionListFlow = getCollectionListUseCase
-                .execute(GetCollectionListUseCase.Params(collectionId))
-                .cachedIn(viewModelScope)
-        }
-    }
+    var router: GlobalRouter? = null
 
     fun onItemClicked(item: Content) {
         router?.openMovieDetail(item)

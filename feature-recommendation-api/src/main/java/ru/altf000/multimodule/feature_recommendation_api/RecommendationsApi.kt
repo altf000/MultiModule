@@ -7,5 +7,5 @@ interface RecommendationsApi : BaseAPI {
 
     fun getContentRecommendationsUseCase(): ContentRecommendationsUseCase
 
-    fun getUtils(): Utils
+    fun getReleaseManager(): ReleaseManager
 }

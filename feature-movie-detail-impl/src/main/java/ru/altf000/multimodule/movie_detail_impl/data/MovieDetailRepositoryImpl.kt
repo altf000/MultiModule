@@ -2,7 +2,6 @@ package ru.altf000.multimodule.movie_detail_impl.data
 
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
-import ru.altf000.multimodule.common.di.ScopeScreen
 import ru.altf000.multimodule.common_db.db.AppDatabase
 import ru.altf000.multimodule.common_entities.domain.FullContent
 import ru.altf000.multimodule.common_entities.mapper.toFullContent
@@ -15,7 +14,6 @@ import ru.altf000.multimodule.common_network.network.api.ApiService
 import ru.altf000.multimodule.movie_detail_impl.domain.MovieDetailRepository
 import javax.inject.Inject
 
-@ScopeScreen
 internal class MovieDetailRepositoryImpl @Inject constructor(
     private val apiService: ApiService,
     private val database: AppDatabase,

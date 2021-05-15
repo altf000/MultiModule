@@ -18,10 +18,11 @@ class CollectionListDataSource(
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, Content> {
 
         val nextPageNumber = params.key ?: 0
-        val from = nextPageNumber * PAGE_SIZE
-        val to = from + PAGE_SIZE - 1
+        val from = nextPageNumber * params.loadSize
+        val to = from + params.loadSize - 1
 
-        Timber.tag("CollectionPaging").d("nextPageNumber = $nextPageNumber")
+        Timber.tag("CollectionPaging")
+            .d("nextPageNumber = $nextPageNumber, loadSize = ${params.loadSize}")
 
         try {
 
@@ -36,7 +37,7 @@ class CollectionListDataSource(
                 LoadResult.Page(
                     data = items,
                     prevKey = null,
-                    nextKey = if (items.size == PAGE_SIZE) {
+                    nextKey = if (items.size == params.loadSize) {
                         nextPageNumber + 1
                     } else {
                         null
@@ -51,7 +52,5 @@ class CollectionListDataSource(
         }
     }
 
-    override fun getRefreshKey(state: PagingState<Int, Content>): Int? = 0
+    override fun getRefreshKey(state: PagingState<Int, Content>): Int = 0
 }
-
-const val PAGE_SIZE = 20

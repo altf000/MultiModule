@@ -9,8 +9,8 @@ import ru.altf000.multimodule.collection_list.R
 import ru.altf000.multimodule.common_entities.domain.Content
 import ru.altf000.multimodule.common_ui.utils.load
 
-class CollectionListAdapter(private val onClickListener: (Content) -> Unit)
-    : PagingDataAdapter<Content, RecyclerView.ViewHolder>(ContentComparator()) {
+class CollectionListAdapter(private val onClickListener: (Content) -> Unit) :
+    PagingDataAdapter<Content, RecyclerView.ViewHolder>(ContentComparator()) {
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val inflater = LayoutInflater.from(viewGroup.context)

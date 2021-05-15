@@ -4,5 +4,5 @@ import kotlinx.coroutines.flow.Flow
 
 abstract class BaseUseCase<T, Params> {
 
-    abstract suspend fun execute(params: Params): Flow<T>
+    abstract fun execute(params: Params): Flow<T>
 }

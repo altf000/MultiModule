@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
@@ -12,9 +13,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import ru.altf000.multimodule.common.fragment.argument
-import ru.altf000.multimodule.common.navigation.CustomRouter
+import ru.altf000.multimodule.common.navigation.GlobalRouter
 import ru.altf000.multimodule.common.utils.ContentUtils
-import ru.altf000.multimodule.common.viewmodel.injectViewModel
 import ru.altf000.multimodule.common_entities.domain.Content
 import ru.altf000.multimodule.common_entities.domain.FullContent
 import ru.altf000.multimodule.common_ui.fragment.BaseFragment
@@ -29,31 +29,32 @@ import javax.inject.Inject
 internal class MovieDetailFragment : BaseFragment<FragmentDetailBinding>() {
 
     @Inject
-    lateinit var viewModelFactory: MovieDetailViewModelFactory
+    lateinit var router: GlobalRouter
 
     @Inject
-    lateinit var router: CustomRouter
+    lateinit var factory: MovieDetailViewModelFactory.Factory
 
     var content: Content by argument()
 
-    private lateinit var viewModel: MovieDetailViewModel
+    private val viewModel: MovieDetailViewModel by viewModels {
+        factory.create(content)
+    }
 
     private val recommendationsAdapter = RecommendationsListAdapter {
         viewModel.onItemClicked(it)
     }
 
-    init {
-        MovieDetailComponentHolder.getComponent().inject(this)
-    }
-
     override fun onAttach(context: Context) {
-        super.onAttach(context)
-        viewModelFactory.content = content
-        viewModel = injectViewModel(viewModelFactory)
+        MovieDetailComponentHolder.getComponent().inject(this)
         viewModel.router = router
+        super.onAttach(context)
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
         _binding = FragmentDetailBinding.inflate(layoutInflater).apply {
             recommendations.apply {
                 layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
@@ -83,11 +84,12 @@ internal class MovieDetailFragment : BaseFragment<FragmentDetailBinding>() {
             viewModel.recommendationsFlow
                 .flowWithLifecycle(viewLifecycleOwner.lifecycle, Lifecycle.State.STARTED)
                 .collect { recommendations ->
-                    binding.recommendationsContainer.visibility = if (recommendations.isNotEmpty()) {
-                        View.VISIBLE
-                    } else {
-                        View.GONE
-                    }
+                    binding.recommendationsContainer.visibility =
+                        if (recommendations.isNotEmpty()) {
+                            View.VISIBLE
+                        } else {
+                            View.GONE
+                        }
                     setRecommendations(recommendations)
                 }
         }

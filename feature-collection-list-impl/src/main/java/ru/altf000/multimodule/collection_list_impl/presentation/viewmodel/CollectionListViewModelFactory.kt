@@ -2,17 +2,24 @@ package ru.altf000.multimodule.collection_list_impl.presentation.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import dagger.assisted.Assisted
+import dagger.assisted.AssistedFactory
+import dagger.assisted.AssistedInject
 import ru.altf000.multimodule.collection_list_impl.domain.GetCollectionListUseCase
-import javax.inject.Inject
 
-@Suppress("UNCHECKED_CAST")
-internal class CollectionListViewModelFactory @Inject constructor(
-    private val getCollectionListUseCase: GetCollectionListUseCase
+internal class CollectionListViewModelFactory @AssistedInject constructor(
+    @Assisted private val collectionId: Int,
+    private val collectionListUseCase: GetCollectionListUseCase
 ) : ViewModelProvider.Factory {
 
-    var collectionId: Int = -1
-
+    @Suppress("UNCHECKED_CAST")
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-        return CollectionListViewModel(getCollectionListUseCase, collectionId) as T
+        return CollectionListViewModel(collectionListUseCase, collectionId) as T
+    }
+
+    @AssistedFactory
+    interface Factory {
+
+        fun create(@Assisted collectionId: Int): CollectionListViewModelFactory
     }
 }

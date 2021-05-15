@@ -1,10 +1,10 @@
 buildscript {
 
-    val kotlin_version by extra("1.4.20")
-    val dagger_version by extra("2.31.2")
+    val kotlin_version by extra("1.5.0")
+    val dagger_version by extra("2.34")
     val cicerone_version by extra("5.1.1")
     val glide_version by extra("4.12.0")
-    val coroutines_version by extra("1.4.2")
+    val coroutines_version by extra("1.5.0")
     val appcompat_version by extra("1.2.0")
     val recyclerview_version by extra("1.1.0")
     val constraintlayout_version by extra("2.0.4")
@@ -17,6 +17,7 @@ buildscript {
     val room_version by extra("2.2.6")
     val timber_version by extra("4.7.1")
     val swipe_refresh_version by extra("1.1.0")
+    val fragment_ktx_version by extra("1.3.6")
 
     repositories {
         google()
@@ -24,7 +25,7 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath("com.android.tools.build:gradle:4.1.2")
+        classpath("com.android.tools.build:gradle:4.1.3")
         classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version")
 
 

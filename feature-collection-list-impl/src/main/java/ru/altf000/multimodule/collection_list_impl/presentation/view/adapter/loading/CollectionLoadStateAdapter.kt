@@ -13,7 +13,10 @@ class CollectionLoadStateAdapter<T : Any, VH : RecyclerView.ViewHolder>(
     private val adapter: PagingDataAdapter<T, VH>
 ) : LoadStateAdapter<CollectionLoadViewHolder>() {
 
-    override fun onCreateViewHolder(parent: ViewGroup, loadState: LoadState): CollectionLoadViewHolder {
+    override fun onCreateViewHolder(
+        parent: ViewGroup,
+        loadState: LoadState
+    ): CollectionLoadViewHolder {
         return CollectionLoadViewHolder(
             ItemNetworkStateBinding.bind(
                 LayoutInflater

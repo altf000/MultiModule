@@ -31,7 +31,8 @@ sealed class RequestResult<out T> {
 
         class Error(override val error: Throwable) : Failure<Throwable>(error)
 
-        class HttpError(override val error: HttpException) : Failure<HttpException>(), HttpResponse {
+        class HttpError(override val error: HttpException) : Failure<HttpException>(),
+            HttpResponse {
 
             override val statusCode: Int get() = error.statusCode
 

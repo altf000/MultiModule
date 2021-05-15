@@ -6,7 +6,7 @@ import dagger.Provides
 import ru.altf000.multimodule.collection_list_api.CollectionListApi
 import ru.altf000.multimodule.collection_list_impl.di.CollectionListComponentHolder
 import ru.altf000.multimodule.collection_list_impl.di.CollectionListDependencies
-import ru.altf000.multimodule.common.navigation.CustomRouter
+import ru.altf000.multimodule.common.navigation.GlobalRouter
 import ru.altf000.multimodule.common_db.db.AppDatabase
 import ru.altf000.multimodule.common_db.di.DatabaseComponent
 import ru.altf000.multimodule.common_network.di.NetworkComponent
@@ -30,7 +30,7 @@ internal class FeatureModule {
 
             override fun getApiService(): ApiService = NetworkComponent.get().apiService()
 
-            override fun getRouter(): CustomRouter = MainActivityComponent.get().globalRouter()
+            override fun getRouter(): GlobalRouter = MainActivityComponent.get().globalRouter()
         }
     }
 
@@ -52,7 +52,7 @@ internal class FeatureModule {
 
             override fun getDatabase(): AppDatabase = DatabaseComponent.get(context).getDatabase()
 
-            override fun getRouter(): CustomRouter = MainActivityComponent.get().globalRouter()
+            override fun getRouter(): GlobalRouter = MainActivityComponent.get().globalRouter()
 
             override fun getRecommendationsApi(): RecommendationsApi {
                 RecommendationsComponentHolder.init(recommendationDependencies)

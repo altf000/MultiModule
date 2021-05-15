@@ -9,10 +9,10 @@ import ru.altf000.multimodule.common_ui.diffutil.ContentDiff
 import ru.altf000.multimodule.common_ui.utils.load
 import ru.altf000.multimodule.movie_detail_impl.R
 
-class RecommendationsListAdapter(private val onClickListener: (Content) -> Unit)
-    : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class RecommendationsListAdapter(private val onClickListener: (Content) -> Unit) :
+    RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-    var items: MutableList<Content> = mutableListOf()
+    private var items: MutableList<Content> = mutableListOf()
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val inflater = LayoutInflater.from(viewGroup.context)

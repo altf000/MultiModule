@@ -36,4 +36,5 @@ class FragmentNullableArgumentDelegate<T : Any?> : ReadWriteProperty<Fragment, T
 
 fun <T : Any> argument(): ReadWriteProperty<Fragment, T> = FragmentArgumentDelegate()
 
-fun <T : Any> argumentNullable(): ReadWriteProperty<Fragment, T?> = FragmentNullableArgumentDelegate()
+fun <T : Any> argumentNullable(): ReadWriteProperty<Fragment, T?> =
+    FragmentNullableArgumentDelegate()

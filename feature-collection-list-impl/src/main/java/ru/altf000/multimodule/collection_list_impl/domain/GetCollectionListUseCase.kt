@@ -12,7 +12,7 @@ internal class GetCollectionListUseCase @Inject constructor(
     private val collectionListRepository: CollectionListRepository
 ) : BaseUseCase<PagingData<Content>, GetCollectionListUseCase.Params>() {
 
-    override suspend fun execute(params: Params): Flow<PagingData<Content>> {
+    override fun execute(params: Params): Flow<PagingData<Content>> {
         return collectionListRepository.getCollectionList(params.collectionId)
     }
 

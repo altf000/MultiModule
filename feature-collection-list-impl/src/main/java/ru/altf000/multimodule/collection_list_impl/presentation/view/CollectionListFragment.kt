@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
@@ -19,39 +20,39 @@ import ru.altf000.multimodule.collection_list_impl.presentation.view.adapter.loa
 import ru.altf000.multimodule.collection_list_impl.presentation.viewmodel.CollectionListViewModel
 import ru.altf000.multimodule.collection_list_impl.presentation.viewmodel.CollectionListViewModelFactory
 import ru.altf000.multimodule.common.fragment.argument
-import ru.altf000.multimodule.common.navigation.CustomRouter
-import ru.altf000.multimodule.common.viewmodel.injectViewModel
+import ru.altf000.multimodule.common.navigation.GlobalRouter
 import ru.altf000.multimodule.common_ui.fragment.BaseFragment
 import javax.inject.Inject
 
 internal class CollectionListFragment : BaseFragment<FragmentCollectionListBinding>() {
 
     @Inject
-    lateinit var viewModelFactory: CollectionListViewModelFactory
+    lateinit var router: GlobalRouter
 
     @Inject
-    lateinit var router: CustomRouter
+    lateinit var factory: CollectionListViewModelFactory.Factory
 
     var collectionId: Int by argument()
 
-    private lateinit var viewModel: CollectionListViewModel
+    private val viewModel: CollectionListViewModel by viewModels {
+        factory.create(collectionId)
+    }
 
     private val collectionListAdapter = CollectionListAdapter {
         viewModel.onItemClicked(it)
     }
 
-    init {
-        CollectionListComponentHolder.getComponent().inject(this)
-    }
-
     override fun onAttach(context: Context) {
-        super.onAttach(context)
-        viewModelFactory.collectionId = collectionId
-        viewModel = injectViewModel(viewModelFactory)
+        CollectionListComponentHolder.getComponent().inject(this)
         viewModel.router = router
+        super.onAttach(context)
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
         _binding = FragmentCollectionListBinding.inflate(layoutInflater).apply {
             list.apply {
                 layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
@@ -74,7 +75,7 @@ internal class CollectionListFragment : BaseFragment<FragmentCollectionListBindi
 
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.collectionListFlow
-                .flowWithLifecycle(viewLifecycleOwner.lifecycle, Lifecycle.State.CREATED)
+                .flowWithLifecycle(viewLifecycleOwner.lifecycle, Lifecycle.State.STARTED)
                 .collectLatest { pagingData ->
                     collectionListAdapter.submitData(pagingData)
                 }
@@ -82,7 +83,7 @@ internal class CollectionListFragment : BaseFragment<FragmentCollectionListBindi
 
         viewLifecycleOwner.lifecycleScope.launch {
             collectionListAdapter.loadStateFlow
-                .flowWithLifecycle(viewLifecycleOwner.lifecycle, Lifecycle.State.CREATED)
+                .flowWithLifecycle(viewLifecycleOwner.lifecycle, Lifecycle.State.STARTED)
                 .collectLatest { loadState ->
                     binding.root.isRefreshing = loadState.refresh is LoadState.Loading
                 }

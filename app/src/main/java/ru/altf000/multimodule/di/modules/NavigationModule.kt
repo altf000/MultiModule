@@ -2,7 +2,7 @@ package ru.altf000.multimodule.di.modules
 
 import dagger.Module
 import dagger.Provides
-import ru.altf000.multimodule.common.navigation.CustomRouter
+import ru.altf000.multimodule.common.navigation.GlobalRouter
 import ru.terrakok.cicerone.Cicerone
 import ru.terrakok.cicerone.NavigatorHolder
 import javax.inject.Singleton
@@ -12,13 +12,13 @@ internal class NavigationModule {
 
     @Singleton
     @Provides
-    fun provideCicerone(customRouter: CustomRouter): Cicerone<CustomRouter> {
-        return Cicerone.create(customRouter)
+    fun provideCicerone(globalRouter: GlobalRouter): Cicerone<GlobalRouter> {
+        return Cicerone.create(globalRouter)
     }
 
     @Singleton
     @Provides
-    fun provideNavigatorHolder(cicerone: Cicerone<CustomRouter>): NavigatorHolder {
+    fun provideNavigatorHolder(cicerone: Cicerone<GlobalRouter>): NavigatorHolder {
         return cicerone.navigatorHolder
     }
 }

@@ -9,7 +9,11 @@ import java.lang.reflect.Type
 
 class ResultAdapterFactory : CallAdapter.Factory() {
 
-    override fun get(returnType: Type, annotations: Array<Annotation>, retrofit: Retrofit): CallAdapter<*, *>? {
+    override fun get(
+        returnType: Type,
+        annotations: Array<Annotation>,
+        retrofit: Retrofit
+    ): CallAdapter<*, *>? {
         val rawReturnType: Class<*> = getRawType(returnType)
         if (rawReturnType == Call::class.java) {
             if (returnType is ParameterizedType) {
@@ -29,7 +33,8 @@ class ResultAdapterFactory : CallAdapter.Factory() {
     }
 }
 
-private class ResultCallAdapter<R>(private val type: Type) : CallAdapter<R, Call<RequestResult<R>>> {
+private class ResultCallAdapter<R>(private val type: Type) :
+    CallAdapter<R, Call<RequestResult<R>>> {
 
     override fun responseType() = type
 

@@ -16,8 +16,6 @@ class App : Application() {
     }
 
     companion object {
-        @Volatile
         lateinit var appContext: Context
-            private set
     }
 }

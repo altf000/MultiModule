@@ -7,7 +7,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import ru.altf000.multimodule.common.navigation.CustomRouter
+import ru.altf000.multimodule.common.navigation.GlobalRouter
 import ru.altf000.multimodule.common.navigation.ScreenKeys
 import ru.altf000.multimodule.common.navigation.ScreensChecker
 import ru.altf000.multimodule.common.viewmodel.BaseViewModel
@@ -32,7 +32,7 @@ internal class MovieDetailViewModel(
     private val _recommendationsFlow = MutableStateFlow(listOf(Content(), Content(), Content()))
     val recommendationsFlow: StateFlow<List<Content>> = _recommendationsFlow.asStateFlow()
 
-    var router: CustomRouter? = null
+    var router: GlobalRouter? = null
 
     init {
         loadContent()
@@ -93,7 +93,7 @@ internal class MovieDetailViewModel(
     override fun onCleared() {
         if (!ScreensChecker.hasScreen(ScreenKeys.MOVIE_DETAIL)) {
             MovieDetailComponentHolder.reset()
-            recommendationsApi.get().getUtils().release()
+            recommendationsApi.get().getReleaseManager().release()
         }
         super.onCleared()
     }

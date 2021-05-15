@@ -2,6 +2,7 @@ package ru.altf000.multimodule.presentation.view
 
 import android.os.Bundle
 import android.view.View
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
@@ -11,9 +12,8 @@ import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
 import ru.altf000.multimodule.R
-import ru.altf000.multimodule.common.navigation.CustomNavigator
-import ru.altf000.multimodule.common.navigation.CustomRouter
-import ru.altf000.multimodule.common.viewmodel.injectViewModel
+import ru.altf000.multimodule.common.navigation.GlobalNavigator
+import ru.altf000.multimodule.common.navigation.GlobalRouter
 import ru.altf000.multimodule.constants.Constants
 import ru.altf000.multimodule.databinding.ActivityMainBinding
 import ru.altf000.multimodule.di.app.DaggerMainActivityComponent
@@ -30,15 +30,18 @@ class MainActivity : AppCompatActivity() {
     lateinit var navigatorHolder: NavigatorHolder
 
     @Inject
-    lateinit var router: CustomRouter
+    lateinit var router: GlobalRouter
 
     @Inject
-    lateinit var navigator: CustomNavigator
+    lateinit var navigator: GlobalNavigator
 
     @Inject
-    lateinit var viewModelFactory: ViewModelProvider.Factory
+    lateinit var factory: ViewModelProvider.Factory
 
-    private lateinit var viewModel: MainViewModel
+    private val viewModel: MainViewModel by viewModels {
+        factory
+    }
+
     private lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -57,8 +60,6 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         navigatorHolder.setNavigator(navigator)
-
-        viewModel = injectViewModel(viewModelFactory)
 
         lifecycleScope.launch {
             viewModel.initFlow

@@ -14,7 +14,8 @@ import java.io.IOException
 import java.lang.reflect.Type
 import java.util.concurrent.atomic.AtomicBoolean
 
-internal class FlowCallAdapter<R>(private val responseType: Type) : CallAdapter<R, Flow<RequestResult<R>>> {
+internal class FlowCallAdapter<R>(private val responseType: Type) :
+    CallAdapter<R, Flow<RequestResult<R>>> {
 
     override fun responseType() = responseType
 
@@ -50,7 +51,11 @@ internal class FlowCallAdapter<R>(private val responseType: Type) : CallAdapter<
                     override fun onFailure(call: Call<R>, throwable: Throwable) {
                         val result = when (throwable) {
                             is retrofit2.HttpException -> RequestResult.Failure.HttpError(
-                                HttpException(throwable.code(), throwable.message(), cause = throwable)
+                                HttpException(
+                                    throwable.code(),
+                                    throwable.message(),
+                                    cause = throwable
+                                )
                             )
                             is IOException -> RequestResult.Failure.Error(throwable)
                             else -> RequestResult.Failure.Error(throwable)

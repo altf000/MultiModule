@@ -74,4 +74,7 @@ dependencies {
 
     val timber = rootProject.extra["timber_version"]
     implementation("com.jakewharton.timber:timber:$timber")
+
+    val fragmentKtx = rootProject.extra["fragment_ktx_version"]
+    implementation("androidx.fragment:fragment-ktx:$fragmentKtx")
 }
