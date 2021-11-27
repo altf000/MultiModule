@@ -19,16 +19,8 @@ android {
             proguardFiles("proguard-rules.pro")
         }
     }
-
-    buildFeatures {
-        viewBinding = true
-    }
 }
 
 dependencies {
 
-    implementation(project(":module-injector"))
-
-    val cicerone = rootProject.extra["cicerone_version"]
-    implementation("com.github.terrakok:cicerone:$cicerone")
 }

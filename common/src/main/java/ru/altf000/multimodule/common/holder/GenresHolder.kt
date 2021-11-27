@@ -7,16 +7,12 @@ object GenresHolder {
 
     private val GENRES = mutableListOf<Genre>()
 
-    fun getGenres(): List<Genre> {
-        return Collections.unmodifiableList(GENRES)
-    }
+    fun getGenres(): MutableList<Genre> = Collections.unmodifiableList(GENRES)
 
     fun saveGenres(genresList: List<Genre>) {
         GENRES.clear()
         GENRES.addAll(genresList)
     }
 
-    fun getTitle(genreId: Int): String? {
-        return GENRES.find { it.id == genreId }?.title
-    }
+    fun getTitle(genreId: Int) = GENRES.find { it.id == genreId }?.title
 }

@@ -2,7 +2,7 @@ plugins {
     id("com.android.library")
     kotlin("android")
     kotlin("kapt")
-    id("kotlin-parcelize")
+    kotlin("plugin.parcelize")
 }
 
 android {
@@ -11,8 +11,6 @@ android {
     defaultConfig {
         minSdkVersion(rootProject.extra["minSdkVersion"] as Int)
         targetSdkVersion(rootProject.extra["compileSdkVersion"] as Int)
-        versionCode = 1
-        versionName = "1.0"
     }
 
     buildTypes {

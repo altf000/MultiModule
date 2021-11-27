@@ -7,5 +7,4 @@ import ru.altf000.multimodule.common_network.network.adapter.RequestResult
 interface RecommendationsRepository {
 
     fun getContentRecommendations(contentId: Int): Flow<RequestResult<List<Content>>>
-
 }

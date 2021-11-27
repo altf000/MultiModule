@@ -1,11 +1,11 @@
 package ru.altf000.multimodule.common.navigation
 
+import com.github.terrakok.cicerone.Forward
+import com.github.terrakok.cicerone.Router
+import com.github.terrakok.cicerone.Screen
 import ru.altf000.multimodule.collection_list_api.CollectionListApi
 import ru.altf000.multimodule.common_entities.domain.Content
 import ru.altf000.multimodule.movie_detail_api.MovieDetailApi
-import ru.terrakok.cicerone.Router
-import ru.terrakok.cicerone.Screen
-import ru.terrakok.cicerone.commands.Forward
 import javax.inject.Inject
 import javax.inject.Provider
 import javax.inject.Singleton

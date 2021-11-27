@@ -13,7 +13,7 @@ import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
 
 @Module
-internal class NetworkModule() {
+internal class NetworkModule {
 
     companion object {
         private const val BASE_URL = "https://api.ivi.ru/mobileapi/"
@@ -24,32 +24,23 @@ internal class NetworkModule() {
 
     @Singleton
     @Provides
-    fun createNetworkClient(): OkHttpClient {
-        val loggingInterceptor = HttpLoggingInterceptor(TimberOkHttpLogger()).apply {
-            level = HttpLoggingInterceptor.Level.BODY
-        }
-        return OkHttpClient.Builder()
-            .addNetworkInterceptor(loggingInterceptor)
-            .connectTimeout(CONNECT_TIMEOUT, TimeUnit.SECONDS)
-            .writeTimeout(WRITE_TIMEOUT, TimeUnit.SECONDS)
-            .readTimeout(READ_TIMEOUT, TimeUnit.SECONDS)
-            .build()
-    }
+    fun createNetworkClient() = OkHttpClient.Builder()
+        .addNetworkInterceptor(HttpLoggingInterceptor(TimberOkHttpLogger()).apply { level = HttpLoggingInterceptor.Level.BODY })
+        .connectTimeout(CONNECT_TIMEOUT, TimeUnit.SECONDS)
+        .writeTimeout(WRITE_TIMEOUT, TimeUnit.SECONDS)
+        .readTimeout(READ_TIMEOUT, TimeUnit.SECONDS)
+        .build()
 
     @Singleton
     @Provides
-    fun getRetrofit(okHttpClient: OkHttpClient): Retrofit {
-        return Retrofit.Builder()
-            .baseUrl(BASE_URL)
-            .client(okHttpClient)
-            .addConverterFactory(GsonConverterFactory.create())
-            .addCallAdapterFactory(ResultAdapterFactory())
-            .build()
-    }
+    fun getRetrofit(okHttpClient: OkHttpClient) = Retrofit.Builder()
+        .baseUrl(BASE_URL)
+        .client(okHttpClient)
+        .addConverterFactory(GsonConverterFactory.create())
+        .addCallAdapterFactory(ResultAdapterFactory())
+        .build()
 
     @Singleton
     @Provides
-    fun getApiService(retrofit: Retrofit): ApiService {
-        return retrofit.create(ApiService::class.java)
-    }
+    fun getApiService(retrofit: Retrofit) = retrofit.create(ApiService::class.java)
 }

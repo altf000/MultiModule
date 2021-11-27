@@ -1,7 +1,7 @@
 package ru.altf000.multimodule.collection_list_impl.di
 
+import dagger.Binds
 import dagger.Module
-import dagger.Provides
 import ru.altf000.multimodule.collection_list_api.CollectionScreenCreator
 import ru.altf000.multimodule.collection_list_impl.data.CollectionListRepositoryImpl
 import ru.altf000.multimodule.collection_list_impl.domain.CollectionListRepository
@@ -9,17 +9,13 @@ import ru.altf000.multimodule.collection_list_impl.start.CollectionScreenCreator
 import ru.altf000.multimodule.common.di.ScopeScreen
 
 @Module
-internal class CollectionListModule {
+internal abstract class CollectionListModule {
 
     @ScopeScreen
-    @Provides
-    fun provideRepository(collectionRepository: CollectionListRepositoryImpl): CollectionListRepository {
-        return collectionRepository
-    }
+    @Binds
+    abstract fun provideRepository(collectionRepository: CollectionListRepositoryImpl): CollectionListRepository
 
     @ScopeScreen
-    @Provides
-    fun provideScreenCreator(screenCreator: CollectionScreenCreatorImpl): CollectionScreenCreator {
-        return screenCreator
-    }
+    @Binds
+    abstract fun provideScreenCreator(screenCreator: CollectionScreenCreatorImpl): CollectionScreenCreator
 }

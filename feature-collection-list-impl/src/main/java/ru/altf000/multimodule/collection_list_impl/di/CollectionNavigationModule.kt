@@ -1,11 +1,10 @@
 package ru.altf000.multimodule.collection_list_impl.di
 
+import com.github.terrakok.cicerone.Cicerone
+import com.github.terrakok.cicerone.Router
 import dagger.Module
 import dagger.Provides
 import ru.altf000.multimodule.common.di.ScopeScreen
-import ru.terrakok.cicerone.Cicerone
-import ru.terrakok.cicerone.NavigatorHolder
-import ru.terrakok.cicerone.Router
 
 @Module
 class CollectionNavigationModule {
@@ -14,13 +13,9 @@ class CollectionNavigationModule {
 
     @ScopeScreen
     @Provides
-    fun provideRouter(): Router {
-        return cicerone.router
-    }
+    fun provideRouter() = cicerone.router
 
     @ScopeScreen
     @Provides
-    fun provideNavigatorHolder(): NavigatorHolder {
-        return cicerone.navigatorHolder
-    }
+    fun provideNavigatorHolder() = cicerone.getNavigatorHolder()
 }

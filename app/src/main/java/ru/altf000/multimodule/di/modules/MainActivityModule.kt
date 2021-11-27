@@ -11,7 +11,5 @@ internal class MainActivityModule {
 
     @Singleton
     @Provides
-    fun provideViewModelFactory(factory: MainViewModelFactory): ViewModelProvider.Factory {
-        return factory
-    }
+    fun provideViewModelFactory(factory: MainViewModelFactory): ViewModelProvider.Factory = factory
 }

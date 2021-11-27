@@ -5,7 +5,7 @@ plugins {
 }
 
 apply {
-    plugin("kotlin-android")
+    plugin("org.jetbrains.kotlin.android")
 }
 
 android {
@@ -36,6 +36,10 @@ android {
     buildFeatures {
         viewBinding = true
     }
+
+    kapt {
+        correctErrorTypes = true
+    }
 }
 
 dependencies {
@@ -57,7 +61,7 @@ dependencies {
     implementation("androidx.appcompat:appcompat:$appCompat")
 
     val cicerone = rootProject.extra["cicerone_version"]
-    implementation("ru.terrakok.cicerone:cicerone:$cicerone")
+    implementation("com.github.terrakok:cicerone:$cicerone")
 
     val dagger = rootProject.extra["dagger_version"]
     compileOnly("javax.annotation:jsr250-api:1.0")

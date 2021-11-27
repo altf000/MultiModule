@@ -3,8 +3,7 @@ package ru.altf000.multimodule.collection_list_impl.di
 import ru.altf000.multimodule.collection_list_api.CollectionListApi
 import ru.altf000.multimodule.module_injector.ComponentHolder
 
-object CollectionListComponentHolder :
-    ComponentHolder<CollectionListApi, CollectionListDependencies> {
+object CollectionListComponentHolder : ComponentHolder<CollectionListApi, CollectionListDependencies> {
 
     private var component: CollectionListComponent? = null
 

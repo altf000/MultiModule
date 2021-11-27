@@ -2,7 +2,6 @@ package ru.altf000.multimodule.presentation.viewmodel
 
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
@@ -15,7 +14,7 @@ class MainViewModel(
 ) : BaseViewModel() {
 
     private val _initFlow = MutableStateFlow(false)
-    val initFlow: StateFlow<Boolean> = _initFlow.asStateFlow()
+    val initFlow = _initFlow.asStateFlow()
 
     init {
         launch {

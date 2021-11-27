@@ -1,6 +1,5 @@
 package ru.altf000.multimodule.data
 
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import ru.altf000.multimodule.common.holder.CountriesHolder
 import ru.altf000.multimodule.common.holder.GenresHolder
@@ -21,7 +20,7 @@ internal class MainRepositoryImpl @Inject constructor(
     private val database: AppDatabase
 ) : MainRepository {
 
-    override fun loadRequireData(): Flow<Boolean> = flow {
+    override fun loadRequireData() = flow {
 
         if (GenresHolder.getGenres().isEmpty()) {
             val dao = database.genresDao()

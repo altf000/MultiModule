@@ -21,8 +21,7 @@ class CollectionListDataSource(
         val from = nextPageNumber * params.loadSize
         val to = from + params.loadSize - 1
 
-        Timber.tag("CollectionPaging")
-            .d("nextPageNumber = $nextPageNumber, loadSize = ${params.loadSize}")
+        Timber.tag("CollectionPaging").d("nextPageNumber = $nextPageNumber, loadSize = ${params.loadSize}")
 
         try {
 

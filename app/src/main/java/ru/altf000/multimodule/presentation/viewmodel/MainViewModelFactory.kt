@@ -12,7 +12,5 @@ internal class MainViewModelFactory @Inject constructor(
     private val mainUseCase: MainUseCase
 ) : ViewModelProvider.Factory {
 
-    override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-        return MainViewModel(mainUseCase) as T
-    }
+    override fun <T : ViewModel?> create(modelClass: Class<T>) = MainViewModel(mainUseCase) as T
 }

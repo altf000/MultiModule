@@ -12,19 +12,13 @@ internal class ActivityModule(private val activity: FragmentActivity) {
 
     @Provides
     @Singleton
-    fun provideActivity(): FragmentActivity {
-        return activity
-    }
+    fun provideActivity(): FragmentActivity = activity
 
     @Provides
     @Singleton
-    fun provideResources(): Resources {
-        return activity.resources
-    }
+    fun provideResources(): Resources = activity.resources
 
     @Provides
     @Singleton
-    fun provideContext(): Context {
-        return activity
-    }
+    fun provideContext(): Context = activity
 }

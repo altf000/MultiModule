@@ -1,7 +1,6 @@
 package ru.altf000.multimodule.di.app
 
 import dagger.Component
-import dagger.internal.Preconditions
 import ru.altf000.multimodule.common.navigation.GlobalRouter
 import ru.altf000.multimodule.di.modules.*
 import ru.altf000.multimodule.presentation.view.MainActivity
@@ -29,12 +28,7 @@ internal interface MainActivityComponent {
         @Volatile
         private var instance: MainActivityComponent? = null
 
-        fun get(): MainActivityComponent {
-            return Preconditions.checkNotNull(
-                instance,
-                "AppComponent is not initialized yet. Call init first."
-            )!!
-        }
+        fun get(): MainActivityComponent = requireNotNull(instance) { "AppComponent is not initialized yet. Call init first." }
 
         fun init(component: MainActivityComponent) {
             require(instance == null) { "AppComponent is already initialized." }

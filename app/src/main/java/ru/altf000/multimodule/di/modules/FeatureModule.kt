@@ -6,11 +6,8 @@ import dagger.Provides
 import ru.altf000.multimodule.collection_list_api.CollectionListApi
 import ru.altf000.multimodule.collection_list_impl.di.CollectionListComponentHolder
 import ru.altf000.multimodule.collection_list_impl.di.CollectionListDependencies
-import ru.altf000.multimodule.common.navigation.GlobalRouter
-import ru.altf000.multimodule.common_db.db.AppDatabase
 import ru.altf000.multimodule.common_db.di.DatabaseComponent
 import ru.altf000.multimodule.common_network.di.NetworkComponent
-import ru.altf000.multimodule.common_network.network.api.ApiService
 import ru.altf000.multimodule.di.app.MainActivityComponent
 import ru.altf000.multimodule.feature_recommendation_api.RecommendationsApi
 import ru.altf000.multimodule.feature_recommendation_impl.di.RecommendationsComponentHolder
@@ -25,13 +22,9 @@ internal class FeatureModule {
 
     @Singleton
     @Provides
-    fun provideFeatureCollectionListDependencies(): CollectionListDependencies {
-        return object : CollectionListDependencies {
-
-            override fun getApiService(): ApiService = NetworkComponent.get().apiService()
-
-            override fun getRouter(): GlobalRouter = MainActivityComponent.get().globalRouter()
-        }
+    fun provideFeatureCollectionListDependencies() = object : CollectionListDependencies {
+        override fun getApiService() = NetworkComponent.get().apiService()
+        override fun getRouter() = MainActivityComponent.get().globalRouter()
     }
 
     @Provides
@@ -45,19 +38,13 @@ internal class FeatureModule {
     fun provideFeatureMovieDetailDependencies(
         context: Context,
         recommendationDependencies: RecommendationsDependencies
-    ): MovieDetailDependencies {
-        return object : MovieDetailDependencies {
-
-            override fun getApiService(): ApiService = NetworkComponent.get().apiService()
-
-            override fun getDatabase(): AppDatabase = DatabaseComponent.get(context).getDatabase()
-
-            override fun getRouter(): GlobalRouter = MainActivityComponent.get().globalRouter()
-
-            override fun getRecommendationsApi(): RecommendationsApi {
-                RecommendationsComponentHolder.init(recommendationDependencies)
-                return RecommendationsComponentHolder.get()
-            }
+    ) = object : MovieDetailDependencies {
+        override fun getApiService() = NetworkComponent.get().apiService()
+        override fun getDatabase() = DatabaseComponent.get(context).getDatabase()
+        override fun getRouter() = MainActivityComponent.get().globalRouter()
+        override fun getRecommendationsApi(): RecommendationsApi {
+            RecommendationsComponentHolder.init(recommendationDependencies)
+            return RecommendationsComponentHolder.get()
         }
     }
 
@@ -69,12 +56,8 @@ internal class FeatureModule {
 
     @Singleton
     @Provides
-    fun provideRecommendationDependencies(context: Context): RecommendationsDependencies {
-        return object : RecommendationsDependencies {
-
-            override fun getApiService(): ApiService = NetworkComponent.get().apiService()
-
-            override fun getDatabase(): AppDatabase = DatabaseComponent.get(context).getDatabase()
-        }
+    fun provideRecommendationDependencies(context: Context) = object : RecommendationsDependencies {
+        override fun getApiService() = NetworkComponent.get().apiService()
+        override fun getDatabase() = DatabaseComponent.get(context).getDatabase()
     }
 }

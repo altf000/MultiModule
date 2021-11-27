@@ -7,12 +7,8 @@ import ru.altf000.multimodule.feature_recommendation_api.RecommendationsApi
 import ru.altf000.multimodule.module_injector.BaseDependencies
 
 interface MovieDetailDependencies : BaseDependencies {
-
     fun getApiService(): ApiService
-
     fun getDatabase(): AppDatabase
-
     fun getRouter(): GlobalRouter
-
     fun getRecommendationsApi(): RecommendationsApi
 }

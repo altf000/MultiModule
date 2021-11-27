@@ -34,13 +34,8 @@ internal class CollectionListFragment : BaseFragment<FragmentCollectionListBindi
 
     var collectionId: Int by argument()
 
-    private val viewModel: CollectionListViewModel by viewModels {
-        factory.create(collectionId)
-    }
-
-    private val collectionListAdapter = CollectionListAdapter {
-        viewModel.onItemClicked(it)
-    }
+    private val viewModel: CollectionListViewModel by viewModels { factory.create(collectionId) }
+    private val collectionListAdapter = CollectionListAdapter { viewModel.onItemClicked(it) }
 
     override fun onAttach(context: Context) {
         CollectionListComponentHolder.getComponent().inject(this)

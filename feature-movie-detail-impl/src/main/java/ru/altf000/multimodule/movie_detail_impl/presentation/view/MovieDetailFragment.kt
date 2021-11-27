@@ -36,13 +36,8 @@ internal class MovieDetailFragment : BaseFragment<FragmentDetailBinding>() {
 
     var content: Content by argument()
 
-    private val viewModel: MovieDetailViewModel by viewModels {
-        factory.create(content)
-    }
-
-    private val recommendationsAdapter = RecommendationsListAdapter {
-        viewModel.onItemClicked(it)
-    }
+    private val viewModel: MovieDetailViewModel by viewModels { factory.create(content) }
+    private val recommendationsAdapter = RecommendationsListAdapter { viewModel.onItemClicked(it) }
 
     override fun onAttach(context: Context) {
         MovieDetailComponentHolder.getComponent().inject(this)

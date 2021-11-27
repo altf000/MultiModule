@@ -16,15 +16,13 @@ class CollectionLoadStateAdapter<T : Any, VH : RecyclerView.ViewHolder>(
     override fun onCreateViewHolder(
         parent: ViewGroup,
         loadState: LoadState
-    ): CollectionLoadViewHolder {
-        return CollectionLoadViewHolder(
-            ItemNetworkStateBinding.bind(
-                LayoutInflater
-                    .from(parent.context)
-                    .inflate(R.layout.item_network_state, parent, false)
-            )
-        ) { adapter.retry() }
-    }
+    ) = CollectionLoadViewHolder(
+        ItemNetworkStateBinding.bind(
+            LayoutInflater
+                .from(parent.context)
+                .inflate(R.layout.item_network_state, parent, false)
+        )
+    ) { adapter.retry() }
 
     override fun onBindViewHolder(holder: CollectionLoadViewHolder, loadState: LoadState) {
         holder.bind(loadState)

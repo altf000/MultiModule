@@ -44,10 +44,11 @@ abstract class AppDatabase : RoomDatabase() {
             if (database == null) {
                 synchronized(AppDatabase::class.java) {
                     if (database == null) {
-                        database = Room.databaseBuilder(
-                            context.applicationContext,
-                            AppDatabase::class.java, Constants.Database.DATABASE_NAME
-                        )
+                        database = Room
+                            .databaseBuilder(
+                                context.applicationContext,
+                                AppDatabase::class.java, Constants.Database.DATABASE_NAME
+                            )
                             .build()
                     }
                     return database!!

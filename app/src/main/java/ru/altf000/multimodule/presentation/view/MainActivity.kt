@@ -1,13 +1,14 @@
 package ru.altf000.multimodule.presentation.view
 
 import android.os.Bundle
-import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isVisible
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
+import com.github.terrakok.cicerone.NavigatorHolder
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
@@ -21,7 +22,6 @@ import ru.altf000.multimodule.di.app.MainActivityComponent
 import ru.altf000.multimodule.di.modules.ActivityModule
 import ru.altf000.multimodule.di.modules.FragmentManagerModule
 import ru.altf000.multimodule.presentation.viewmodel.MainViewModel
-import ru.terrakok.cicerone.NavigatorHolder
 import javax.inject.Inject
 
 class MainActivity : AppCompatActivity() {
@@ -38,9 +38,7 @@ class MainActivity : AppCompatActivity() {
     @Inject
     lateinit var factory: ViewModelProvider.Factory
 
-    private val viewModel: MainViewModel by viewModels {
-        factory
-    }
+    private val viewModel: MainViewModel by viewModels { factory }
 
     private lateinit var binding: ActivityMainBinding
 
@@ -56,6 +54,7 @@ class MainActivity : AppCompatActivity() {
         MainActivityComponent.get().inject(this)
 
         super.onCreate(savedInstanceState)
+
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
@@ -63,13 +62,11 @@ class MainActivity : AppCompatActivity() {
 
         lifecycleScope.launch {
             viewModel.initFlow
-                .onStart {
-                    binding.progressBar.visibility = View.VISIBLE
-                }
+                .onStart { binding.progressBar.isVisible = true }
                 .flowWithLifecycle(lifecycle, Lifecycle.State.CREATED)
                 .collect {
                     if (it) {
-                        binding.progressBar.visibility = View.GONE
+                        binding.progressBar.isVisible = false
                         if (savedInstanceState == null) {
                             router.openCollection(Constants.Content.BASE_COLLECTION_ID)
                         }

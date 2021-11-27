@@ -10,8 +10,6 @@ android {
     defaultConfig {
         minSdkVersion(rootProject.extra["minSdkVersion"] as Int)
         targetSdkVersion(rootProject.extra["compileSdkVersion"] as Int)
-        versionCode = 1
-        versionName = "1.0"
     }
 
     buildTypes {
@@ -33,5 +31,5 @@ dependencies {
     implementation(project(":common-entities"))
 
     val cicerone = rootProject.extra["cicerone_version"]
-    implementation("ru.terrakok.cicerone:cicerone:$cicerone")
+    implementation("com.github.terrakok:cicerone:$cicerone")
 }

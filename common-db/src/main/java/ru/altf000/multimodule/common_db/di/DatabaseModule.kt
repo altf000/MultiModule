@@ -11,7 +11,5 @@ internal class DatabaseModule(private val context: Context) {
 
     @Singleton
     @Provides
-    fun provideDatabase(): AppDatabase {
-        return AppDatabase.getInstance(context)
-    }
+    fun provideDatabase() = AppDatabase.getInstance(context)
 }

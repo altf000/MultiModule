@@ -12,13 +12,9 @@ internal class FragmentManagerModule(
 ) {
 
     @Provides
-    fun provideContainerId(): Int {
-        return containerId
-    }
+    fun provideContainerId(): Int = containerId
 
     @Provides
     @Singleton
-    fun provideFragmentManager(): FragmentManager {
-        return fragmentManager
-    }
+    fun provideFragmentManager(): FragmentManager = fragmentManager
 }

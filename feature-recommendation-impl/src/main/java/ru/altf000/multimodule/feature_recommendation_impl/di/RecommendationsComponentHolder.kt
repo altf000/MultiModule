@@ -3,8 +3,7 @@ package ru.altf000.multimodule.feature_recommendation_impl.di
 import ru.altf000.multimodule.feature_recommendation_api.RecommendationsApi
 import ru.altf000.multimodule.module_injector.ComponentHolder
 
-object RecommendationsComponentHolder :
-    ComponentHolder<RecommendationsApi, RecommendationsDependencies> {
+object RecommendationsComponentHolder : ComponentHolder<RecommendationsApi, RecommendationsDependencies> {
 
     private var component: RecommendationsComponent? = null
 

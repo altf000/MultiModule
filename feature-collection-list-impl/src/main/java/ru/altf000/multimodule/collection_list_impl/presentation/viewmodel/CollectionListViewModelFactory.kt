@@ -19,7 +19,6 @@ internal class CollectionListViewModelFactory @AssistedInject constructor(
 
     @AssistedFactory
     interface Factory {
-
         fun create(@Assisted collectionId: Int): CollectionListViewModelFactory
     }
 }

@@ -1,6 +1,6 @@
 package ru.altf000.multimodule.common.navigation
 
-import ru.terrakok.cicerone.Screen
+import com.github.terrakok.cicerone.Screen
 
 object ScreensChecker {
 
@@ -16,7 +16,5 @@ object ScreensChecker {
         }
     }
 
-    fun hasScreen(key: String): Boolean {
-        return SCREENS.find { it.screenKey == key } != null
-    }
+    fun hasScreen(key: String) = SCREENS.find { it.screenKey == key } != null
 }

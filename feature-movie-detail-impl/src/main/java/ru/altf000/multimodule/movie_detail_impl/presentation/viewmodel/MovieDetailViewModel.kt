@@ -2,9 +2,9 @@ package ru.altf000.multimodule.movie_detail_impl.presentation.viewmodel
 
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import ru.altf000.multimodule.common.navigation.GlobalRouter
@@ -27,10 +27,10 @@ internal class MovieDetailViewModel(
 ) : BaseViewModel() {
 
     private val _contentInfoFlow = MutableStateFlow(FullContent())
-    val contentInfoFlow: StateFlow<FullContent> = _contentInfoFlow.asStateFlow()
+    val contentInfoFlow = _contentInfoFlow.asStateFlow()
 
     private val _recommendationsFlow = MutableStateFlow(listOf(Content(), Content(), Content()))
-    val recommendationsFlow: StateFlow<List<Content>> = _recommendationsFlow.asStateFlow()
+    val recommendationsFlow = _recommendationsFlow.asStateFlow()
 
     var router: GlobalRouter? = null
 
@@ -42,14 +42,14 @@ internal class MovieDetailViewModel(
         launch {
             getContentInfoUseCase
                 .execute(GetContentInfoUseCase.Params(content))
-                .collect { result ->
+                .collectLatest { result ->
                     withContext(Dispatchers.Main) {
                         when (result) {
                             is RequestResult.Success -> {
                                 _contentInfoFlow.value = result.value
                                 loadRecommendations()
                                 Timber
-                                    .tag(MovieDetailViewModel::class.simpleName)
+                                    .tag(MovieDetailViewModel::class.simpleName.orEmpty())
                                     .d("content info: ${result.value}")
                             }
                             is RequestResult.Failure<*> -> {
@@ -73,7 +73,7 @@ internal class MovieDetailViewModel(
                             is RequestResult.Success -> {
                                 _recommendationsFlow.value = result.value
                                 Timber
-                                    .tag(MovieDetailViewModel::class.simpleName)
+                                    .tag(MovieDetailViewModel::class.simpleName.orEmpty())
                                     .d("recommendations: ${result.value}")
                             }
                             is RequestResult.Failure<*> -> {

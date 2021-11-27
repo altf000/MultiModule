@@ -1,9 +1,7 @@
 package ru.altf000.multimodule.movie_detail_impl.data
 
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import ru.altf000.multimodule.common_db.db.AppDatabase
-import ru.altf000.multimodule.common_entities.domain.FullContent
 import ru.altf000.multimodule.common_entities.mapper.toFullContent
 import ru.altf000.multimodule.common_entities.mapper.toFullContentEntity
 import ru.altf000.multimodule.common_network.network.adapter.RequestResult
@@ -19,18 +17,15 @@ internal class MovieDetailRepositoryImpl @Inject constructor(
     private val database: AppDatabase,
 ) : MovieDetailRepository {
 
-    override fun getMovieInfo(contentId: Int):
-        Flow<RequestResult<FullContent>> = getContent(contentId, false)
+    override fun getMovieInfo(contentId: Int) = getContent(contentId, false)
 
-    override fun getSerialInfo(contentId: Int):
-        Flow<RequestResult<FullContent>> = getContent(contentId, true)
+    override fun getSerialInfo(contentId: Int) = getContent(contentId, true)
 
-    private fun getContent(contentId: Int, isSerial: Boolean):
-        Flow<RequestResult<FullContent>> = flow {
+    private fun getContent(contentId: Int, isSerial: Boolean) = flow {
 
         val dao = database.fullContentDao()
-        dao.findById(contentId)?.let {
-            emit(RequestResult.Success.Value(it.toFullContent()))
+        dao.findById(contentId)?.let { entity ->
+            emit(RequestResult.Success.Value(entity.toFullContent()))
         } ?: run {
 
             val apiResult = if (isSerial) {
