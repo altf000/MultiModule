@@ -12,19 +12,20 @@ import javax.inject.Singleton
 
 @Singleton
 class GlobalRouter @Inject constructor(
-    private val collectionListScreen: Provider<CollectionListApi>,
+    private val collectionListScreenCreator: Provider<CollectionListApi>,
     private val movieDetailScreenCreator: Provider<MovieDetailApi>
 ) : Router() {
 
-    private fun addScreen(screen: Screen) {
-        executeCommands(Forward(screen))
-    }
-
     fun openCollection(collectionId: Int) {
-        addScreen(collectionListScreen.get().getScreenCreator().createScreen(collectionId))
+        showScreen(collectionListScreenCreator.get().getScreenCreator().createScreen(collectionId))
     }
 
     fun openMovieDetail(content: Content) {
-        addScreen(movieDetailScreenCreator.get().getScreenCreator().createScreen(content))
+        showScreen(movieDetailScreenCreator.get().getScreenCreator().createScreen(content))
     }
+
+    private fun showScreen(screen: Screen) {
+        executeCommands(Forward(screen))
+    }
+
 }

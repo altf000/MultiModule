@@ -10,12 +10,12 @@ apply {
 
 android {
 
-    compileSdkVersion(rootProject.extra["compileSdkVersion"] as Int)
+    compileSdk = rootProject.extra["compileSdkVersion"] as Int
 
     defaultConfig {
         applicationId = "ru.altf000.multimodule"
-        minSdkVersion(rootProject.extra["minSdkVersion"] as Int)
-        targetSdkVersion(rootProject.extra["compileSdkVersion"] as Int)
+        minSdk = rootProject.extra["minSdkVersion"] as Int
+        targetSdk = rootProject.extra["compileSdkVersion"] as Int
         versionCode = 1
         versionName = "1.0"
     }
