@@ -16,7 +16,7 @@ fun Content.toEntity(parentId: Int) = RecommendationEntity(
 )
 
 fun RecommendationEntity.toDomain() = Content(
-    id = this.id,
+    id = this.contentId,
     title = this.title,
     synopsis = this.synopsis,
     posterUrl = this.posterUrl,

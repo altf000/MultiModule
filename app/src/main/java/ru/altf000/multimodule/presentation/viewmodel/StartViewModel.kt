@@ -17,12 +17,18 @@ class StartViewModel(
 
     init {
         launch {
-            bootloaderUseCase(Unit).collect {
+            bootloaderUseCase(Unit).collect { isLoaded ->
                 withContext(dispatchersProvider.main) {
-                    _isLoaded.value = true
-                    navigator.collection(1376)
+                    if (isLoaded) {
+                        _isLoaded.value = true
+                        navigator.collection(COLLECTION_ID)
+                    }
                 }
             }
         }
+    }
+
+    companion object {
+        private const val COLLECTION_ID = 1376
     }
 }

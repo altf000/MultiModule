@@ -29,7 +29,7 @@ private fun buildOkHttp(interceptor: Interceptor) = OkHttpClient.Builder()
     .readTimeout(READ_TIMEOUT, TimeUnit.SECONDS)
     .build()
 
-inline fun <reified T> buildRetrofit(
+private inline fun <reified T> buildRetrofit(
     okHttpClient: OkHttpClient
 ): T = Retrofit.Builder()
     .baseUrl(BASE_URL)

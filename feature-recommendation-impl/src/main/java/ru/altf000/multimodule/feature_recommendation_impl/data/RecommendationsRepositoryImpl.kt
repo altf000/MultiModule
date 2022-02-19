@@ -21,7 +21,7 @@ internal class RecommendationsRepositoryImpl(
         val dao = database.recommendationsDao()
         val cachedItems = dao.getRecommendations(contentId)
 
-        if (!cachedItems.isNullOrEmpty()) {
+        if (cachedItems.isNotEmpty()) {
             emit(RequestResult.Success.Value(cachedItems.map { it.toDomain() }))
         }
 

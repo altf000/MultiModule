@@ -1,9 +1,6 @@
 package ru.altf000.multimodule.movie_detail.presentation.viewmodel
 
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import ru.altf000.multimodule.common.viewmodel.BaseViewModel
@@ -12,6 +9,7 @@ import ru.altf000.multimodule.common_entities.domain.FullContent
 import ru.altf000.multimodule.common_network.network.adapter.RequestResult
 import ru.altf000.multimodule.feature_recommendation_api.domain.GetContentRecommendationsUseCase
 import ru.altf000.multimodule.movie_detail.domain.GetContentInfoUseCase
+import ru.altf000.multimodule.movie_detail.presentation.adapter.RecommendationItem
 import timber.log.Timber
 
 internal class MovieDetailViewModel(
@@ -20,11 +18,19 @@ internal class MovieDetailViewModel(
     private val content: Content
 ) : BaseViewModel() {
 
-    private val _contentInfoFlow = MutableStateFlow(FullContent())
-    val contentInfoFlow = _contentInfoFlow.asStateFlow()
+    private val _contentInfo = MutableStateFlow(FullContent())
+    val contentInfo = _contentInfo.asStateFlow()
 
-    private val _recommendationsFlow = MutableStateFlow(listOf(Content(), Content(), Content()))
-    val recommendationsFlow = _recommendationsFlow.asStateFlow()
+    private val recommendations = MutableStateFlow(listOf(Content(), Content(), Content()))
+    val recommendationsItems = recommendations.map { list ->
+        list.map { content ->
+            if (content.id == -1) {
+                RecommendationItem(content = content, isStub = true)
+            } else {
+                RecommendationItem(content = content)
+            }
+        }
+    }
 
     init {
         loadContent()
@@ -36,7 +42,7 @@ internal class MovieDetailViewModel(
                 withContext(dispatchersProvider.main) {
                     when (result) {
                         is RequestResult.Success -> {
-                            _contentInfoFlow.value = result.value
+                            _contentInfo.value = result.value
                             loadRecommendations()
                         }
                         is RequestResult.Failure<*> -> {
@@ -54,10 +60,10 @@ internal class MovieDetailViewModel(
                 withContext(dispatchersProvider.main) {
                     when (result) {
                         is RequestResult.Success -> {
-                            _recommendationsFlow.value = result.value
+                            recommendations.value = result.value
                         }
                         is RequestResult.Failure<*> -> {
-                            _recommendationsFlow.value = emptyList()
+                            recommendations.value = emptyList()
                         }
                     }
                 }

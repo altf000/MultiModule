@@ -13,7 +13,7 @@ internal class CollectionListRepositoryImpl(
 ) : CollectionListRepository {
 
     override fun getCollectionList(collectionId: Int) = Pager(
-        config = PagingConfig(pageSize = PAGE_SIZE, initialLoadSize = PAGE_SIZE),
+        config = PagingConfig(pageSize = PAGE_SIZE, initialLoadSize = PAGE_SIZE, enablePlaceholders = false),
         pagingSourceFactory = { CollectionListDataSource(apiService, collectionId) }
     ).flow
 }

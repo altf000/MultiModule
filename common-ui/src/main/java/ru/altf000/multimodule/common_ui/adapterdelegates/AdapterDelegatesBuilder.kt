@@ -12,11 +12,12 @@ import ru.altf000.multimodule.common_utils.extentions.collectOnCreated
 fun createAdapter(
     lifecycleOwner: LifecycleOwner,
     recyclerView: RecyclerView,
+    layoutManager: LinearLayoutManager = LinearLayoutManager(recyclerView.context),
     selector: DSelector,
     block: AdapterDelegateBuilder.() -> Unit
 ): ConcatAdapter {
     recyclerView.apply {
-        layoutManager = LinearLayoutManager(recyclerView.context)
+        this.layoutManager = layoutManager
     }
     return AdapterDelegateBuilder(lifecycleOwner, selector).apply(block).build()
 }

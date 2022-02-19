@@ -28,15 +28,11 @@ class ResultAdapterFactory : CallAdapter.Factory() {
                 }
             }
         }
-
         return null
     }
 }
 
-private class ResultCallAdapter<R>(private val type: Type) :
-    CallAdapter<R, Call<RequestResult<R>>> {
-
+private class ResultCallAdapter<R>(private val type: Type) : CallAdapter<R, Call<RequestResult<R>>> {
     override fun responseType() = type
-
     override fun adapt(call: Call<R>): Call<RequestResult<R>> = ResultCall(call)
 }

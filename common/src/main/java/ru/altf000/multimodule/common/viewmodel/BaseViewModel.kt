@@ -14,10 +14,10 @@ import kotlin.coroutines.CoroutineContext
 
 abstract class BaseViewModel : ViewModel(), CoroutineScope, KoinComponent {
 
-    override val coroutineContext: CoroutineContext by lazy { SupervisorJob() + Dispatchers.IO }
-
     protected val navigator by inject<Navigator>()
     protected val dispatchersProvider by inject<DispatchersProvider>()
+
+    override val coroutineContext: CoroutineContext by lazy { SupervisorJob() + dispatchersProvider.io }
 
     @CallSuper
     override fun onCleared() {
