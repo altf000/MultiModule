@@ -6,12 +6,10 @@ plugins {
 
 android {
     compileSdk = rootProject.extra["compileSdkVersion"] as Int
-
     defaultConfig {
         minSdk = rootProject.extra["minSdkVersion"] as Int
         targetSdk = rootProject.extra["compileSdkVersion"] as Int
     }
-
     buildTypes {
         getByName("release") {
             isMinifyEnabled = false
@@ -19,7 +17,6 @@ android {
             proguardFiles("proguard-rules.pro")
         }
     }
-
     buildFeatures {
         viewBinding = true
     }
@@ -27,10 +24,8 @@ android {
 
 dependencies {
 
-    implementation(project(":module-injector"))
     implementation(project(":common-network"))
     implementation(project(":common-entities"))
 
-    val coroutines = rootProject.extra["coroutines_version"]
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutines")
+    implementation(libs.coroutines.android)
 }

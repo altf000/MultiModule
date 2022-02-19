@@ -6,12 +6,10 @@ plugins {
 
 android {
     compileSdk = rootProject.extra["compileSdkVersion"] as Int
-
     defaultConfig {
         minSdk = rootProject.extra["minSdkVersion"] as Int
         targetSdk = rootProject.extra["compileSdkVersion"] as Int
     }
-
     buildTypes {
         getByName("release") {
             isMinifyEnabled = false
@@ -23,23 +21,14 @@ android {
 
 dependencies {
 
-    implementation(project(":module-injector"))
     implementation(project(":common-entities"))
-    implementation(project(":constants"))
+    implementation(project(":common-utils"))
 
-    val appCompat = rootProject.extra["appcompat_version"]
-    implementation("androidx.appcompat:appcompat:$appCompat")
-
-    val dagger = rootProject.extra["dagger_version"]
-    compileOnly("javax.annotation:jsr250-api:1.0")
-    implementation("com.google.dagger:dagger:$dagger")
-    kapt("com.google.dagger:dagger-compiler:$dagger")
-
-    val coroutines = rootProject.extra["coroutines_version"]
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutines")
-
-    val room = rootProject.extra["room_version"]
-    implementation("androidx.room:room-runtime:$room")
-    kapt("androidx.room:room-compiler:$room")
-    implementation("androidx.room:room-ktx:$room")
+    implementation(libs.appcompat)
+    implementation(libs.coroutines.android)
+    implementation(libs.room.runtime)
+    implementation(libs.room.ktx)
+    kapt(libs.room.compiler)
+    implementation(libs.koin.core)
+    implementation(libs.koin.android)
 }

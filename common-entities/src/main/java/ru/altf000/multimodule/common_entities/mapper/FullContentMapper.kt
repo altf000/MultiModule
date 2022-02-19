@@ -2,10 +2,10 @@ package ru.altf000.multimodule.common_entities.mapper
 
 import ru.altf000.multimodule.common_entities.domain.FullContent
 import ru.altf000.multimodule.common_entities.entity.FullContentEntity
-import ru.altf000.multimodule.common_entities.server.content.FullContentResponse
-import ru.altf000.multimodule.constants.Constants
+import ru.altf000.multimodule.common_entities.network.content.FullContentNetwork
+import ru.altf000.multimodule.common_utils.constants.Constants
 
-fun FullContentResponse.toFullContent() = FullContent(
+fun FullContentNetwork.toDomain() = FullContent(
     id = this.id,
     title = this.title.orEmpty(),
     synopsis = this.synopsis.orEmpty(),
@@ -19,7 +19,7 @@ fun FullContentResponse.toFullContent() = FullContent(
     country = this.country
 )
 
-fun FullContentEntity.toFullContent() = FullContent(
+fun FullContentEntity.toDomain() = FullContent(
     id = this.id,
     title = this.title,
     synopsis = this.synopsis,
@@ -33,7 +33,7 @@ fun FullContentEntity.toFullContent() = FullContent(
     country = this.country
 )
 
-fun FullContent.toFullContentEntity() = FullContentEntity(
+fun FullContent.toEntity() = FullContentEntity(
     id = this.id,
     title = this.title,
     synopsis = this.synopsis,

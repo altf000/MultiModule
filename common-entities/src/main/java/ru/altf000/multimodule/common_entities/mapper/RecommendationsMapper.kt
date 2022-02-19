@@ -3,7 +3,7 @@ package ru.altf000.multimodule.common_entities.mapper
 import ru.altf000.multimodule.common_entities.domain.Content
 import ru.altf000.multimodule.common_entities.entity.RecommendationEntity
 
-fun Content.toRecommendationEntity(parentId: Int) = RecommendationEntity(
+fun Content.toEntity(parentId: Int) = RecommendationEntity(
     parentId = parentId,
     contentId = this.id,
     title = this.title,
@@ -15,7 +15,7 @@ fun Content.toRecommendationEntity(parentId: Int) = RecommendationEntity(
     isSerial = this.isSerial,
 )
 
-fun RecommendationEntity.toFullContent() = Content(
+fun RecommendationEntity.toDomain() = Content(
     id = this.id,
     title = this.title,
     synopsis = this.synopsis,

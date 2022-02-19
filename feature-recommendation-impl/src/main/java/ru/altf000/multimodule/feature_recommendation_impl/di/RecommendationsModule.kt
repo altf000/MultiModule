@@ -1,27 +1,12 @@
 package ru.altf000.multimodule.feature_recommendation_impl.di
 
-import dagger.Binds
-import dagger.Module
-import ru.altf000.multimodule.common.di.ScopeFeature
-import ru.altf000.multimodule.feature_recommendation_api.ReleaseManager
-import ru.altf000.multimodule.feature_recommendation_api.domain.ContentRecommendationsUseCase
-import ru.altf000.multimodule.feature_recommendation_impl.ReleaseManagerImpl
+import org.koin.dsl.module
+import ru.altf000.multimodule.feature_recommendation_api.domain.GetContentRecommendationsUseCase
 import ru.altf000.multimodule.feature_recommendation_impl.data.RecommendationsRepositoryImpl
-import ru.altf000.multimodule.feature_recommendation_impl.domain.ContentRecommendationsUseCaseImpl
+import ru.altf000.multimodule.feature_recommendation_impl.domain.GetGetContentRecommendationsUseCaseImpl
 import ru.altf000.multimodule.feature_recommendation_impl.domain.RecommendationsRepository
 
-@Module
-internal abstract class RecommendationsModule {
-
-    @ScopeFeature
-    @Binds
-    abstract fun provideRepository(repository: RecommendationsRepositoryImpl): RecommendationsRepository
-
-    @ScopeFeature
-    @Binds
-    abstract fun provideUseCase(useCase: ContentRecommendationsUseCaseImpl): ContentRecommendationsUseCase
-
-    @ScopeFeature
-    @Binds
-    abstract fun provideUtils(utils: ReleaseManagerImpl): ReleaseManager
+val recommendationsModule = module {
+    single<RecommendationsRepository> { RecommendationsRepositoryImpl(get(), get()) }
+    factory<GetContentRecommendationsUseCase> { GetGetContentRecommendationsUseCaseImpl(get()) }
 }

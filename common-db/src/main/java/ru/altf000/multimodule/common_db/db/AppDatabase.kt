@@ -14,7 +14,7 @@ import ru.altf000.multimodule.common_entities.entity.CountryEntity
 import ru.altf000.multimodule.common_entities.entity.FullContentEntity
 import ru.altf000.multimodule.common_entities.entity.GenreEntity
 import ru.altf000.multimodule.common_entities.entity.RecommendationEntity
-import ru.altf000.multimodule.constants.Constants
+import ru.altf000.multimodule.common_utils.constants.Constants
 
 @Database(
     entities = [

@@ -6,12 +6,10 @@ plugins {
 
 android {
     compileSdk = rootProject.extra["compileSdkVersion"] as Int
-
     defaultConfig {
         minSdk = rootProject.extra["minSdkVersion"] as Int
         targetSdk = rootProject.extra["compileSdkVersion"] as Int
     }
-
     buildTypes {
         getByName("release") {
             isMinifyEnabled = false
@@ -19,19 +17,24 @@ android {
             proguardFiles("proguard-rules.pro")
         }
     }
+    buildFeatures {
+        viewBinding = true
+    }
 }
 
 dependencies {
 
+    implementation(project(":common-utils"))
     implementation(project(":common-entities"))
 
-    val recyclerView = rootProject.extra["recyclerview_version"]
-    implementation("androidx.recyclerview:recyclerview:$recyclerView")
-
-    val appCompat = rootProject.extra["appcompat_version"]
-    implementation("androidx.appcompat:appcompat:$appCompat")
-
-    val glide = rootProject.extra["glide_version"]
-    implementation("com.github.bumptech.glide:glide:$glide")
-    annotationProcessor("com.github.bumptech.glide:compiler:$glide")
+    implementation(libs.recyclerview)
+    implementation(libs.appcompat)
+    implementation(libs.glide)
+    annotationProcessor(libs.glide.compiler)
+    implementation(libs.lifecycle.common)
+    implementation(libs.paging)
+    implementation(libs.coroutines.android)
+    implementation(libs.constraintlayout)
+    implementation(libs.material)
+    implementation(libs.core.ktx)
 }

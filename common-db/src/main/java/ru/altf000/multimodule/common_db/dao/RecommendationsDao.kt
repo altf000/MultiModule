@@ -5,7 +5,7 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import ru.altf000.multimodule.common_entities.entity.RecommendationEntity
-import ru.altf000.multimodule.constants.Constants
+import ru.altf000.multimodule.common_utils.constants.Constants
 
 @Dao
 interface RecommendationsDao {

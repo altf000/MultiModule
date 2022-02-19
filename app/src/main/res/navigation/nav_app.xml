@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nav_app"
+    app:startDestination="@id/startFragment">
+
+    <action
+        android:id="@+id/actionGlobalStartFragment"
+        app:destination="@id/startFragment" />
+
+    <fragment
+        android:id="@+id/startFragment"
+        android:name="ru.altf000.multimodule.presentation.view.StartFragment"
+        android:label="StartFragment">
+
+        <action
+            android:id="@+id/actionStartFragmentToCollectionFragment"
+            app:destination="@id/nav_collection_list"
+            app:popUpTo="@id/startFragment"
+            app:popUpToInclusive="true" />
+
+    </fragment>
+
+    <action
+        android:id="@id/actionGlobalCollectionListFragment"
+        app:destination="@id/nav_collection_list" />
+
+    <include app:graph="@navigation/nav_collection_list" />
+
+    <action
+        android:id="@id/actionGlobalMovieDetailFragment"
+        app:destination="@id/nav_movie_detail" />
+
+    <include app:graph="@navigation/nav_movie_detail" />
+
+</navigation>

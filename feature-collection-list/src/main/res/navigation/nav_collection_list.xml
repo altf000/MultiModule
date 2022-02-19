@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nav_collection_list"
+    app:startDestination="@id/collectionListFragment">
+
+    <fragment
+        android:id="@+id/collectionListFragment"
+        android:name="ru.altf000.multimodule.collection_list.presentation.view.CollectionListFragment"
+        android:label="CollectionListFragment">
+
+        <argument
+            android:name="collectionId"
+            app:argType="integer" />
+
+    </fragment>
+
+    <action
+        android:id="@+id/actionGlobalCollectionListFragment"
+        app:destination="@id/collectionListFragment" />
+
+</navigation>

@@ -44,44 +44,28 @@ android {
 
 dependencies {
 
-    implementation(project(":module-injector"))
     implementation(project(":common-network"))
     implementation(project(":common-db"))
     implementation(project(":common"))
-    implementation(project(":constants"))
+    implementation(project(":common-ui"))
+    implementation(project(":common-utils"))
     implementation(project(":common-entities"))
-    implementation(project(":feature-collection-list-api"))
-    implementation(project(":feature-collection-list-impl"))
-    implementation(project(":feature-movie-detail-api"))
-    implementation(project(":feature-movie-detail-impl"))
+    implementation(project(":feature-collection-list"))
+    implementation(project(":feature-movie-detail"))
     implementation(project(":feature-recommendation-api"))
     implementation(project(":feature-recommendation-impl"))
+    implementation(project(":common-utils"))
 
-    val appCompat = rootProject.extra["appcompat_version"]
-    implementation("androidx.appcompat:appcompat:$appCompat")
-
-    val cicerone = rootProject.extra["cicerone_version"]
-    implementation("com.github.terrakok:cicerone:$cicerone")
-
-    val dagger = rootProject.extra["dagger_version"]
-    compileOnly("javax.annotation:jsr250-api:1.0")
-    implementation("com.google.dagger:dagger:$dagger")
-    kapt("com.google.dagger:dagger-compiler:$dagger")
-
-    val coroutines = rootProject.extra["coroutines_version"]
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutines")
-
-    val room = rootProject.extra["room_version"]
-    implementation("androidx.room:room-runtime:$room")
-    kapt("androidx.room:room-compiler:$room")
-    implementation("androidx.room:room-ktx:$room")
-
-    val timber = rootProject.extra["timber_version"]
-    implementation("com.jakewharton.timber:timber:$timber")
-
-    val lifecycleKtx = rootProject.extra["lifecycle_ktx_version"]
-    implementation("androidx.lifecycle:lifecycle-runtime-ktx:$lifecycleKtx")
-
-    val fragmentKtx = rootProject.extra["fragment_ktx_version"]
-    implementation("androidx.fragment:fragment-ktx:$fragmentKtx")
+    implementation(libs.appcompat)
+    implementation(libs.coroutines.android)
+    implementation(libs.room.runtime)
+    implementation(libs.room.ktx)
+    kapt(libs.room.compiler)
+    implementation(libs.timber)
+    implementation(libs.lifecycle.runtime.ktx)
+    implementation(libs.fragment.ktx)
+    implementation(libs.koin.core)
+    implementation(libs.koin.android)
+    implementation(libs.navigation.fragment.ktx)
+    implementation(libs.navigation.ui.ktx)
 }

@@ -7,12 +7,10 @@ plugins {
 
 android {
     compileSdk = rootProject.extra["compileSdkVersion"] as Int
-
     defaultConfig {
         minSdk = rootProject.extra["minSdkVersion"] as Int
         targetSdk = rootProject.extra["compileSdkVersion"] as Int
     }
-
     buildTypes {
         getByName("release") {
             isMinifyEnabled = false
@@ -24,13 +22,9 @@ android {
 
 dependencies {
 
-    implementation(project(":constants"))
-
-    val gson = rootProject.extra["gson_version"]
-    implementation("com.google.code.gson:gson:$gson")
-
-    val room = rootProject.extra["room_version"]
-    implementation("androidx.room:room-runtime:$room")
-    kapt("androidx.room:room-compiler:$room")
-    implementation("androidx.room:room-ktx:$room")
+    implementation(project(":common-utils"))
+    implementation(libs.gson)
+    implementation(libs.room.runtime)
+    implementation(libs.room.ktx)
+    kapt(libs.room.compiler)
 }

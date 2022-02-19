@@ -2,7 +2,7 @@ package ru.altf000.multimodule.common_db.dao
 
 import androidx.room.*
 import ru.altf000.multimodule.common_entities.entity.FullContentEntity
-import ru.altf000.multimodule.constants.Constants
+import ru.altf000.multimodule.common_utils.constants.Constants
 
 @Dao
 interface FullContentDao {
