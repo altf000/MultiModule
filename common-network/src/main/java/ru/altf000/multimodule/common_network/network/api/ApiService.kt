@@ -6,6 +6,7 @@ import ru.altf000.multimodule.common_entities.network.categories.CategoriesResul
 import ru.altf000.multimodule.common_entities.network.content.ContentResultNetwork
 import ru.altf000.multimodule.common_entities.network.content.FullContentResultNetwork
 import ru.altf000.multimodule.common_entities.network.countries.CountriesResultNetwork
+import ru.altf000.multimodule.common_entities.network.pages.PagesResultNetwork
 import ru.altf000.multimodule.common_network.network.adapter.RequestResult
 
 interface ApiService {
@@ -34,4 +35,7 @@ interface ApiService {
         @Query("id") id: Int,
         @Query("scenario_id") scenario: String
     ): RequestResult<ContentResultNetwork>
+
+    @GET("pages/v5?id=1&width=5")
+    suspend fun getPages(): RequestResult<PagesResultNetwork>
 }

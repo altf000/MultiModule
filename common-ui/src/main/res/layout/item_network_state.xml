@@ -13,7 +13,7 @@
         android:fontFamily="@font/bold"
         android:gravity="center"
         android:text="Ошибка получения данных"
-        android:textColor="?android:textColorSecondary"
+        android:textColor="?colorPrimaryDark"
         android:textSize="16sp"
         app:layout_constraintBottom_toTopOf="@+id/progressBar"
         app:layout_constraintEnd_toEndOf="parent"

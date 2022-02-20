@@ -8,6 +8,7 @@ import ru.altf000.multimodule.common.di.commonModule
 import ru.altf000.multimodule.common_db.di.dbModule
 import ru.altf000.multimodule.common_network.di.networkModule
 import ru.altf000.multimodule.di.appModule
+import ru.altf000.multimodule.feature_collections.presentation.di.collectionsModule
 import ru.altf000.multimodule.feature_recommendation_impl.di.recommendationsModule
 import ru.altf000.multimodule.movie_detail.di.movieDetailModule
 import timber.log.Timber
@@ -23,6 +24,7 @@ class App : Application() {
                 dbModule,
                 networkModule,
                 collectionListModule,
+                collectionsModule,
                 movieDetailModule,
                 recommendationsModule,
                 commonModule

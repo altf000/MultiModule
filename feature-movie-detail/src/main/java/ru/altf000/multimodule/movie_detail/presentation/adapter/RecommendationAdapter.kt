@@ -26,7 +26,7 @@ internal class RecommendationAdapter(
         }
     }
 
-    override fun onUnbind(binding: ItemRecommendationBinding) {
+    override fun onUnbind(binding: ItemRecommendationBinding, position: Int) {
         with(binding) {
             poster.setImageDrawable(null)
             title.text = null

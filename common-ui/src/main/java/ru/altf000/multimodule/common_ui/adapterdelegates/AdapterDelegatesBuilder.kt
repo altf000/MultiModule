@@ -14,7 +14,7 @@ fun createAdapter(
     recyclerView: RecyclerView,
     layoutManager: LinearLayoutManager = LinearLayoutManager(recyclerView.context),
     selector: DSelector,
-    block: AdapterDelegateBuilder.() -> Unit
+    block: AdapterDelegateBuilder.() -> Unit = {}
 ): ConcatAdapter {
     recyclerView.apply {
         this.layoutManager = layoutManager

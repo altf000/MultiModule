@@ -8,7 +8,7 @@ import ru.altf000.multimodule.common_entities.domain.Content
 import ru.altf000.multimodule.common_ui.adapterdelegates.AdapterDelegate
 import ru.altf000.multimodule.common_ui.utils.load
 
-class ContentItemAdapter(
+internal class ContentItemAdapter(
     private val onClickAction: (Content) -> Unit
 ) : AdapterDelegate<ContentItem, ItemContentBinding>() {
 
@@ -27,7 +27,7 @@ class ContentItemAdapter(
         }
     }
 
-    override fun onUnbind(binding: ItemContentBinding) {
+    override fun onUnbind(binding: ItemContentBinding, position: Int) {
         with(binding) {
             poster.setImageDrawable(null)
             title.text = null

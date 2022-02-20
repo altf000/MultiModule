@@ -26,7 +26,7 @@
             android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
             android:fontFamily="@font/bold"
-            android:textColor="#000000"
+            android:textColor="?colorPrimaryDark"
             android:textSize="28sp"
             tools:text="Терминатор: закат и рассвет" />
 
@@ -39,6 +39,7 @@
             android:layout_marginTop="8dp"
             android:layout_marginEnd="16dp"
             android:fontFamily="@font/medium"
+            android:textColor="?colorPrimary"
             android:textSize="16sp"
             tools:text="2019, США, Ужасы" />
 
@@ -52,7 +53,7 @@
             android:layout_marginEnd="16dp"
             android:fontFamily="@font/regular"
             android:gravity="left"
-            android:textColor="#232323"
+            android:textColor="?colorPrimary"
             android:textSize="18sp"
             tools:text="Терминатор: закат и рассвет" />
 
@@ -73,7 +74,7 @@
                 android:layout_marginEnd="16dp"
                 android:fontFamily="@font/bold"
                 android:text="Смотрите также"
-                android:textColor="#000000"
+                android:textColor="?colorPrimaryDark"
                 android:textSize="20sp"
                 tools:text="Смотрите также" />
 

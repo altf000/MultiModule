@@ -10,7 +10,7 @@
         android:layout_marginHorizontal="16dp"
         android:layout_marginTop="16dp"
         android:fontFamily="@font/medium"
-        android:textColor="#171717"
+        android:textColor="?colorPrimaryDark"
         android:textSize="22sp" />
 
 </FrameLayout>

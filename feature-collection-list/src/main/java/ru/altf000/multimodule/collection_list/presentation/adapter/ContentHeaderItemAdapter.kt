@@ -6,7 +6,7 @@ import ru.altf000.multimodule.collection_list.R
 import ru.altf000.multimodule.collection_list.databinding.ItemContentHeaderBinding
 import ru.altf000.multimodule.common_ui.adapterdelegates.AdapterDelegate
 
-class ContentHeaderItemAdapter : AdapterDelegate<ContentHeaderItem, ItemContentHeaderBinding>() {
+internal class ContentHeaderItemAdapter : AdapterDelegate<ContentHeaderItem, ItemContentHeaderBinding>() {
 
     override val viewType: Int = R.layout.item_content_header
     override val itemClass = ContentHeaderItem::class.java
@@ -18,7 +18,7 @@ class ContentHeaderItemAdapter : AdapterDelegate<ContentHeaderItem, ItemContentH
         binding.title.text = item.data
     }
 
-    override fun onUnbind(binding: ItemContentHeaderBinding) {
+    override fun onUnbind(binding: ItemContentHeaderBinding, position: Int) {
         binding.title.text = null
     }
 }

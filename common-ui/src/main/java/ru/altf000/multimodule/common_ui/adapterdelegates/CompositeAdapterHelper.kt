@@ -28,7 +28,7 @@ class CompositeAdapterHelper(private val delegatesSelector: DSelector) {
     }
 
     fun recycled(holder: BindingVH) {
-        getDelegate(holder.itemViewType).onUnbind(holder.binding)
+        getDelegate(holder.itemViewType).onUnbind(holder.binding, holder.bindingAdapterPosition)
     }
 
     @Suppress("UNCHECKED_CAST")

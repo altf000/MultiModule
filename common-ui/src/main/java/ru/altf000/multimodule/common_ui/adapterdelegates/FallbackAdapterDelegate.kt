@@ -11,7 +11,7 @@ class FallbackAdapterDelegate : AdapterDelegate<DItem, ViewBinding>() {
     override val itemClass = FallbackAdapterDelegateItem::class.java
     override fun createBinding(parent: ViewGroup) = ViewBinding { View(parent.context) }
     override fun onBind(item: DItem, binding: ViewBinding, position: Int, payloads: List<Any>) {}
-    override fun onUnbind(binding: ViewBinding) {}
+    override fun onUnbind(binding: ViewBinding, position: Int) {}
 
     data class FallbackAdapterDelegateItem(val item: Any?) : DItem() {
         override val identifier = Random.nextLong()

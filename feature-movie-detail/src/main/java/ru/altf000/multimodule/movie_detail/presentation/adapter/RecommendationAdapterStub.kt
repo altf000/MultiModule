@@ -17,6 +17,6 @@ internal class RecommendationAdapterStub : AdapterDelegate<RecommendationItem, I
     override fun onBind(item: RecommendationItem, binding: ItemRecommendationStubBinding, position: Int, payloads: List<Any>) {
     }
 
-    override fun onUnbind(binding: ItemRecommendationStubBinding) {
+    override fun onUnbind(binding: ItemRecommendationStubBinding, position: Int) {
     }
 }
