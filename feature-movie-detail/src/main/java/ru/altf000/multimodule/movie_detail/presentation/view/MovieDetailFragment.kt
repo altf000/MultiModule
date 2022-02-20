@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
-import ru.altf000.multimodule.common.providers.MetaInfoProvider
+import ru.altf000.multimodule.common.providers.ContentMetaInfoProvider
 import ru.altf000.multimodule.common_entities.domain.FullContent
 import ru.altf000.multimodule.common_ui.adapterdelegates.createAdapter
 import ru.altf000.multimodule.common_ui.adapterdelegates.delegateSelector
@@ -25,7 +25,7 @@ internal class MovieDetailFragment : BaseFragment(R.layout.fragment_detail) {
 
     private val args by navArgs<MovieDetailFragmentArgs>()
     private val viewModel: MovieDetailViewModel by viewModel { parametersOf(args.content) }
-    private val metaProvider: MetaInfoProvider by inject()
+    private val metaProvider: ContentMetaInfoProvider by inject()
 
     override val binding by viewBinding(FragmentDetailBinding::bind)
 

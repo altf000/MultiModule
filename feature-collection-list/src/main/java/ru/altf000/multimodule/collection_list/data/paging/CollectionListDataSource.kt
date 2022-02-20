@@ -6,7 +6,6 @@ import ru.altf000.multimodule.common_entities.domain.Content
 import ru.altf000.multimodule.common_entities.mapper.toDomain
 import ru.altf000.multimodule.common_network.network.adapter.result.asSuccess
 import ru.altf000.multimodule.common_network.network.adapter.result.isSuccess
-import ru.altf000.multimodule.common_network.network.adapter.result.map
 import ru.altf000.multimodule.common_network.network.api.ApiService
 
 internal class CollectionListDataSource(
@@ -21,15 +20,12 @@ internal class CollectionListDataSource(
         val to = from + params.loadSize - 1
 
         try {
-
             val apiResult = apiService
                 .getCollectionList(collectionId, from, to)
-                .map { response ->
-                    response.result.map { it.toDomain() }
-                }
-
             return if (apiResult.isSuccess()) {
-                val items = apiResult.asSuccess().value
+                val items = apiResult.asSuccess().value.result
+                    .map { it.toDomain() }
+                    .sortedByDescending { it.year }
                 LoadResult.Page(
                     data = items,
                     prevKey = null,

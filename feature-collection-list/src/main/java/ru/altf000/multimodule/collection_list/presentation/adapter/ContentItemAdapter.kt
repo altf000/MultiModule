@@ -8,7 +8,7 @@ import ru.altf000.multimodule.common_entities.domain.Content
 import ru.altf000.multimodule.common_ui.adapterdelegates.AdapterDelegate
 import ru.altf000.multimodule.common_ui.utils.load
 
-class ContentAdapter(
+class ContentItemAdapter(
     private val onClickAction: (Content) -> Unit
 ) : AdapterDelegate<ContentItem, ItemContentBinding>() {
 

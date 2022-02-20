@@ -7,7 +7,8 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
 import ru.altf000.multimodule.collection_list.R
 import ru.altf000.multimodule.collection_list.databinding.FragmentCollectionListBinding
-import ru.altf000.multimodule.collection_list.presentation.adapter.ContentAdapter
+import ru.altf000.multimodule.collection_list.presentation.adapter.ContentHeaderItemAdapter
+import ru.altf000.multimodule.collection_list.presentation.adapter.ContentItemAdapter
 import ru.altf000.multimodule.collection_list.presentation.viewmodel.CollectionListViewModel
 import ru.altf000.multimodule.common_ui.adapterdelegates.CompositePagingAdapter
 import ru.altf000.multimodule.common_ui.adapterdelegates.createAdapter
@@ -30,9 +31,8 @@ internal class CollectionListFragment : BaseFragment(R.layout.fragment_collectio
             lifecycleOwner = viewLifecycleOwner,
             recyclerView = recyclerView,
             selector = delegateSelector {
-                addDelegate(ContentAdapter {
-                    viewModel.onItemClicked(it)
-                })
+                addDelegate(ContentItemAdapter { viewModel.onItemClicked(it) })
+                addDelegate(ContentHeaderItemAdapter())
             }
         ) {
             pagingAdapter = addPagingAdapter(viewModel.pager).withNetworkStateAdapter()

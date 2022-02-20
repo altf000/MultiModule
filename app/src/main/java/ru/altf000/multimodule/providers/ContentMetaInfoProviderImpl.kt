@@ -2,16 +2,16 @@ package ru.altf000.multimodule.providers
 
 import ru.altf000.multimodule.common.datasource.CountriesReadOnlyDataSource
 import ru.altf000.multimodule.common.datasource.GenresDataSource
-import ru.altf000.multimodule.common.providers.MetaInfoProvider
+import ru.altf000.multimodule.common.providers.ContentMetaInfoProvider
 import ru.altf000.multimodule.common_entities.domain.Country
 import ru.altf000.multimodule.common_entities.domain.FullContent
 import ru.altf000.multimodule.common_entities.domain.Genre
 import ru.altf000.multimodule.common_utils.constants.Constants
 
-class MetaInfoProviderImpl(
+class ContentMetaInfoProviderImpl(
     private val countriesDataSource: CountriesReadOnlyDataSource,
     private val genresDataSource: GenresDataSource
-) : MetaInfoProvider {
+) : ContentMetaInfoProvider {
 
     override fun getMeta(content: FullContent): String {
         val result = StringBuffer()
@@ -40,5 +40,4 @@ class MetaInfoProviderImpl(
     private fun List<Country>.getCountryTitle(countryId: Int) = find { it.id == countryId }?.title
 
     private fun List<Genre>.getGenreTitle(genreId: Int) = find { it.id == genreId }?.title
-
 }

@@ -38,7 +38,7 @@ internal class MovieDetailViewModel(
 
     private fun loadContent() {
         launch {
-            getContentInfo(GetContentInfoUseCase.Params(content)).collectLatest { result ->
+            getContentInfo(GetContentInfoUseCase.Params(content)).collect { result ->
                 withContext(dispatchersProvider.main) {
                     when (result) {
                         is RequestResult.Success -> {

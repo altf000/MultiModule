@@ -1,4 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="collection_list_load_error_message">Ошибка загрузки данных</string>
+    <string name="content_header_item">%s год</string>
 </resources>
