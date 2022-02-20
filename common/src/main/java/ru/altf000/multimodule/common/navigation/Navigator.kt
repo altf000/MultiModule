@@ -6,6 +6,6 @@ import ru.altf000.multimodule.common_entities.domain.Content
 interface Navigator {
     val navigateActions: Flow<NavigateAction?>
     fun navigate(action: NavigateAction)
-    fun collection(collectionId: Int)
+    fun main()
     fun movieDetail(item: Content)
 }

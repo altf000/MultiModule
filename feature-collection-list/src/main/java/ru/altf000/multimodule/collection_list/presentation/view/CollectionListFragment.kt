@@ -19,8 +19,8 @@ import ru.altf000.multimodule.common_utils.extentions.collectLatestOnCreated
 
 internal class CollectionListFragment : BaseFragment(R.layout.fragment_collection_list) {
 
-    private val args by navArgs<CollectionListFragmentArgs>()
-    private val viewModel: CollectionListViewModel by viewModel { parametersOf(args.collectionId) }
+//    private val args by navArgs<CollectionListFragmentArgs>()
+    private val viewModel: CollectionListViewModel by viewModel { parametersOf(12345) }
 
     private lateinit var pagingAdapter: CompositePagingAdapter
 

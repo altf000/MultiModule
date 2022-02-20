@@ -8,12 +8,10 @@
         android:id="@+id/movieDetailFragment"
         android:name="ru.altf000.multimodule.movie_detail.presentation.view.MovieDetailFragment"
         android:label="MovieDetailFragment">
-
         <argument
             android:name="content"
             app:argType="ru.altf000.multimodule.common_entities.domain.Content"
             app:nullable="false" />
-
     </fragment>
 
     <action

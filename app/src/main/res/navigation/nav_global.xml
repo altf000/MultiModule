@@ -4,33 +4,26 @@
     android:id="@+id/nav_app"
     app:startDestination="@id/startFragment">
 
-    <action
-        android:id="@+id/actionGlobalStartFragment"
-        app:destination="@id/startFragment" />
-
     <fragment
         android:id="@+id/startFragment"
         android:name="ru.altf000.multimodule.presentation.view.StartFragment"
         android:label="StartFragment">
-
         <action
-            android:id="@+id/actionStartFragmentToCollectionFragment"
-            app:destination="@id/nav_collection_list"
+            android:id="@+id/actionStartFragmentToMainFragment"
+            app:destination="@id/mainFragment"
             app:popUpTo="@id/startFragment"
             app:popUpToInclusive="true" />
-
     </fragment>
 
-    <action
-        android:id="@id/actionGlobalCollectionListFragment"
-        app:destination="@id/nav_collection_list" />
+    <fragment
+        android:id="@+id/mainFragment"
+        android:name="ru.altf000.multimodule.presentation.view.MainFragment"
+        android:label="MainFragment" />
 
-    <include app:graph="@navigation/nav_collection_list" />
+    <include app:graph="@navigation/nav_movie_detail" />
 
     <action
         android:id="@id/actionGlobalMovieDetailFragment"
         app:destination="@id/nav_movie_detail" />
-
-    <include app:graph="@navigation/nav_movie_detail" />
 
 </navigation>

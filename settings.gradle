@@ -7,7 +7,7 @@ pluginManagement {
     plugins {
         id 'com.android.application' version '7.2.0-alpha07'
         id 'com.android.library' version '7.2.0-alpha07'
-        id 'org.jetbrains.kotlin.android' version '1.6.0'
+        id 'org.jetbrains.kotlin.android' version '1.6.10'
         id 'org.jetbrains.kotlin.kapt' version '1.6.0'
         id 'org.jetbrains.kotlin.plugin.parcelize' version "1.6.0"
     }
@@ -29,6 +29,7 @@ include ':app'
 include ':common-network'
 include ':common-entities'
 include ':feature-collection-list'
+include ':feature-collections'
 include ':feature-movie-detail'
 include ':feature-recommendation-api'
 include ':feature-recommendation-impl'

@@ -17,7 +17,7 @@
         android:usesCleartextTraffic="true">
 
         <activity
-            android:name="ru.altf000.multimodule.presentation.view.StartActivity"
+            android:name="ru.altf000.multimodule.presentation.view.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

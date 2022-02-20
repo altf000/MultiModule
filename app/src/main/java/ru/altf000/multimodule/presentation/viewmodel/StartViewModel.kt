@@ -1,5 +1,6 @@
 package ru.altf000.multimodule.presentation.viewmodel
 
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collect
@@ -8,7 +9,7 @@ import kotlinx.coroutines.withContext
 import ru.altf000.multimodule.common.viewmodel.BaseViewModel
 import ru.altf000.multimodule.domain.BootloaderUseCase
 
-class StartViewModel(
+internal class StartViewModel(
     private val bootloaderUseCase: BootloaderUseCase
 ) : BaseViewModel() {
 
@@ -20,15 +21,13 @@ class StartViewModel(
             bootloaderUseCase(Unit).collect { isLoaded ->
                 withContext(dispatchersProvider.main) {
                     if (isLoaded) {
+                        // simulate long work
+                        delay(2000)
                         _isLoaded.value = true
-                        navigator.collection(COLLECTION_ID)
+                        navigator.main()
                     }
                 }
             }
         }
-    }
-
-    companion object {
-        private const val COLLECTION_ID = 1376
     }
 }
