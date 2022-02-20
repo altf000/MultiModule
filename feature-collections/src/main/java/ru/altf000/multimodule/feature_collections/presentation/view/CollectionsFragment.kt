@@ -6,6 +6,7 @@ import ru.altf000.multimodule.common_ui.adapterdelegates.createAdapter
 import ru.altf000.multimodule.common_ui.adapterdelegates.delegateSelector
 import ru.altf000.multimodule.common_ui.fragment.BaseFragment
 import ru.altf000.multimodule.common_ui.utils.viewBinding
+import ru.altf000.multimodule.common_utils.extentions.collectOnStarted
 import ru.altf000.multimodule.feature_collections.R
 import ru.altf000.multimodule.feature_collections.databinding.FragmentCollectionsBinding
 import ru.altf000.multimodule.feature_collections.presentation.view.adapter.HorizontalItemAdapter
@@ -21,9 +22,13 @@ class CollectionsFragment : BaseFragment(R.layout.fragment_collections) {
         recyclerView.adapter = createAdapter(
             lifecycleOwner = viewLifecycleOwner,
             recyclerView = recyclerView,
-            selector = delegateSelector { addDelegate(HorizontalItemAdapter({ viewModel.onItemClicked(it) })) }
+            selector = delegateSelector { addDelegate(HorizontalItemAdapter { viewModel.onItemClicked(it) }) }
         ) {
             addAdapters(viewModel.collectionItems)
         }
+        viewModel.isRefreshing.collectOnStarted(viewLifecycleOwner) { isRefreshing ->
+            binding.root.isRefreshing = isRefreshing
+        }
+        root.setOnRefreshListener { viewModel.refresh() }
     }
 }
