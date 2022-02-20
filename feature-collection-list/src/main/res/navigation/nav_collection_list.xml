@@ -10,6 +10,7 @@
         android:label="CollectionListFragment">
         <argument
             android:name="collectionId"
+            android:defaultValue="4796"
             app:argType="integer" />
     </fragment>
 
