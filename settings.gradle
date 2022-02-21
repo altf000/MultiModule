@@ -30,7 +30,7 @@ include ':common-network'
 include ':common-entities'
 include ':feature-collection-list'
 include ':feature-collections'
-include ':feature-movie-detail'
+include ':feature-content-detail'
 include ':feature-recommendation-api'
 include ':feature-recommendation-impl'
 

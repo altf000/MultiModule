@@ -36,7 +36,7 @@ internal class CollectionListViewModel(
             }
             .cachedIn(viewModelScope)
 
-    fun onItemClicked(item: Content) {
-        navigator.movieDetail(item)
+    fun onContentClicked(item: Content) {
+        navigator.content(item)
     }
 }

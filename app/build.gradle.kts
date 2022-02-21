@@ -53,7 +53,7 @@ dependencies {
     implementation(project(":common-entities"))
     implementation(project(":feature-collection-list"))
     implementation(project(":feature-collections"))
-    implementation(project(":feature-movie-detail"))
+    implementation(project(":feature-content-detail"))
     implementation(project(":feature-recommendation-api"))
     implementation(project(":feature-recommendation-impl"))
     implementation(project(":common-utils"))

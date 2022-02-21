@@ -20,11 +20,11 @@
         android:name="ru.altf000.multimodule.presentation.view.MainFragment"
         android:label="MainFragment" />
 
-    <include app:graph="@navigation/nav_movie_detail" />
+    <include app:graph="@navigation/nav_content_detail" />
 
     <action
-        android:id="@id/actionGlobalMovieDetailFragment"
-        app:destination="@id/nav_movie_detail" />
+        android:id="@id/actionGlobalContentDetailFragment"
+        app:destination="@id/nav_content_detail" />
 
     <include app:graph="@navigation/nav_collection_list" />
 

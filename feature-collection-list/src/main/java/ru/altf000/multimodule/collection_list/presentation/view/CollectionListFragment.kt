@@ -31,7 +31,7 @@ internal class CollectionListFragment : BaseFragment(R.layout.fragment_collectio
             lifecycleOwner = viewLifecycleOwner,
             recyclerView = recyclerView,
             selector = delegateSelector {
-                addDelegate(ContentItemAdapter { viewModel.onItemClicked(it) })
+                addDelegate(ContentItemAdapter { viewModel.onContentClicked(it) })
                 addDelegate(ContentHeaderItemAdapter())
             }
         ) {

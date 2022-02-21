@@ -2,7 +2,7 @@ package ru.altf000.multimodule.domain
 
 import ru.altf000.multimodule.common.usecase.BaseSuspendUseCase
 
-class BootloaderUseCase(
+internal class BootloaderUseCase(
     private val bootloaderRepository: BootloaderRepository
 ) : BaseSuspendUseCase<Boolean, Unit>() {
 

@@ -8,5 +8,5 @@ interface Navigator {
     fun navigate(action: NavigateAction)
     fun main()
     fun collection(collectionId: Int)
-    fun movieDetail(item: Content)
+    fun content(item: Content)
 }

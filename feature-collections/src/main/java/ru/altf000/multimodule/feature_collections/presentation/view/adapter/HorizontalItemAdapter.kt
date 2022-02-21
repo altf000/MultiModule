@@ -25,7 +25,7 @@ internal class HorizontalItemAdapter(
     override fun createBinding(parent: ViewGroup) =
         ItemHorizontalBinding.inflate(LayoutInflater.from(parent.context), parent, false).apply {
             recyclerView.apply {
-                adapter = CompositeAdapter(delegateSelector { addDelegate(MovieItemAdapter(onItemClick)) })
+                adapter = CompositeAdapter(delegateSelector { addDelegate(ContentItemAdapter(onItemClick)) })
                 layoutManager = LinearLayoutManager(parent.context, RecyclerView.HORIZONTAL, false)
             }
         }

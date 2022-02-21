@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nav_content_detail"
+    app:startDestination="@id/contentDetailFragment">
+
+    <fragment
+        android:id="@+id/contentDetailFragment"
+        android:name="ru.altf000.multimodule.content_detail.presentation.view.ContentDetailFragment"
+        android:label="MovieDetailFragment">
+        <argument
+            android:name="content"
+            app:argType="ru.altf000.multimodule.common_entities.domain.Content"
+            app:nullable="false" />
+    </fragment>
+
+    <action
+        android:id="@+id/actionGlobalContentDetailFragment"
+        app:destination="@id/contentDetailFragment" />
+
+</navigation>

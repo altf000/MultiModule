@@ -9,7 +9,7 @@ import ru.altf000.multimodule.common_entities.domain.Content
 import ru.altf000.multimodule.feature_collections.presentation.domain.GetCollectionsUseCase
 import ru.altf000.multimodule.feature_collections.presentation.view.adapter.HorizontalItem
 import ru.altf000.multimodule.feature_collections.presentation.view.adapter.HorizontalItemData
-import ru.altf000.multimodule.feature_collections.presentation.view.adapter.MovieItem
+import ru.altf000.multimodule.feature_collections.presentation.view.adapter.ContentItem
 
 internal class CollectionsViewModel(
     getCollectionsUseCase: GetCollectionsUseCase
@@ -23,7 +23,7 @@ internal class CollectionsViewModel(
                         title = block.title,
                         collectionId = block.id,
                         items = block.collection.map { content ->
-                            MovieItem(content)
+                            ContentItem(content)
                         }
                     )
                 )
@@ -36,6 +36,6 @@ internal class CollectionsViewModel(
     }
 
     fun onContentClicked(item: Content) {
-        navigator.movieDetail(item)
+        navigator.content(item)
     }
 }

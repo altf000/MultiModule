@@ -1,37 +1,35 @@
-package ru.altf000.multimodule.collection_list.presentation.adapter
+package ru.altf000.multimodule.feature_collections.presentation.view.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import ru.altf000.multimodule.collection_list.R
-import ru.altf000.multimodule.collection_list.databinding.ItemContentBinding
 import ru.altf000.multimodule.common_entities.domain.Content
 import ru.altf000.multimodule.common_ui.adapterdelegates.AdapterDelegate
 import ru.altf000.multimodule.common_ui.utils.load
+import ru.altf000.multimodule.feature_collections.R
+import ru.altf000.multimodule.feature_collections.databinding.ItemMovieBinding
 
 internal class ContentItemAdapter(
     private val onContentClickAction: (Content) -> Unit
-) : AdapterDelegate<ContentItem, ItemContentBinding>() {
+) : AdapterDelegate<ContentItem, ItemMovieBinding>() {
 
-    override val viewType: Int = R.layout.item_content
+    override val viewType: Int = R.layout.item_movie
     override val itemClass = ContentItem::class.java
 
     override fun createBinding(parent: ViewGroup) =
-        ItemContentBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        ItemMovieBinding.inflate(LayoutInflater.from(parent.context), parent, false)
 
-    override fun onBind(item: ContentItem, binding: ItemContentBinding, position: Int, payloads: List<Any>) {
+    override fun onBind(item: ContentItem, binding: ItemMovieBinding, position: Int, payloads: List<Any>) {
         with(binding) {
             poster.load(item.data.posterUrl)
             title.text = item.data.title
-            description.text = item.data.synopsis
             root.setOnClickListener { onContentClickAction(item.data) }
         }
     }
 
-    override fun onUnbind(binding: ItemContentBinding, position: Int) {
+    override fun onUnbind(binding: ItemMovieBinding, position: Int) {
         with(binding) {
             poster.setImageDrawable(null)
             title.text = null
-            description.text = null
             root.setOnClickListener(null)
         }
     }

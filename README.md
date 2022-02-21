@@ -3,7 +3,7 @@
 ### Used libraries and patterns
 
 1. Multi-module (app module, common modules, feature modules)
-2. Single Activity (Fragments, Jetpack Navigation)
+2. Single Activity (Fragments, Jetpack Navigation, SafeArgs)
 3. Clean Architecture
 4. MVVM (Jetpack ViewModels, Kotlin Flows)
 5. Kotlin, Coroutines, Flows

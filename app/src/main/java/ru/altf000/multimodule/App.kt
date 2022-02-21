@@ -10,7 +10,7 @@ import ru.altf000.multimodule.common_network.di.networkModule
 import ru.altf000.multimodule.di.appModule
 import ru.altf000.multimodule.feature_collections.presentation.di.collectionsModule
 import ru.altf000.multimodule.feature_recommendation_impl.di.recommendationsModule
-import ru.altf000.multimodule.movie_detail.di.movieDetailModule
+import ru.altf000.multimodule.content_detail.di.contentDetailModule
 import timber.log.Timber
 
 class App : Application() {
@@ -25,7 +25,7 @@ class App : Application() {
                 networkModule,
                 collectionListModule,
                 collectionsModule,
-                movieDetailModule,
+                contentDetailModule,
                 recommendationsModule,
                 commonModule
             )
