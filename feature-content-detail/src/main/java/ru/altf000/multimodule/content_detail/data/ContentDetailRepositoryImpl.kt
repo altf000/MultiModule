@@ -23,20 +23,23 @@ internal class ContentDetailRepositoryImpl(
     private fun getContent(contentId: Int, isSerial: Boolean) = flow {
 
         val dao = database.fullContentDao()
-        dao.findById(contentId)?.let { entity ->
-            emit(RequestResult.Success.Value(entity.toDomain()))
-        } ?: run {
+        val cachedContent = dao.findById(contentId)
 
-            val apiResult = if (isSerial) {
-                apiService.getSerial(contentId).map { it.result.toDomain() }
-            } else {
-                apiService.getMovie(contentId).map { it.result.toDomain() }
-            }
-            emit(apiResult)
+        if (cachedContent != null) {
+            emit(RequestResult.Success.Value(cachedContent.toDomain()))
+            return@flow
+        }
 
-            if (apiResult.isSuccess()) {
-                dao.insert(apiResult.asSuccess().value.toEntity())
-            }
+        val apiResult = if (isSerial) {
+            apiService.getSerial(contentId).map { it.result.toDomain() }
+        } else {
+            apiService.getMovie(contentId).map { it.result.toDomain() }
+        }
+
+        emit(apiResult)
+
+        if (apiResult.isSuccess()) {
+            dao.insert(apiResult.asSuccess().value.toEntity())
         }
     }
 }

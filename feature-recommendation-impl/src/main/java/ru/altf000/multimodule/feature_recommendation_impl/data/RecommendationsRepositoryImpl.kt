@@ -23,19 +23,17 @@ internal class RecommendationsRepositoryImpl(
 
         if (cachedItems.isNotEmpty()) {
             emit(RequestResult.Success.Value(cachedItems.map { it.toDomain() }))
+            return@flow
         }
 
         val apiResult = apiService
             .getRecommendations(contentId, ITEM_PAGE)
-            .map { response ->
-                response.result.map { it.toDomain() }
-            }
+            .map { response -> response.result.map { it.toDomain() } }
+
         emit(apiResult)
 
         if (apiResult.isSuccess()) {
-            val recommendationsEntities = apiResult.asSuccess().value.map {
-                it.toEntity(contentId)
-            }
+            val recommendationsEntities = apiResult.asSuccess().value.map { it.toEntity(contentId) }
             dao.deleteAll(contentId)
             dao.insertAll(recommendationsEntities)
         }
