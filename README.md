@@ -7,5 +7,5 @@
 3. Clean Architecture
 4. MVVM (Jetpack ViewModels, Kotlin Flows)
 5. Kotin, Coroutines, Flows
-6. Retrofit, OkHttp, Room, Koin, Jetpack Paging 3
+6. Retrofit, OkHttp, Room, Koin, Jetpack Paging 3, ViewBinding
 7. Custom Adapter Delegates pattern (ConcatAdapter, Kotlin Flows)

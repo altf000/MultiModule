@@ -13,7 +13,8 @@ import ru.altf000.multimodule.feature_collections.R
 import ru.altf000.multimodule.feature_collections.databinding.ItemHorizontalBinding
 
 internal class HorizontalItemAdapter(
-    private val onClickAction: (Content) -> Unit
+    private val onHeaderClick: (collectionId: Int) -> Unit,
+    private val onItemClick: (content: Content) -> Unit
 ) : AdapterDelegate<HorizontalItem, ItemHorizontalBinding>() {
 
     override val viewType: Int = R.layout.item_horizontal
@@ -24,13 +25,14 @@ internal class HorizontalItemAdapter(
     override fun createBinding(parent: ViewGroup) =
         ItemHorizontalBinding.inflate(LayoutInflater.from(parent.context), parent, false).apply {
             recyclerView.apply {
-                adapter = CompositeAdapter(delegateSelector { addDelegate(MovieItemAdapter(onClickAction)) })
+                adapter = CompositeAdapter(delegateSelector { addDelegate(MovieItemAdapter(onItemClick)) })
                 layoutManager = LinearLayoutManager(parent.context, RecyclerView.HORIZONTAL, false)
             }
         }
 
     override fun onBind(item: HorizontalItem, binding: ItemHorizontalBinding, position: Int, payloads: List<Any>) {
         binding.title.text = item.data.title
+        binding.title.setOnClickListener { onHeaderClick(item.data.collectionId) }
         (binding.recyclerView.adapter as CompositeAdapter).submitList(item.data.items) {
             scrollStates[position]?.let {
                 (binding.recyclerView.layoutManager as? LinearLayoutManager)?.onRestoreInstanceState(it)
@@ -43,6 +45,7 @@ internal class HorizontalItemAdapter(
             scrollStates[position] = it.onSaveInstanceState()
         }
         binding.title.text = null
+        binding.title.setOnClickListener(null)
         (binding.recyclerView.adapter as CompositeAdapter).submitList(emptyList())
     }
 }

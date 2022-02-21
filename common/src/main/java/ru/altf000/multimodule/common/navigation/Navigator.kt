@@ -7,5 +7,6 @@ interface Navigator {
     val navigateActions: Flow<NavigateAction?>
     fun navigate(action: NavigateAction)
     fun main()
+    fun collection(collectionId: Int)
     fun movieDetail(item: Content)
 }

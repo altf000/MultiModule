@@ -11,5 +11,6 @@ internal data class HorizontalItem(
 
 internal data class HorizontalItemData(
     val title: String,
+    val collectionId: Int,
     val items: List<MovieItem>
 )

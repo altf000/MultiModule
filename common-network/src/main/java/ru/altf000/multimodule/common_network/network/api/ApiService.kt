@@ -37,5 +37,8 @@ interface ApiService {
     ): RequestResult<ContentResultNetwork>
 
     @GET("pages/v5?id=1&width=5")
-    suspend fun getPages(): RequestResult<PagesResultNetwork>
+    suspend fun getPages(
+        @Query("from") from: Int,
+        @Query("to") to: Int
+    ): RequestResult<PagesResultNetwork>
 }

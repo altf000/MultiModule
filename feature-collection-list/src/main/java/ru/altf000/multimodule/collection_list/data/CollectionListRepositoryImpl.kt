@@ -6,7 +6,7 @@ import ru.altf000.multimodule.collection_list.data.paging.CollectionListDataSour
 import ru.altf000.multimodule.collection_list.domain.CollectionListRepository
 import ru.altf000.multimodule.common_network.network.api.ApiService
 
-const val PAGE_SIZE = 20
+private const val PAGE_SIZE = 20
 
 internal class CollectionListRepositoryImpl(
     private val apiService: ApiService

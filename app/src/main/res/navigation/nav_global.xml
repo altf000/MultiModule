@@ -26,4 +26,10 @@
         android:id="@id/actionGlobalMovieDetailFragment"
         app:destination="@id/nav_movie_detail" />
 
+    <include app:graph="@navigation/nav_collection_list" />
+
+    <action
+        android:id="@id/actionGlobalCollectionListFragment"
+        app:destination="@id/nav_collection_list" />
+
 </navigation>

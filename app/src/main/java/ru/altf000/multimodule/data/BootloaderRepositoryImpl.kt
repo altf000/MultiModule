@@ -1,7 +1,5 @@
 package ru.altf000.multimodule.data
 
-import android.util.Log
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.flow
 import ru.altf000.multimodule.common.datasource.CountriesReadOnlyDataSource
 import ru.altf000.multimodule.common.datasource.CountriesUpdatableDataSource
@@ -65,7 +63,7 @@ internal class BootloaderRepositoryImpl(
                 countryWritableDataSource.update(cachedCountries.map { it.toDomain() })
             }
         }
-        
+
         emit(true)
     }
 }

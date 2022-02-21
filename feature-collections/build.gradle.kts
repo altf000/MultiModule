@@ -40,6 +40,7 @@ dependencies {
     implementation(libs.glide)
     annotationProcessor(libs.glide.compiler)
     implementation(libs.swipetorefresh)
+    implementation(libs.paging)
     implementation(libs.timber)
     implementation(libs.fragment.ktx)
     implementation(libs.koin.core)

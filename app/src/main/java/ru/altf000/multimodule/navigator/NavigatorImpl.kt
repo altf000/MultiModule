@@ -1,6 +1,7 @@
 package ru.altf000.multimodule.navigator
 
 import kotlinx.coroutines.flow.MutableSharedFlow
+import ru.altf000.multimodule.collection_list.NavCollectionListDirections
 import ru.altf000.multimodule.common.navigation.NavigateAction
 import ru.altf000.multimodule.common.navigation.Navigator
 import ru.altf000.multimodule.common.navigation.OpenScreenAction
@@ -14,6 +15,16 @@ internal class NavigatorImpl : Navigator {
 
     override fun main() {
         navigate(OpenScreenAction(StartFragmentDirections.actionStartFragmentToMainFragment()))
+    }
+
+    override fun collection(collectionId: Int) {
+        navigate(
+            OpenScreenAction(
+                NavCollectionListDirections.actionGlobalCollectionListFragment().apply {
+                    this.collectionId = collectionId
+                }
+            )
+        )
     }
 
     override fun movieDetail(item: Content) {

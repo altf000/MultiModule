@@ -9,8 +9,4 @@
         android:name="ru.altf000.multimodule.feature_collections.presentation.view.CollectionsFragment"
         android:label="CollectionsFragment" />
 
-    <action
-        android:id="@+id/actionGlobalCollectionsFragment"
-        app:destination="@id/collectionsFragment" />
-
 </navigation>

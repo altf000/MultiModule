@@ -9,7 +9,7 @@ pluginManagement {
         id 'com.android.library' version '7.2.0-alpha07'
         id 'org.jetbrains.kotlin.android' version '1.6.10'
         id 'org.jetbrains.kotlin.kapt' version '1.6.0'
-        id 'org.jetbrains.kotlin.plugin.parcelize' version "1.6.0"
+        id 'org.jetbrains.kotlin.plugin.parcelize' version '1.6.0'
     }
 }
 

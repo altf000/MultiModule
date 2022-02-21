@@ -38,7 +38,6 @@ internal class CollectionListDataSource(
             } else {
                 LoadResult.Error(Exception())
             }
-
         } catch (exc: Exception) {
             return LoadResult.Error(exc)
         }
