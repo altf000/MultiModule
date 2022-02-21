@@ -24,7 +24,7 @@ internal class FlowCallAdapter<R>(private val responseType: Type) : CallAdapter<
                 override fun onResponse(call: Call<R>, response: Response<R>) {
                     val result = if (response.isSuccessful) {
                         @Suppress("UNCHECKED_CAST")
-                        RequestResult.Success.HttpResponse(
+                        RequestResult.Success.HttpSuccess(
                             value = response.body() as R,
                             statusCode = response.code(),
                             statusMessage = response.message(),
@@ -32,7 +32,7 @@ internal class FlowCallAdapter<R>(private val responseType: Type) : CallAdapter<
                         )
                     } else {
                         RequestResult.Failure.HttpError(
-                            HttpException(
+                            error = HttpException(
                                 statusCode = response.code(),
                                 statusMessage = response.message(),
                                 url = call.request().url.toString(),

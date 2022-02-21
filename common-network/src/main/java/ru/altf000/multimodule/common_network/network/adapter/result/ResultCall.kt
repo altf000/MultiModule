@@ -27,7 +27,7 @@ internal class ResultCall<T>(proxy: Call<T>) : CallDelegate<T, RequestResult<T>>
             val result: RequestResult<T>
             if (response.isSuccessful) {
                 @Suppress("UNCHECKED_CAST")
-                result = RequestResult.Success.HttpResponse(
+                result = RequestResult.Success.HttpSuccess(
                     value = response.body() as T,
                     statusCode = response.code(),
                     statusMessage = response.message(),
