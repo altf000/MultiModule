@@ -1,12 +1,12 @@
 package ru.altf000.multimodule.navigator
 
 import kotlinx.coroutines.flow.MutableSharedFlow
-import ru.altf000.multimodule.collection_list.NavCollectionListDirections
+import ru.altf000.multimodule.feature_collection_list.NavCollectionListDirections
 import ru.altf000.multimodule.common.navigation.NavigateAction
 import ru.altf000.multimodule.common.navigation.Navigator
 import ru.altf000.multimodule.common.navigation.OpenScreenAction
 import ru.altf000.multimodule.common_entities.domain.Content
-import ru.altf000.multimodule.content_detail.NavContentDetailDirections
+import ru.altf000.multimodule.feature_content_detail.NavContentDetailDirections
 import ru.altf000.multimodule.presentation.view.StartFragmentDirections
 
 internal class NavigatorImpl : Navigator {

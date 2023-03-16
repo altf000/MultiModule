@@ -7,8 +7,6 @@ buildscript {
     }
 
     dependencies {
-        classpath("com.android.tools.build:gradle:8.1.0-alpha09")
-        classpath("androidx.navigation:navigation-safe-args-gradle-plugin:2.5.3")
         classpath("com.github.ben-manes:gradle-versions-plugin:0.42.0")
     }
 }

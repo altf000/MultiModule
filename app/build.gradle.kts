@@ -5,10 +5,6 @@ plugins {
     kotlin("kapt")
 }
 
-apply {
-    plugin("org.jetbrains.kotlin.android")
-}
-
 android {
 
     namespace = "ru.altf000.multimodule"
@@ -23,7 +19,7 @@ android {
     }
 
     buildTypes {
-        getByName("release") {
+        named("release") {
             isMinifyEnabled = false
             proguardFiles(getDefaultProguardFile("proguard-android.txt"))
             proguardFiles("proguard-rules.pro")
@@ -41,6 +37,10 @@ android {
 
     kapt {
         correctErrorTypes = true
+    }
+
+    packaging {
+        resources.excludes.add("META-INF/versions/9/previous-compilation-data.bin")
     }
 }
 

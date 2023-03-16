@@ -5,6 +5,7 @@ pluginManagement {
         mavenCentral()
     }
     plugins {
+        id 'androidx.navigation.safeargs' version '2.6.0-alpha07'
         id 'com.android.application' version '8.1.0-alpha09'
         id 'com.android.library' version '8.1.0-alpha09'
         id 'org.jetbrains.kotlin.android' version '1.8.20-RC'

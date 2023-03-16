@@ -6,7 +6,7 @@
 
     <fragment
         android:id="@+id/contentDetailFragment"
-        android:name="ru.altf000.multimodule.content_detail.presentation.view.ContentDetailFragment"
+        android:name="ru.altf000.multimodule.feature_content_detail.presentation.view.ContentDetailFragment"
         android:label="MovieDetailFragment">
         <argument
             android:name="content"
