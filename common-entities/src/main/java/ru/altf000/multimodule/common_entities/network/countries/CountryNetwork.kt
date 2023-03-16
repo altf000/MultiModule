@@ -5,5 +5,5 @@ import com.google.gson.annotations.SerializedName
 data class CountryNetwork(
     @SerializedName("id") val id: Int = -1,
     @SerializedName("title") val title: String? = null,
-    @SerializedName("code") val code: String? = null
+    @SerializedName("code") val code: String? = null,
 )

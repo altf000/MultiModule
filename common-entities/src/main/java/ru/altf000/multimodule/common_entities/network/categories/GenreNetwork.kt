@@ -4,5 +4,5 @@ import com.google.gson.annotations.SerializedName
 
 data class GenreNetwork(
     @SerializedName("id") val id: Int = -1,
-    @SerializedName("title") val title: String? = null
+    @SerializedName("title") val title: String? = null,
 )

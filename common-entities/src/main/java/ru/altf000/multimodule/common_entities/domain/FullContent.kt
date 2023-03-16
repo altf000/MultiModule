@@ -15,5 +15,5 @@ data class FullContent(
     val restrict: Int = -1,
     val isSerial: Boolean = false,
     val genres: List<Int> = emptyList(),
-    val country: Int = -1
+    val country: Int = -1,
 ) : Parcelable

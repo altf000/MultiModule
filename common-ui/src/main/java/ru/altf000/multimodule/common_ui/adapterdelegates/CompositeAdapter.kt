@@ -4,14 +4,15 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 
 class CompositeAdapter(
-    delegatesSelector: DSelector
+    delegatesSelector: DSelector,
 ) : ListAdapter<DItem, BindingVH>(AdapterDelegatesDiffCallback()) {
 
     private val helper = CompositeAdapterHelper(delegatesSelector)
 
     override fun getItemViewType(position: Int) = helper.getViewType(getItem(position))
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = helper.create(parent, viewType)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
+        helper.create(parent, viewType)
 
     override fun onBindViewHolder(holder: BindingVH, position: Int) {
         helper.bind(holder, getItem(position), position, emptyList())

@@ -17,7 +17,11 @@ const val WRITE_TIMEOUT = 60L
 const val READ_TIMEOUT = 60L
 
 val networkModule = module {
-    single { HttpLoggingInterceptor(TimberOkHttpLogger()).apply { level = HttpLoggingInterceptor.Level.BODY } }
+    single {
+        HttpLoggingInterceptor(TimberOkHttpLogger()).apply {
+            level = HttpLoggingInterceptor.Level.BODY
+        }
+    }
     single { buildOkHttp(get<HttpLoggingInterceptor>()) }
     single { buildRetrofit<ApiService>(get()) }
 }
@@ -30,7 +34,7 @@ private fun buildOkHttp(interceptor: Interceptor) = OkHttpClient.Builder()
     .build()
 
 private inline fun <reified T> buildRetrofit(
-    okHttpClient: OkHttpClient
+    okHttpClient: OkHttpClient,
 ): T = Retrofit.Builder()
     .baseUrl(BASE_URL)
     .client(okHttpClient)

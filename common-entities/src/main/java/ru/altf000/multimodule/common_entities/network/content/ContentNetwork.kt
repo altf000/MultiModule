@@ -10,5 +10,5 @@ data class ContentNetwork(
     @SerializedName("rating") val rating: RatingRootNetwork? = null,
     @SerializedName("restrict") val restrict: Int,
     @SerializedName("year") val year: Int,
-    @SerializedName("kind") val kind: Int
+    @SerializedName("kind") val kind: Int,
 )

@@ -6,5 +6,5 @@ data class BlockNetwork(
     @SerializedName("id") val id: Int = -1,
     @SerializedName("title") val title: String = "",
     @SerializedName("type") val type: BlockType = BlockType.UNDEFIEND,
-    @SerializedName("request_params") val requestParams: RequestParamsNetwork? = null
+    @SerializedName("request_params") val requestParams: RequestParamsNetwork? = null,
 )

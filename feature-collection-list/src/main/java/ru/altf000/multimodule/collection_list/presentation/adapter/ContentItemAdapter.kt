@@ -9,7 +9,7 @@ import ru.altf000.multimodule.common_ui.adapterdelegates.AdapterDelegate
 import ru.altf000.multimodule.common_ui.utils.load
 
 internal class ContentItemAdapter(
-    private val onContentClickAction: (Content) -> Unit
+    private val onContentClickAction: (Content) -> Unit,
 ) : AdapterDelegate<ContentItem, ItemContentBinding>() {
 
     override val viewType: Int = R.layout.item_content
@@ -18,7 +18,12 @@ internal class ContentItemAdapter(
     override fun createBinding(parent: ViewGroup) =
         ItemContentBinding.inflate(LayoutInflater.from(parent.context), parent, false)
 
-    override fun onBind(item: ContentItem, binding: ItemContentBinding, position: Int, payloads: List<Any>) {
+    override fun onBind(
+        item: ContentItem,
+        binding: ItemContentBinding,
+        position: Int,
+        payloads: List<Any>,
+    ) {
         with(binding) {
             poster.load(item.data.posterUrl)
             title.text = item.data.title

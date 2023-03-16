@@ -12,7 +12,7 @@ class ResultAdapterFactory : CallAdapter.Factory() {
     override fun get(
         returnType: Type,
         annotations: Array<Annotation>,
-        retrofit: Retrofit
+        retrofit: Retrofit,
     ): CallAdapter<*, *>? {
         val rawReturnType: Class<*> = getRawType(returnType)
         if (rawReturnType == Call::class.java) {
@@ -32,7 +32,8 @@ class ResultAdapterFactory : CallAdapter.Factory() {
     }
 }
 
-private class ResultCallAdapter<R>(private val type: Type) : CallAdapter<R, Call<RequestResult<R>>> {
+private class ResultCallAdapter<R>(private val type: Type) :
+    CallAdapter<R, Call<RequestResult<R>>> {
     override fun responseType() = type
     override fun adapt(call: Call<R>): Call<RequestResult<R>> = ResultCall(call)
 }

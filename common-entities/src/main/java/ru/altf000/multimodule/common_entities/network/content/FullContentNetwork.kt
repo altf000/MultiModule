@@ -13,5 +13,5 @@ data class FullContentNetwork(
     @SerializedName("year") val year: Int = -1,
     @SerializedName("kind") val kind: Int = -1,
     @SerializedName("genres") val genres: List<Int> = emptyList(),
-    @SerializedName("country") val country: Int = -1
+    @SerializedName("country") val country: Int = -1,
 )

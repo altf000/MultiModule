@@ -15,7 +15,7 @@ sealed class RequestResult<out T> {
             override val value: T,
             override val statusCode: Int,
             override val statusMessage: String? = null,
-            override val url: String? = null
+            override val url: String? = null,
         ) : Success<T>(), HttpResponse
     }
 
@@ -23,7 +23,8 @@ sealed class RequestResult<out T> {
 
         data class Error(override val error: Throwable?) : Failure<Throwable>(error)
 
-        data class HttpError(override val error: HttpException) : Failure<HttpException>(), HttpResponse {
+        data class HttpError(override val error: HttpException) : Failure<HttpException>(),
+            HttpResponse {
             override val statusCode: Int get() = error.statusCode
             override val statusMessage: String? get() = error.statusMessage
             override val url: String? get() = error.url

@@ -1,7 +1,7 @@
 package ru.altf000.multimodule.common_ui.adapterdelegates
 
 import androidx.recyclerview.widget.DiffUtil
-import java.util.*
+import java.util.Objects
 
 class AdapterDelegatesDiffCallback : DiffUtil.ItemCallback<DItem>() {
 

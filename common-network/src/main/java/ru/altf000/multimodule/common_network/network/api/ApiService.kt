@@ -21,7 +21,7 @@ interface ApiService {
     suspend fun getCollectionList(
         @Query("id") id: Int,
         @Query("from") from: Int,
-        @Query("to") to: Int
+        @Query("to") to: Int,
     ): RequestResult<ContentResultNetwork>
 
     @GET("videoinfo/v7/")
@@ -33,12 +33,12 @@ interface ApiService {
     @GET("hydra/get/recommendation/v7/")
     suspend fun getRecommendations(
         @Query("id") id: Int,
-        @Query("scenario_id") scenario: String
+        @Query("scenario_id") scenario: String,
     ): RequestResult<ContentResultNetwork>
 
     @GET("pages/v5?id=1&width=5")
     suspend fun getPages(
         @Query("from") from: Int,
-        @Query("to") to: Int
+        @Query("to") to: Int,
     ): RequestResult<PagesResultNetwork>
 }

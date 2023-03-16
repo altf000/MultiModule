@@ -5,11 +5,11 @@ import ru.altf000.multimodule.common.usecase.BaseUseCase
 import ru.altf000.multimodule.common_entities.domain.Content
 
 internal class GetCollectionListUseCase(
-    private val collectionListRepository: CollectionListRepository
+    private val collectionListRepository: CollectionListRepository,
 ) : BaseUseCase<PagingData<Content>, GetCollectionListUseCase.Params>() {
 
     override fun invoke(params: Params) =
         collectionListRepository.getCollectionList(params.collectionId)
 
-    class Params(val collectionId: Int)
+    internal data class Params(val collectionId: Int)
 }

@@ -26,7 +26,9 @@ internal class CollectionsFragment : BaseFragment(R.layout.fragment_collections)
             lifecycleOwner = viewLifecycleOwner,
             recyclerView = recyclerView,
             selector = delegateSelector {
-                addDelegate(HorizontalItemAdapter({ viewModel.onHeaderClicked(it) }) { viewModel.onContentClicked(it) })
+                addDelegate(HorizontalItemAdapter({ viewModel.onHeaderClicked(it) }) { content ->
+                    viewModel.onContentClicked(content)
+                })
             }
         ) {
             pagingAdapter = addPagingAdapter(viewModel.collectionItems).withNetworkStateAdapter()

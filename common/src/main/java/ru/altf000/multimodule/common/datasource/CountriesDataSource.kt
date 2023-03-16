@@ -8,4 +8,5 @@ import ru.altf000.multimodule.common_entities.domain.Country
 interface CountriesReadOnlyDataSource : ReadOnlyDataSource<List<Country>>
 interface CountriesUpdatableDataSource : UpdatableDataSource<List<Country>>
 
-class CountriesDataSource : DataSource<List<Country>>(emptyList()), CountriesReadOnlyDataSource, CountriesUpdatableDataSource
+class CountriesDataSource : DataSource<List<Country>>(emptyList()), CountriesReadOnlyDataSource,
+    CountriesUpdatableDataSource

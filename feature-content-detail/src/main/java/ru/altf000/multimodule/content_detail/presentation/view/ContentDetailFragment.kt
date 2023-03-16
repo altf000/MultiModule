@@ -35,8 +35,8 @@ internal class ContentDetailFragment : BaseFragment(R.layout.fragment_content_de
             recyclerView = recommendations,
             layoutManager = LinearLayoutManager(context, RecyclerView.HORIZONTAL, false),
             selector = delegateSelector {
-                addDelegateSelector(RecommendationItemAdapterSelector {
-                    viewModel.onContentClicked(it)
+                addDelegateSelector(RecommendationItemAdapterSelector { content ->
+                    viewModel.onContentClicked(content)
                 })
             }
         ) {

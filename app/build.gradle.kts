@@ -11,6 +11,7 @@ apply {
 
 android {
 
+    namespace = "ru.altf000.multimodule"
     compileSdk = rootProject.extra["compileSdkVersion"] as Int
 
     defaultConfig {

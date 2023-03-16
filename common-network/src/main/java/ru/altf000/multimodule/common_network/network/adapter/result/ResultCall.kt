@@ -20,7 +20,7 @@ internal class ResultCall<T>(proxy: Call<T>) : CallDelegate<T, RequestResult<T>>
 
     private class ResultCallback<T>(
         private val proxy: ResultCall<T>,
-        private val callback: Callback<RequestResult<T>>
+        private val callback: Callback<RequestResult<T>>,
     ) : Callback<T> {
 
         override fun onResponse(call: Call<T>, response: Response<T>) {
@@ -50,6 +50,7 @@ internal class ResultCall<T>(proxy: Call<T>) : CallDelegate<T, RequestResult<T>>
                 is retrofit2.HttpException -> RequestResult.Failure.HttpError(
                     HttpException(error.code(), error.message(), cause = error)
                 )
+
                 is IOException -> RequestResult.Failure.Error(error)
                 else -> RequestResult.Failure.Error(error)
             }

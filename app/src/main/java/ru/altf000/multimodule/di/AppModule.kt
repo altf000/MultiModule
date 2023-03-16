@@ -18,7 +18,16 @@ import ru.altf000.multimodule.providers.StringsProviderImpl
 
 val appModule = module {
     viewModel { StartViewModel(get()) }
-    single<BootloaderRepository> { BootloaderRepositoryImpl(get(), get(), get(), get(), get(), get()) }
+    single<BootloaderRepository> {
+        BootloaderRepositoryImpl(
+            get(),
+            get(),
+            get(),
+            get(),
+            get(),
+            get()
+        )
+    }
     factory { BootloaderUseCase(get()) }
     single<Navigator> { NavigatorImpl() }
     single<DispatchersProvider> { DispatchersProviderImpl() }

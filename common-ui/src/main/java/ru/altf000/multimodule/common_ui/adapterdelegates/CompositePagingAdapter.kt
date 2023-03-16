@@ -11,11 +11,12 @@ import kotlinx.coroutines.flow.stateIn
 
 class CompositePagingAdapter(
     lifecycleScope: CoroutineScope,
-    delegatesSelector: DSelector
+    delegatesSelector: DSelector,
 ) : PagingDataAdapter<DItem, BindingVH>(AdapterDelegatesDiffCallback()) {
 
     private val helper = CompositeAdapterHelper(delegatesSelector)
-    private val updateStateFlow = onPagesUpdatedFlow.stateIn(lifecycleScope, SharingStarted.Lazily, Unit)
+    private val updateStateFlow =
+        onPagesUpdatedFlow.stateIn(lifecycleScope, SharingStarted.Lazily, Unit)
 
     val loadingState = loadStateFlow.map { state ->
         state.refresh is LoadState.Loading
@@ -36,7 +37,8 @@ class CompositePagingAdapter(
 
     override fun getItemViewType(position: Int) = helper.getViewType(item(position))
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = helper.create(parent, viewType)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
+        helper.create(parent, viewType)
 
     override fun onBindViewHolder(holder: BindingVH, position: Int) {
         helper.bind(holder, item(position), position, emptyList())
@@ -58,5 +60,6 @@ class CompositePagingAdapter(
         helper.recycled(holder)
     }
 
-    private fun item(position: Int) = getItem(position) ?: error("Could not get item for $position position")
+    private fun item(position: Int) =
+        getItem(position) ?: error("Could not get item for $position position")
 }

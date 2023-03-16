@@ -5,7 +5,6 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
@@ -37,7 +36,7 @@ fun <T> Flow<T>.collectOnCreated(
 fun <T> Flow<T>.collectOnStarted(
     viewLifecycleOwner: LifecycleOwner,
     cancelBlock: (() -> Unit)? = null,
-    block: suspend (T) -> Unit
+    block: suspend (T) -> Unit,
 ) {
     collectLifecycle(viewLifecycleOwner, Lifecycle.State.STARTED, cancelBlock, block)
 }
@@ -72,7 +71,7 @@ fun <T> Flow<T>.collectLatestOnCreated(
 fun <T> Flow<T>.collectLatestOnStarted(
     viewLifecycleOwner: LifecycleOwner,
     cancelBlock: (() -> Unit)? = null,
-    block: suspend (T) -> Unit
+    block: suspend (T) -> Unit,
 ) {
     collectLifecycle(viewLifecycleOwner, Lifecycle.State.STARTED, cancelBlock, block)
 }

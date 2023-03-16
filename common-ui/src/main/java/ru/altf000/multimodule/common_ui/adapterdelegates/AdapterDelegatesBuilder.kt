@@ -14,7 +14,7 @@ fun createAdapter(
     recyclerView: RecyclerView,
     layoutManager: LinearLayoutManager = LinearLayoutManager(recyclerView.context),
     selector: DSelector,
-    block: AdapterDelegateBuilder.() -> Unit = {}
+    block: AdapterDelegateBuilder.() -> Unit = {},
 ): ConcatAdapter {
     recyclerView.apply {
         this.layoutManager = layoutManager
@@ -23,12 +23,12 @@ fun createAdapter(
 }
 
 fun delegateSelector(
-    block: AdapterDelegatesSelectorImpl.() -> Unit
+    block: AdapterDelegatesSelectorImpl.() -> Unit,
 ) = AdapterDelegatesSelectorImpl().apply(block)
 
 class AdapterDelegateBuilder(
     private val lifecycleOwner: LifecycleOwner,
-    private val selector: DSelector
+    private val selector: DSelector,
 ) {
 
     private val concatAdapter = ConcatAdapter(DEFAULT_CONFIG)
@@ -45,7 +45,7 @@ class AdapterDelegateBuilder(
 
     fun addPagingAdapter(
         items: Flow<PagingData<out DItem>>,
-        onItemsLoadedAction: ((List<DItem>) -> Unit)? = null
+        onItemsLoadedAction: ((List<DItem>) -> Unit)? = null,
     ): CompositePagingAdapter {
 
         if (concatAdapter.adapters.find { it is CompositePagingAdapter } != null) {
@@ -84,6 +84,7 @@ class AdapterDelegateBuilder(
     fun build() = concatAdapter
 
     companion object {
-        private val DEFAULT_CONFIG = ConcatAdapter.Config.Builder().setIsolateViewTypes(false).build()
+        private val DEFAULT_CONFIG =
+            ConcatAdapter.Config.Builder().setIsolateViewTypes(false).build()
     }
 }

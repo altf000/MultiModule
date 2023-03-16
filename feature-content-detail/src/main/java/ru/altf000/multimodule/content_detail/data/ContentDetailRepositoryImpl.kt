@@ -7,7 +7,7 @@ import ru.altf000.multimodule.common_entities.mapper.toEntity
 import ru.altf000.multimodule.common_network.network.adapter.RequestResult
 import ru.altf000.multimodule.common_network.network.adapter.result.asSuccess
 import ru.altf000.multimodule.common_network.network.adapter.result.isSuccess
-import ru.altf000.multimodule.common_network.network.adapter.result.map
+import ru.altf000.multimodule.common_network.network.adapter.result.mapIfSuccess
 import ru.altf000.multimodule.common_network.network.api.ApiService
 import ru.altf000.multimodule.content_detail.domain.ContentDetailRepository
 
@@ -31,9 +31,13 @@ internal class ContentDetailRepositoryImpl(
         }
 
         val apiResult = if (isSerial) {
-            apiService.getSerial(contentId).map { it.result.toDomain() }
+            apiService
+                .getSerial(contentId)
+                .mapIfSuccess { it.result.toDomain() }
         } else {
-            apiService.getMovie(contentId).map { it.result.toDomain() }
+            apiService
+                .getMovie(contentId)
+                .mapIfSuccess { it.result.toDomain() }
         }
 
         emit(apiResult)

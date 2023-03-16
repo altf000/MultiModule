@@ -9,16 +9,21 @@ import ru.altf000.multimodule.feature_collections.R
 import ru.altf000.multimodule.feature_collections.databinding.ItemMovieBinding
 
 internal class ContentItemAdapter(
-    private val onContentClickAction: (Content) -> Unit
+    private val onContentClickAction: (Content) -> Unit,
 ) : AdapterDelegate<ContentItem, ItemMovieBinding>() {
 
-    override val viewType: Int = R.layout.item_movie
+    override val viewType = R.layout.item_movie
     override val itemClass = ContentItem::class.java
 
     override fun createBinding(parent: ViewGroup) =
         ItemMovieBinding.inflate(LayoutInflater.from(parent.context), parent, false)
 
-    override fun onBind(item: ContentItem, binding: ItemMovieBinding, position: Int, payloads: List<Any>) {
+    override fun onBind(
+        item: ContentItem,
+        binding: ItemMovieBinding,
+        position: Int,
+        payloads: List<Any>,
+    ) {
         with(binding) {
             poster.load(item.data.posterUrl)
             title.text = item.data.title

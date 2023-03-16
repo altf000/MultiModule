@@ -12,5 +12,5 @@ data class Content(
     val rating: String = "",
     val year: Int = -1,
     val restrict: Int = -1,
-    val isSerial: Boolean = false
+    val isSerial: Boolean = false,
 ) : Parcelable

@@ -14,7 +14,7 @@ import ru.altf000.multimodule.feature_collections.databinding.ItemHorizontalBind
 
 internal class HorizontalItemAdapter(
     private val onHeaderClick: (collectionId: Int) -> Unit,
-    private val onItemClick: (content: Content) -> Unit
+    private val onItemClick: (content: Content) -> Unit,
 ) : AdapterDelegate<HorizontalItem, ItemHorizontalBinding>() {
 
     override val viewType: Int = R.layout.item_horizontal
@@ -25,27 +25,37 @@ internal class HorizontalItemAdapter(
     override fun createBinding(parent: ViewGroup) =
         ItemHorizontalBinding.inflate(LayoutInflater.from(parent.context), parent, false).apply {
             recyclerView.apply {
-                adapter = CompositeAdapter(delegateSelector { addDelegate(ContentItemAdapter(onItemClick)) })
+                adapter =
+                    CompositeAdapter(delegateSelector { addDelegate(ContentItemAdapter(onItemClick)) })
                 layoutManager = LinearLayoutManager(parent.context, RecyclerView.HORIZONTAL, false)
             }
         }
 
-    override fun onBind(item: HorizontalItem, binding: ItemHorizontalBinding, position: Int, payloads: List<Any>) {
-        binding.title.text = item.data.title
-        binding.title.setOnClickListener { onHeaderClick(item.data.collectionId) }
-        (binding.recyclerView.adapter as CompositeAdapter).submitList(item.data.items) {
-            scrollStates[position]?.let {
-                (binding.recyclerView.layoutManager as? LinearLayoutManager)?.onRestoreInstanceState(it)
+    override fun onBind(
+        item: HorizontalItem,
+        binding: ItemHorizontalBinding,
+        position: Int,
+        payloads: List<Any>,
+    ) {
+        with(binding) {
+            title.text = item.data.title
+            title.setOnClickListener { onHeaderClick(item.data.collectionId) }
+            (recyclerView.adapter as CompositeAdapter).submitList(item.data.items) {
+                scrollStates[position]?.let {
+                    (recyclerView.layoutManager as? LinearLayoutManager)?.onRestoreInstanceState(it)
+                }
             }
         }
     }
 
     override fun onUnbind(binding: ItemHorizontalBinding, position: Int) {
-        (binding.recyclerView.layoutManager as? LinearLayoutManager)?.let {
-            scrollStates[position] = it.onSaveInstanceState()
+        with(binding) {
+            (recyclerView.layoutManager as? LinearLayoutManager)?.let {
+                scrollStates[position] = it.onSaveInstanceState()
+            }
+            title.text = null
+            title.setOnClickListener(null)
+            (recyclerView.adapter as CompositeAdapter).submitList(emptyList())
         }
-        binding.title.text = null
-        binding.title.setOnClickListener(null)
-        (binding.recyclerView.adapter as CompositeAdapter).submitList(emptyList())
     }
 }

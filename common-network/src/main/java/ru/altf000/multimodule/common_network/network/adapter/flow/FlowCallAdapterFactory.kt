@@ -10,7 +10,7 @@ class FlowCallAdapterFactory : CallAdapter.Factory() {
     override fun get(
         returnType: Type,
         annotations: Array<Annotation>,
-        retrofit: Retrofit
+        retrofit: Retrofit,
     ): CallAdapter<*, *>? {
         if (getRawType(returnType) != Flow::class.java) {
             return null

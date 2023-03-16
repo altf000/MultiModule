@@ -9,16 +9,21 @@ import ru.altf000.multimodule.content_detail.R
 import ru.altf000.multimodule.content_detail.databinding.ItemRecommendationBinding
 
 internal class RecommendationItemAdapter(
-    private val onContentClickAction: (Content) -> Unit
+    private val onContentClickAction: (Content) -> Unit,
 ) : AdapterDelegate<RecommendationItem, ItemRecommendationBinding>() {
 
-    override val viewType: Int = R.layout.item_recommendation
+    override val viewType = R.layout.item_recommendation
     override val itemClass = RecommendationItem::class.java
 
     override fun createBinding(parent: ViewGroup) =
         ItemRecommendationBinding.inflate(LayoutInflater.from(parent.context), parent, false)
 
-    override fun onBind(item: RecommendationItem, binding: ItemRecommendationBinding, position: Int, payloads: List<Any>) {
+    override fun onBind(
+        item: RecommendationItem,
+        binding: ItemRecommendationBinding,
+        position: Int,
+        payloads: List<Any>,
+    ) {
         with(binding) {
             poster.load(item.data.posterUrl)
             title.text = item.data.title

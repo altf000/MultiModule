@@ -7,7 +7,7 @@ import ru.altf000.multimodule.common_entities.mapper.toEntity
 import ru.altf000.multimodule.common_network.network.adapter.RequestResult
 import ru.altf000.multimodule.common_network.network.adapter.result.asSuccess
 import ru.altf000.multimodule.common_network.network.adapter.result.isSuccess
-import ru.altf000.multimodule.common_network.network.adapter.result.map
+import ru.altf000.multimodule.common_network.network.adapter.result.mapIfSuccess
 import ru.altf000.multimodule.common_network.network.api.ApiService
 import ru.altf000.multimodule.feature_recommendation_impl.domain.RecommendationsRepository
 
@@ -28,7 +28,7 @@ internal class RecommendationsRepositoryImpl(
 
         val apiResult = apiService
             .getRecommendations(contentId, ITEM_PAGE)
-            .map { response -> response.result.map { it.toDomain() } }
+            .mapIfSuccess { response -> response.result.map { it.toDomain() } }
 
         emit(apiResult)
 
@@ -40,6 +40,6 @@ internal class RecommendationsRepositoryImpl(
     }
 
     companion object {
-        const val ITEM_PAGE = "ITEM_PAGE"
+        private const val ITEM_PAGE = "ITEM_PAGE"
     }
 }

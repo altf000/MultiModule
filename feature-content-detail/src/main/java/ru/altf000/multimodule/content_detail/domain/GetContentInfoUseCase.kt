@@ -6,7 +6,7 @@ import ru.altf000.multimodule.common_entities.domain.FullContent
 import ru.altf000.multimodule.common_network.network.adapter.RequestResult
 
 internal class GetContentInfoUseCase(
-    private val contentDetailRepository: ContentDetailRepository
+    private val contentDetailRepository: ContentDetailRepository,
 ) : BaseSuspendUseCase<RequestResult<FullContent>, GetContentInfoUseCase.Params>() {
 
     override suspend fun invoke(params: Params) = if (params.content.isSerial) {
@@ -15,5 +15,5 @@ internal class GetContentInfoUseCase(
         contentDetailRepository.getMovieInfo(params.content.id)
     }
 
-    data class Params(val content: Content)
+    internal data class Params(val content: Content)
 }

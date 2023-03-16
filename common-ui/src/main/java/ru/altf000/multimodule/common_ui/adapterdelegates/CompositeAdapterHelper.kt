@@ -13,7 +13,8 @@ class CompositeAdapterHelper(private val delegatesSelector: DSelector) {
         return delegate.viewType
     }
 
-    fun create(parent: ViewGroup, viewType: Int) = BindingViewHolder(getDelegate(viewType).createBinding(parent))
+    fun create(parent: ViewGroup, viewType: Int) =
+        BindingViewHolder(getDelegate(viewType).createBinding(parent))
 
     fun bind(holder: BindingVH, item: DItem, position: Int, payloads: List<Any>) {
         getDelegate(holder.itemViewType).onBind(item, holder.binding, position, payloads)
@@ -32,5 +33,6 @@ class CompositeAdapterHelper(private val delegatesSelector: DSelector) {
     }
 
     @Suppress("UNCHECKED_CAST")
-    private fun getDelegate(viewType: Int) = delegatesMap[viewType] as AdapterDelegate<DItem, ViewBinding>
+    private fun getDelegate(viewType: Int) =
+        delegatesMap[viewType] as AdapterDelegate<DItem, ViewBinding>
 }

@@ -53,12 +53,14 @@ class AdapterDelegatesSelectorImpl : AdapterDelegatesSelector<DItem>() {
                     null
                 }
             }
+
             is DAdapter -> if (delegate.itemClass == itemClass) {
                 cachedDelegatesMap[itemClass] = delegate
                 delegate
             } else {
                 null
             }
+
             else -> null
         }
     }

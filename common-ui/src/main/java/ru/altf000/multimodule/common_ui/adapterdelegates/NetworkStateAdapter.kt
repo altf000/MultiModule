@@ -10,12 +10,12 @@ import androidx.recyclerview.widget.RecyclerView
 import ru.altf000.multimodule.common_ui.databinding.ItemNetworkStateBinding
 
 class NetworkStateAdapter(
-    private val adapter: PagingDataAdapter<*, *>
+    private val adapter: PagingDataAdapter<*, *>,
 ) : LoadStateAdapter<NetworkStateAdapter.NetworkStateViewHolder>() {
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
-        loadState: LoadState
+        loadState: LoadState,
     ) = NetworkStateViewHolder(
         ItemNetworkStateBinding.inflate(LayoutInflater.from(parent.context), parent, false)
     ) { adapter.retry() }
@@ -26,7 +26,7 @@ class NetworkStateAdapter(
 
     class NetworkStateViewHolder(
         private val binding: ItemNetworkStateBinding,
-        private val retryAction: () -> Unit
+        private val retryAction: () -> Unit,
     ) : RecyclerView.ViewHolder(binding.root) {
 
         init {

@@ -16,7 +16,7 @@ abstract class NavigateAction : Action() {
 class OpenScreenAction(
     private val directions: NavDirections,
     private val navOptions: NavOptions? = null,
-    private val extras: Navigator.Extras? = null
+    private val extras: Navigator.Extras? = null,
 ) : NavigateAction() {
     override fun navigate(navController: NavController) {
         navController.safeNavigate(directions, navOptions, extras)
@@ -31,14 +31,18 @@ class ExitScreenAction : NavigateAction() {
 
 data class ExitScreenActionTo(
     @IdRes val destinationId: Int,
-    private val inclusive: Boolean
+    private val inclusive: Boolean,
 ) : NavigateAction() {
     override fun navigate(navController: NavController) {
         navController.popBackStack(destinationId, inclusive)
     }
 }
 
-fun NavController.safeNavigate(action: NavDirections, navOptions: NavOptions? = null, extras: Navigator.Extras? = null) {
+fun NavController.safeNavigate(
+    action: NavDirections,
+    navOptions: NavOptions? = null,
+    extras: Navigator.Extras? = null,
+) {
     runCatching {
         navigate(action.actionId, action.arguments, navOptions, extras)
     }.onFailure { ex ->

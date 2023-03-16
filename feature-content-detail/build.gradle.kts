@@ -6,11 +6,15 @@ plugins {
 }
 
 android {
+
+    namespace = "ru.altf000.multimodule.feature_content_detail"
     compileSdk = rootProject.extra["compileSdkVersion"] as Int
+
     defaultConfig {
         minSdk = rootProject.extra["minSdkVersion"] as Int
         targetSdk = rootProject.extra["compileSdkVersion"] as Int
     }
+
     buildTypes {
         getByName("release") {
             isMinifyEnabled = false
@@ -18,6 +22,7 @@ android {
             proguardFiles("proguard-rules.pro")
         }
     }
+
     buildFeatures {
         viewBinding = true
     }

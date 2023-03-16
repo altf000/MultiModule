@@ -16,7 +16,8 @@ class MainFragment : BaseFragment(R.layout.fragment_main) {
     private lateinit var nestedNavController: NavController
 
     override fun onBind(savedInstanceState: Bundle?) = binding.apply {
-        val nestedNavHostFragment = childFragmentManager.findFragmentById(R.id.hostMain) as NavHostFragment
+        val nestedNavHostFragment =
+            childFragmentManager.findFragmentById(R.id.hostMain) as NavHostFragment
         nestedNavController = nestedNavHostFragment.navController
         bottomNavigationView.setupWithNavController(nestedNavController)
     }

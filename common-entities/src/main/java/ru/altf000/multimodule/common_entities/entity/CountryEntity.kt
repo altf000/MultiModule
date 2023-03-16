@@ -8,5 +8,5 @@ import ru.altf000.multimodule.common_utils.constants.Constants
 data class CountryEntity(
     @PrimaryKey val id: Int = -1,
     val title: String = "",
-    val code: String = ""
+    val code: String = "",
 )

@@ -7,12 +7,12 @@ import kotlinx.coroutines.flow.map
 import ru.altf000.multimodule.common.viewmodel.BaseViewModel
 import ru.altf000.multimodule.common_entities.domain.Content
 import ru.altf000.multimodule.feature_collections.presentation.domain.GetCollectionsUseCase
+import ru.altf000.multimodule.feature_collections.presentation.view.adapter.ContentItem
 import ru.altf000.multimodule.feature_collections.presentation.view.adapter.HorizontalItem
 import ru.altf000.multimodule.feature_collections.presentation.view.adapter.HorizontalItemData
-import ru.altf000.multimodule.feature_collections.presentation.view.adapter.ContentItem
 
 internal class CollectionsViewModel(
-    getCollectionsUseCase: GetCollectionsUseCase
+    getCollectionsUseCase: GetCollectionsUseCase,
 ) : BaseViewModel() {
 
     val collectionItems = getCollectionsUseCase(Unit)
@@ -31,11 +31,7 @@ internal class CollectionsViewModel(
         }
         .cachedIn(viewModelScope)
 
-    fun onHeaderClicked(collectionId: Int) {
-        navigator.collection(collectionId)
-    }
+    fun onHeaderClicked(collectionId: Int) = navigator.collection(collectionId)
 
-    fun onContentClicked(item: Content) {
-        navigator.content(item)
-    }
+    fun onContentClicked(item: Content) = navigator.content(item)
 }

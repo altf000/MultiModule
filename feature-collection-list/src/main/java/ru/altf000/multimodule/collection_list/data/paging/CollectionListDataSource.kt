@@ -10,7 +10,7 @@ import ru.altf000.multimodule.common_network.network.api.ApiService
 
 internal class CollectionListDataSource(
     private val apiService: ApiService,
-    private val collectionId: Int
+    private val collectionId: Int,
 ) : PagingSource<Int, Content>() {
 
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, Content> {

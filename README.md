@@ -10,7 +10,6 @@
 6. Retrofit, OkHttp, Room, Koin, Jetpack Paging 3, ViewBinding, Glide
 7. Custom Adapter Delegates pattern (ConcatAdapter, Kotlin Flows)
 
+### Demo
 
-
-### Demonstration
 https://user-images.githubusercontent.com/31753662/154922604-70feaec2-4b84-458d-9ac3-ca34a9981701.mp4

@@ -10,7 +10,7 @@ import ru.altf000.multimodule.common_utils.constants.Constants
 
 class ContentMetaInfoProviderImpl(
     private val countriesDataSource: CountriesReadOnlyDataSource,
-    private val genresDataSource: GenresDataSource
+    private val genresDataSource: GenresDataSource,
 ) : ContentMetaInfoProvider {
 
     override fun getMeta(content: FullContent): String {

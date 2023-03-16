@@ -9,11 +9,15 @@ import ru.altf000.multimodule.feature_collections.presentation.domain.Collection
 private const val PAGE_SIZE = 10
 
 internal class CollectionsRepositoryImpl(
-    private val apiService: ApiService
+    private val apiService: ApiService,
 ) : CollectionsRepository {
 
     override fun getCollections() = Pager(
-        config = PagingConfig(pageSize = PAGE_SIZE, initialLoadSize = PAGE_SIZE, enablePlaceholders = false),
+        config = PagingConfig(
+            pageSize = PAGE_SIZE,
+            initialLoadSize = PAGE_SIZE,
+            enablePlaceholders = false
+        ),
         pagingSourceFactory = { CollectionsDataSource(apiService) }
     ).flow
 }
